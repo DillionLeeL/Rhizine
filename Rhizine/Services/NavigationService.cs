@@ -1,8 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Navigation;
-
-using Rhizine.Contracts.Services;
-using Rhizine.Contracts.ViewModels;
+using Rhizine.Displays.Interfaces;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services;
 

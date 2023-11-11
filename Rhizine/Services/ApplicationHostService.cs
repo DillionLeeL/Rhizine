@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
-
-using Rhizine.Contracts.Activation;
-using Rhizine.Contracts.Services;
-using Rhizine.Contracts.Views;
-using Rhizine.ViewModels;
+using Rhizine.Displays.Interfaces;
+using Rhizine.Displays.Pages;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services;
 

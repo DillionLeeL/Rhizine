@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using Rhizine.Contracts.Services;
 using Rhizine.Models;
+using Rhizine.Services.Interfaces;
 using System.Collections;
 using System.IO;
 

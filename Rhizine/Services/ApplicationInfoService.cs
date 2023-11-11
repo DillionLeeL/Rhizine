@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-
-using Rhizine.Contracts.Services;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services;
 

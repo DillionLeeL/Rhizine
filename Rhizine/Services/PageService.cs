@@ -1,9 +1,8 @@
 ﻿using System.Windows.Controls;
 
 using CommunityToolkit.Mvvm.ComponentModel;
-
-using Rhizine.Contracts.Services;
-using Rhizine.ViewModels;
+using Rhizine.Displays.Pages;
+using Rhizine.Services.Interfaces;
 using Rhizine.Views;
 
 namespace Rhizine.Services;

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Rhizine.Contracts.Services;
-using Rhizine.Contracts.Views;
+using Rhizine.Displays.Interfaces;
+using Rhizine.Displays.Pages;
+using Rhizine.Displays.Windows;
 using Rhizine.Models;
 using Rhizine.Services;
-using Rhizine.ViewModels;
+using Rhizine.Services.Interfaces;
 using Rhizine.Views;
 using System.IO;
 using System.Reflection;

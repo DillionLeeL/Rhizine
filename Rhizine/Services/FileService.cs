@@ -1,9 +1,9 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Text;
 
 using System.Text.Json;
-
-using Rhizine.Contracts.Services;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services;
 
@@ -38,5 +38,26 @@ public class FileService : IFileService
         {
             File.Delete(Path.Combine(folderPath, fileName));
         }
+    }
+    public async Task<Stream> OpenForReadAsync(string path)
+    {
+        return await GetEmbeddedFileStreamAsync(GetType(), path);
+    }
+
+
+    private static async Task<Stream> GetEmbeddedFileStreamAsync(Type assemblyType, string fileName)
+    {
+        await Task.Yield();
+
+        var manifestName = assemblyType.GetTypeInfo().Assembly
+            .GetManifestResourceNames()
+            .FirstOrDefault(n => n.EndsWith(fileName.Replace(" ", "_").Replace("\\", ".").Replace("/", "."), StringComparison.OrdinalIgnoreCase));
+
+        if (manifestName == null)
+        {
+            throw new InvalidOperationException($"Failed to find resource [{fileName}]");
+        }
+
+        return assemblyType.GetTypeInfo().Assembly.GetManifestResourceStream(manifestName);
     }
 }

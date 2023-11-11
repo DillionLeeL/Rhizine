@@ -1,5 +1,5 @@
-﻿using Rhizine.Contracts.Services;
-using Rhizine.Models;
+﻿using Rhizine.Models;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services;
 
