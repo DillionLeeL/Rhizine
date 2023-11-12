@@ -14,7 +14,7 @@ using Rhizine.Displays.Popups;
 
 namespace WPFBase.Displays.Popups;
 
-public partial class WaitPopupViewModel : PopupBase
+public partial class WaitPopupViewModel : PopupViewModelBase
 {
     public ObservableCollection<string> WaitingStates { get; } = new();
     public bool? DialogResult { get; private set; }

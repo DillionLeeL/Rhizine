@@ -28,7 +28,7 @@ public partial class App : Application
     }
 
     private async void OnStartup(object sender, StartupEventArgs e)
-    {
+    {   // TODO: make this optional
         // NOTE: Entry Assembly logic removed from app configure when building as single exe
         var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 

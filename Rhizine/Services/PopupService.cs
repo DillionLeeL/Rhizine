@@ -17,7 +17,7 @@ namespace WPFBase.Services;
 public class PopupService
 {
     // Dictionary to keep track of open popups and their associated ViewModels.
-    private readonly Dictionary<PopupBase, Window> _openPopups = new();
+    private readonly Dictionary<PopupViewModelBase, Window> _openPopups = new();
     private WaitPopup _popup;
     private readonly object _lock = new();
     public bool DialogResult { get; private set; }
@@ -46,7 +46,7 @@ public class PopupService
             }
         });
     }
-    public void ShowPopup(PopupBase viewModel, Window popupView)
+    public void ShowPopup(PopupViewModelBase viewModel, Window popupView)
     {
         // Associate the ViewModel with its View.
         _openPopups[viewModel] = popupView;
@@ -64,7 +64,7 @@ public class PopupService
             }
         });
     }
-    private void ClosePopup(PopupBase viewModel)
+    private void ClosePopup(PopupViewModelBase viewModel)
     {
         // Check if the ViewModel has an associated View.
         if (_openPopups.TryGetValue(viewModel, out var popupView))
