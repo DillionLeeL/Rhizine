@@ -14,30 +14,34 @@ using Rhizine.Displays.Popups;
 
 namespace WPFBase.Displays.Popups;
 
-public partial class WaitPopupViewModel : PopupViewModelBase
+public partial class WaitPopupViewModel : PopupViewModel
 {
     public ObservableCollection<string> WaitingStates { get; } = new();
     public bool? DialogResult { get; private set; }
-    [ObservableProperty]
-    private string _currentStatus;
+
 
     public WaitPopupViewModel()
     {
+        IsVisible = true;
         // If you need to pass parameters or services to the ViewModel, do it here.
     }
-
+    [ObservableProperty]
+    private bool _isVisible;
+    [ObservableProperty]
+    private string _currentStatus;
     public override void Show()
     {
         // Logic to show the popup.
         // This could involve creating a window, setting its DataContext, etc.
     }
-
+    /*
     [RelayCommand]
     protected override void ClosePopup()
     {
         // Send a message that the popup should be closed.
         base.ClosePopup();
     }
+    */
     public void ShowButtons()
     {
         //progressBar.Visibility = Visibility.Collapsed;

@@ -14,12 +14,9 @@ public partial class ShellWindow : MetroWindow, IShellWindow
         DataContext = viewModel;
     }
 
-    public Frame GetNavigationFrame()
-        => shellFrame;
+    public Frame GetNavigationFrame() => shellFrame;
 
-    public void ShowWindow()
-        => Show();
+    public void ShowWindow() => Show();
 
-    public void CloseWindow()
-        => Close();
+    public void CloseWindow() => Close();
 }

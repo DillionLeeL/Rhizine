@@ -9,19 +9,22 @@ public class ApplicationHostService : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly INavigationService _navigationService;
+    private readonly IFlyoutService _flyoutService;
     private readonly IPersistAndRestoreService _persistAndRestoreService;
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private IShellWindow _shellWindow;
     private bool _isInitialized;
 
-    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService)
+    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService,
+                            IPersistAndRestoreService persistAndRestoreService, IFlyoutService flyoutService)
     {
         _serviceProvider = serviceProvider;
         _activationHandlers = activationHandlers;
         _navigationService = navigationService;
         _themeSelectorService = themeSelectorService;
         _persistAndRestoreService = persistAndRestoreService;
+        _flyoutService = flyoutService;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)

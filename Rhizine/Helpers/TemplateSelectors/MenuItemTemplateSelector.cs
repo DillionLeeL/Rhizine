@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 using MahApps.Metro.Controls;
 
-namespace Rhizine.TemplateSelectors;
+namespace Rhizine.Helpers.TemplateSelectors;
 
 public class MenuItemTemplateSelector : DataTemplateSelector
 {

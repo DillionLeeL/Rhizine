@@ -19,19 +19,12 @@ public partial class App : Application
 {
     private IHost _host;
 
-    public T GetService<T>()
-        where T : class
-        => _host.Services.GetService(typeof(T)) as T;
-
-    public App()
-    {
-    }
-
+    public T GetService<T>() where T : class => _host.Services.GetService(typeof(T)) as T;
+    public App() { }
     private async void OnStartup(object sender, StartupEventArgs e)
     {   // TODO: make this optional
         // NOTE: Entry Assembly logic removed from app configure when building as single exe
         var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
 
         _host = Host.CreateDefaultBuilder(e.Args)
             /* Looks for the .dll which will fail when embedded in .exe
@@ -45,6 +38,9 @@ public partial class App : Application
 
         await _host.StartAsync();
     }
+
+    // When adding a service 
+    // C:\Users\Main\source\repos\Rhizine\Rhizine\Services\ApplicationHostService.cs
 
     private void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
@@ -64,6 +60,7 @@ public partial class App : Application
         services.AddSingleton<ISystemService, SystemService>();
         services.AddSingleton<IPageService, PageService>();
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<IFlyoutService, FlyoutService>();
 
         // Views and ViewModels
         services.AddTransient<IShellWindow, ShellWindow>();

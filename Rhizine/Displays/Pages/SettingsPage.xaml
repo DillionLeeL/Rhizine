@@ -7,13 +7,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:converters="clr-namespace:Rhizine.Converters"
     xmlns:models="clr-namespace:Rhizine.Models"
-    xmlns:properties="clr-namespace:Rhizine.Properties"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:properties="clr-namespace:Rhizine.Properties"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    mc:Ignorable="d"
+      xmlns:window="clr-namespace:Rhizine.Displays.Windows"
+      xmlns:pages="clr-namespace:Rhizine.Displays.Pages"
+      mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <Page.Resources>
         <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="models:AppTheme" />
     </Page.Resources>
+
     <ScrollViewer>
         <Grid Margin="{StaticResource SmallTopBottomMargin}">
             <Grid.RowDefinitions>
@@ -91,9 +95,9 @@
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
-                    <Hyperlink
-                        Command="{Binding PrivacyStatementCommand}"
-                        AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
+                    <Hyperlink Command="{Binding OpenSimpleFrameFlyoutCommand}"
+                              >
+                        <!-- CommandParameter="{x:Reference SettingsPage}" -->
                         <TextBlock
                             x:Name="settingsPrivacyStatement"
                             Style="{StaticResource BodyTextStyle}"
@@ -101,6 +105,7 @@
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
+
         </Grid>
     </ScrollViewer>
 </Page>

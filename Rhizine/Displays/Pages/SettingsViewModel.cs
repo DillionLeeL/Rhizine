@@ -1,49 +1,45 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
+using MahApps.Metro.Controls;
 using Microsoft.Extensions.Options;
+using Rhizine.Displays.Flyouts;
 using Rhizine.Displays.Interfaces;
 using Rhizine.Models;
+using Rhizine.Services;
 using Rhizine.Services.Interfaces;
+using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
 // TODO: Change the URL for your privacy policy in the appsettings.json file, currently set to https://YourPrivacyUrlGoesHere
-public class SettingsViewModel : ObservableObject, INavigationAware
+public partial class SettingsViewModel : BaseViewModel
 {
     private readonly AppConfig _appConfig;
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
+
+    [ObservableProperty]
     private AppTheme _theme;
+    [ObservableProperty]
     private string _versionDescription;
-    private ICommand _setThemeCommand;
-    private ICommand _privacyStatementCommand;
-
-    public AppTheme Theme
-    {
-        get { return _theme; }
-        set { SetProperty(ref _theme, value); }
-    }
-
-    public string VersionDescription
-    {
-        get { return _versionDescription; }
-        set { SetProperty(ref _versionDescription, value); }
-    }
-
-    public ICommand SetThemeCommand => _setThemeCommand ?? (_setThemeCommand = new RelayCommand<string>(OnSetTheme));
-
-    public ICommand PrivacyStatementCommand => _privacyStatementCommand ?? (_privacyStatementCommand = new RelayCommand(OnPrivacyStatement));
-
+    [ObservableProperty]
+    private FlyoutsControl _flyoutsControl;
+    [ObservableProperty]
+    public Flyout testFlyout;
     public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService, IApplicationInfoService applicationInfoService)
     {
         _appConfig = appConfig.Value;
         _themeSelectorService = themeSelectorService;
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
+
+        //this.OpenFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, true));
+        //this.CloseFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, false));
     }
 
     public void OnNavigatedTo(object parameter)
@@ -55,13 +51,40 @@ public class SettingsViewModel : ObservableObject, INavigationAware
     public void OnNavigatedFrom()
     {
     }
-
-    private void OnSetTheme(string themeName)
+    [RelayCommand]
+    private void SetTheme(string themeName)
     {
         var theme = (AppTheme)Enum.Parse(typeof(AppTheme), themeName);
         _themeSelectorService.SetTheme(theme);
     }
+    [RelayCommand]
+    private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
 
-    private void OnPrivacyStatement()
-        => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
+
+
+    /*
+    public ICommand OpenFlyoutCommand { get; }
+
+    public ICommand CloseFlyoutCommand { get; }
+    private void ShowDynamicFlyout(object sender, RoutedEventArgs e)
+    {
+        var flyout = new DynamicFlyout
+        {
+            Header = "Dynamic flyout"
+        };
+
+        // when the flyout is closed, remove it from the hosting FlyoutsControl
+        void ClosingFinishedHandler(object o, RoutedEventArgs args)
+        {
+            flyout.ClosingFinished -= ClosingFinishedHandler;
+            this.flyoutsControl.Items.Remove(flyout);
+        }
+
+        flyout.ClosingFinished += ClosingFinishedHandler;
+
+        this.flyoutsControl.Items.Add(flyout);
+
+        flyout.IsOpen = true;
+    }
+    */
 }

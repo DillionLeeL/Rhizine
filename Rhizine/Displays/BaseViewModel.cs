@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Rhizine.Displays.Flyouts;
+using Rhizine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,15 @@ using WPFBase.Services;
 
 namespace WPFBase.Displays;
 
-public partial class ViewModelBase : ObservableRecipient
+public partial class BaseViewModel : ObservableObject
 {
     // Replace these with logic
     [ObservableProperty]
     private bool _canExecute;
     [ObservableProperty]
     private bool _canExecuteAsync;
+    [ObservableProperty]
+    private IFlyoutService _flyoutService;
 
     [RelayCommand(CanExecute = nameof(CanExecuteCommand))]
     private void MyCommand()
@@ -41,7 +45,7 @@ public partial class ViewModelBase : ObservableRecipient
     }
     public IAsyncRelayCommand LoadCommand { get; set; }
 
-    public ViewModelBase()
+    public BaseViewModel()
     {
         LoadCommand = new AsyncRelayCommand(LoadAsync);
     }
@@ -51,6 +55,29 @@ public partial class ViewModelBase : ObservableRecipient
         // Override in derived view models to load data
         return Task.CompletedTask;
     }
-    
 
+    [RelayCommand]
+    private void OpenSimpleFrameFlyout()
+    {
+        FlyoutService = new FlyoutService();
+        //this.FlyoutsControl = new FlyoutsControl();
+        //var flyout = new SimpleFrameFlyout(_appConfig.PrivacyStatement);
+        //TestFlyout = new SimpleFrameFlyout(_appConfig.PrivacyStatement);
+        // when the flyout is closed, remove it from the hosting FlyoutsControl
+        /*
+        void ClosingFinishedHandler(object o, RoutedEventArgs args)
+        {
+            TestFlyout.ClosingFinished -= ClosingFinishedHandler;
+            this.FlyoutsControl.Items.Remove(TestFlyout);
+        }
+
+        TestFlyout.ClosingFinished += ClosingFinishedHandler;
+
+        //this.FlyoutsControl.Items.Add(TestFlyout);
+
+        TestFlyout.IsOpen = true;
+        */
+        //var test = _appConfig.PrivacyStatement;
+        var fly = FlyoutService.CreateFlyout<SimpleFrameFlyoutViewModel>(@"https://www.google.com/");
+    }
 }
