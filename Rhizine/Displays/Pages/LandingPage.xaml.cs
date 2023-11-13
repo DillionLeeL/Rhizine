@@ -10,4 +10,6 @@ public partial class LandingPage : Page
         InitializeComponent();
         DataContext = viewModel;
     }
+
+
 }

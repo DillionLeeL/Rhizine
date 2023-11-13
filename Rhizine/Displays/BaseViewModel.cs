@@ -79,5 +79,7 @@ public partial class BaseViewModel : ObservableObject
         */
         //var test = _appConfig.PrivacyStatement;
         var fly = FlyoutService.CreateFlyout<SimpleFrameFlyoutViewModel>(@"https://www.google.com/");
+        Console.WriteLine("Base opensimpleframe");
+        FlyoutService.ShowFlyout(fly);
     }
 }

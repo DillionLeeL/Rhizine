@@ -11,20 +11,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
             Text="{x:Static properties:Resources.LandingPageTitle}" />
+        <Button Grid.Row="1"
+                Width="110"
+                Height="50"
+                Content="flyout"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding OpenSimpleFrameFlyout}"/>
         <Grid
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="{StaticResource MediumLeftRightMargin}"
             Background="{DynamicResource MahApps.Brushes.Gray10}">
-            <!--
-            The Mahapps Gray10 color represents where you should place your content.
-            Place your content here.
-            -->
+            
         </Grid>
     </Grid>
 </Page>
