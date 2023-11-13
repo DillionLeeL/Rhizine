@@ -13,8 +13,8 @@ namespace Rhizine.Services
     {
         void ShowFlyout(FlyoutViewModel flyoutViewModel);
 
-        public void CloseFlyout(FlyoutViewModel flyoutViewModel);
-        public T CreateFlyout<T>(object param) where T : FlyoutViewModel, new();
+         void CloseFlyout(FlyoutViewModel flyoutViewModel);
+         T CreateFlyout<T>(object param) where T : FlyoutViewModel, new();
     }
 
 }
