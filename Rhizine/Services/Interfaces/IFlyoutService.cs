@@ -1,4 +1,5 @@
-﻿using Rhizine.Displays.Flyouts;
+﻿using MahApps.Metro.Controls;
+using Rhizine.Displays.Flyouts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +12,17 @@ namespace Rhizine.Services
 {
     public interface IFlyoutService
     {
-        void ShowFlyout(FlyoutViewModel flyoutViewModel);
+        event Action<FlyoutBaseViewModel> OnFlyoutOpened;
+        event Action<FlyoutBaseViewModel> OnFlyoutClosed;
+        void Initialize(FlyoutsControl flyoutsControl);
+        void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new();
 
-         void CloseFlyout(FlyoutViewModel flyoutViewModel);
-         T CreateFlyout<T>(object param) where T : FlyoutViewModel, new();
+        void RegisterFlyout<T>(string flyoutName, T viewModel) where T : FlyoutBaseViewModel;
+
+        //void ShowFlyout(string flyoutName);
+        void OpenFlyout(string flyoutName);
+        void CloseFlyout(string flyoutName);
+        //T CreateFlyout<T>(object param) where T : FlyoutViewModel, new();
     }
 
 }

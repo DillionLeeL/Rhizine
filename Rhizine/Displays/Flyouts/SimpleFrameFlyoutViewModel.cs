@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Rhizine.Displays.Flyouts
 {
-    public partial class SimpleFrameFlyoutViewModel : FlyoutViewModel
+    public partial class SimpleFrameFlyoutViewModel : FlyoutBaseViewModel
     {
         public SimpleFrameFlyoutViewModel() { }
         public SimpleFrameFlyoutViewModel(object content)

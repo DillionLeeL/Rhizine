@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Rhizine.Displays.Popups;
 
-public abstract partial class PopupViewModel : ObservableRecipient
+public abstract partial class PopupBaseViewModel : ObservableRecipient
 {
     // Event to signal when the popup is closing.
     public event EventHandler Closing;
@@ -48,9 +48,9 @@ public abstract partial class PopupViewModel : ObservableRecipient
 // Message class used to signal that a popup should close.
 public class ClosePopupMessage
 {
-    public PopupViewModel Popup { get; }
+    public PopupBaseViewModel Popup { get; }
 
-    public ClosePopupMessage(PopupViewModel popup)
+    public ClosePopupMessage(PopupBaseViewModel popup)
     {
         Popup = popup;
     }

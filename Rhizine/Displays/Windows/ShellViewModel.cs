@@ -20,6 +20,8 @@ public partial class ShellViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     [ObservableProperty]
+    private IFlyoutService _flyoutService;
+    [ObservableProperty]
     private HamburgerMenuItem _selectedMenuItem;
     [ObservableProperty]
     private HamburgerMenuItem _selectedOptionsMenuItem;
@@ -39,10 +41,13 @@ public partial class ShellViewModel : BaseViewModel
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     };
 
-    public ShellViewModel(INavigationService navigationService)
+    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService)
     {
         _navigationService = navigationService;
-
+        FlyoutService = flyoutService ?? new FlyoutService();
+        FlyoutService.RegisterFlyout<SimpleFrameFlyoutViewModel>("SimpleFrameFlyout");
+        //_flyoutService.OnFlyoutOpened += FlyoutOpened;
+        //_flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
     private bool CanGoBack() => _navigationService.CanGoBack;
 
@@ -91,5 +96,15 @@ public partial class ShellViewModel : BaseViewModel
 
         GoBackCommand.NotifyCanExecuteChanged();
     }
-    
+
+    [RelayCommand]
+    private void FlyoutOpened(FlyoutBaseViewModel flyout)
+    {
+        
+    }
+    [RelayCommand]
+    private void FlyoutClosed(FlyoutBaseViewModel flyout)
+    {
+        // Handle flyout closed
+    }
 }

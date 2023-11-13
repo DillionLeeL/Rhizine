@@ -1,18 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Rhizine.Displays.Flyouts;
+using Rhizine.Displays.Interfaces;
 using Rhizine.Services;
+using Rhizine.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using WPFBase.Services;
 
 namespace WPFBase.Displays;
 
-public partial class BaseViewModel : ObservableObject
+public partial class BaseViewModel : ObservableObject, INavigationAware
 {
     // Replace these with logic
     [ObservableProperty]
@@ -55,7 +58,14 @@ public partial class BaseViewModel : ObservableObject
         // Override in derived view models to load data
         return Task.CompletedTask;
     }
+    public async void OnNavigatedTo(object parameter)
+    {
+    }
 
+    public void OnNavigatedFrom()
+    {
+    }
+    /*
     [RelayCommand]
     private void OpenSimpleFrameFlyout()
     {
@@ -64,7 +74,7 @@ public partial class BaseViewModel : ObservableObject
         //var flyout = new SimpleFrameFlyout(_appConfig.PrivacyStatement);
         //TestFlyout = new SimpleFrameFlyout(_appConfig.PrivacyStatement);
         // when the flyout is closed, remove it from the hosting FlyoutsControl
-        /*
+        
         void ClosingFinishedHandler(object o, RoutedEventArgs args)
         {
             TestFlyout.ClosingFinished -= ClosingFinishedHandler;
@@ -76,10 +86,11 @@ public partial class BaseViewModel : ObservableObject
         //this.FlyoutsControl.Items.Add(TestFlyout);
 
         TestFlyout.IsOpen = true;
-        */
+        
         //var test = _appConfig.PrivacyStatement;
         var fly = FlyoutService.CreateFlyout<SimpleFrameFlyoutViewModel>(@"https://www.google.com/");
         Console.WriteLine("Base opensimpleframe");
         FlyoutService.ShowFlyout(fly);
     }
+    */
 }

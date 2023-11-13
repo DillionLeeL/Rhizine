@@ -10,19 +10,19 @@ public partial class LandingViewModel : BaseViewModel
 {
     public LandingViewModel()
     {
-        
+        //FlyoutService.OnFlyoutOpened += FlyoutOpened;
+        //FlyoutService.OnFlyoutClosed += FlyoutClosed;
     }
 
-    [RelayCommand]
-    private void OpenSimpleFrameFlyout()
+    
+
+private void FlyoutOpened(string flyout)
     {
-        Console.WriteLine("landing opensimpleframe");
-        base.OpenSimpleFrameFlyoutCommand.Execute(null);
+        //FlyoutService.ShowFlyout(flyout);
     }
 
-    public void OpenFlyout_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void FlyoutClosed(string flyout)
     {
-        Console.WriteLine("click opensimpleframe");
-        base.OpenSimpleFrameFlyoutCommand.Execute(null);
+        //FlyoutService.CloseFlyout(flyout);
     }
 }

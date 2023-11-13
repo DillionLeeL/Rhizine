@@ -5,7 +5,7 @@ using WPFBase.Displays;
 
 namespace Rhizine.Displays.Flyouts
 {
-    public partial class FlyoutViewModel : BaseViewModel
+    public partial class FlyoutBaseViewModel : BaseViewModel
     {
         [ObservableProperty]
         private string? _header;

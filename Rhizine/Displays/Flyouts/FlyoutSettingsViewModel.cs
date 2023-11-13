@@ -3,7 +3,7 @@ using Rhizine.Displays.Pages;
 
 namespace Rhizine.Displays.Flyouts
 {
-    public class FlyoutSettingsViewModel : FlyoutViewModel
+    public class FlyoutSettingsViewModel : FlyoutBaseViewModel
     {
         public FlyoutSettingsViewModel()
         {
