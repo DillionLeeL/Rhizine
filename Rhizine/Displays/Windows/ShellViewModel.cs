@@ -19,6 +19,7 @@ namespace Rhizine.Displays.Windows;
 public partial class ShellViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
+    private readonly ILoggingService _loggingService;
     [ObservableProperty]
     private IFlyoutService _flyoutService;
     [ObservableProperty]
@@ -41,13 +42,15 @@ public partial class ShellViewModel : BaseViewModel
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     };
 
-    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService)
+    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
     {
         _navigationService = navigationService;
-        FlyoutService = flyoutService ?? new FlyoutService();
-        FlyoutService.RegisterFlyout<SimpleFrameFlyoutViewModel>("SimpleFrameFlyout");
-        //_flyoutService.OnFlyoutOpened += FlyoutOpened;
-        //_flyoutService.OnFlyoutClosed += FlyoutClosed;
+
+        FlyoutService = flyoutService;
+        _loggingService = loggingService;
+        _loggingService.LogInformation("shell constructed");
+        _flyoutService.OnFlyoutOpened += FlyoutOpened;
+        _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
     private bool CanGoBack() => _navigationService.CanGoBack;
 
@@ -98,13 +101,13 @@ public partial class ShellViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void FlyoutOpened(FlyoutBaseViewModel flyout)
+    private void FlyoutOpened(string flyout)
     {
-        
+        _loggingService.LogInformation("FlyoutOpened");
     }
     [RelayCommand]
-    private void FlyoutClosed(FlyoutBaseViewModel flyout)
+    private void FlyoutClosed(string flyout)
     {
-        // Handle flyout closed
+        _loggingService.LogInformation("FlyoutOpened");
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls;
+using Rhizine.Services.Interfaces;
 using WPFBase.Displays;
 
 namespace Rhizine.Displays.Flyouts
@@ -15,6 +16,11 @@ namespace Rhizine.Displays.Flyouts
         private Position _position;
         [ObservableProperty]
         private FlyoutTheme _theme = FlyoutTheme.Dark;
+
+        public FlyoutBaseViewModel()
+        {
+
+        }
 
         [RelayCommand]
         private void Close()

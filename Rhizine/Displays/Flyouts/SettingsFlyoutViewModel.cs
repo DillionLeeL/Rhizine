@@ -3,9 +3,9 @@ using Rhizine.Displays.Pages;
 
 namespace Rhizine.Displays.Flyouts
 {
-    public class FlyoutSettingsViewModel : FlyoutBaseViewModel
+    public class SettingsFlyoutViewModel : FlyoutBaseViewModel
     {
-        public FlyoutSettingsViewModel()
+        public SettingsFlyoutViewModel()
         {
             this.Header = "settings";
             this.Position = Position.Left;

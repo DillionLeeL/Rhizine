@@ -12,8 +12,8 @@ namespace Rhizine.Services
 {
     public interface IFlyoutService
     {
-        event Action<FlyoutBaseViewModel> OnFlyoutOpened;
-        event Action<FlyoutBaseViewModel> OnFlyoutClosed;
+        event Action<string> OnFlyoutOpened;
+        event Action<string> OnFlyoutClosed;
         void Initialize(FlyoutsControl flyoutsControl);
         void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new();
 

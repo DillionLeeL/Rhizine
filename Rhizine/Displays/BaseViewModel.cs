@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Rhizine.Displays.Flyouts;
 using Rhizine.Displays.Interfaces;
 using Rhizine.Services;
@@ -22,8 +23,12 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
     private bool _canExecute;
     [ObservableProperty]
     private bool _canExecuteAsync;
-    [ObservableProperty]
-    private IFlyoutService _flyoutService;
+    
+
+    public BaseViewModel()
+    {
+        LoadCommand = new AsyncRelayCommand(LoadAsync);
+    }
 
     [RelayCommand(CanExecute = nameof(CanExecuteCommand))]
     private void MyCommand()
@@ -48,10 +53,7 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
     }
     public IAsyncRelayCommand LoadCommand { get; set; }
 
-    public BaseViewModel()
-    {
-        LoadCommand = new AsyncRelayCommand(LoadAsync);
-    }
+
 
     public virtual Task LoadAsync()
     {

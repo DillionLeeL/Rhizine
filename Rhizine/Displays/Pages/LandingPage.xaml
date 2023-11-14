@@ -20,14 +20,23 @@
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
             Text="{x:Static properties:Resources.LandingPageTitle}" />
-        <Button d:DataContext="{d:DesignInstance Type=window:ShellViewModel}"
+        <Button
                 Grid.Row="1"
                 Width="110"
                 Height="50"
-                Content="flyout"
+                Content="settingsflyout"
+                HorizontalAlignment="left"
                 Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
                 Command="{Binding FlyoutService.OpenFlyoutCommand}"
-                CommandParameter="SimpleFrameFlyout" />
+                CommandParameter="SettingsFlyout" />
+        <Button 
+                Grid.Row="1"
+                Width="110"
+                Height="50"
+                Content="frane flyout"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding FlyoutService.OpenFlyoutCommand}"
+                CommandParameter="WebFrameFlyout" />
         <Grid
             Grid.Row="2"
             Margin="{StaticResource MediumLeftRightMargin}"

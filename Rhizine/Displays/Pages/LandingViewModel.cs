@@ -2,27 +2,36 @@
 using CommunityToolkit.Mvvm.Input;
 using Rhizine.Displays.Flyouts;
 using Rhizine.Services;
+using Rhizine.Services.Interfaces;
 using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
 public partial class LandingViewModel : BaseViewModel
-{
-    public LandingViewModel()
+{ 
+    private ILoggingService _loggingService;
+    [ObservableProperty]
+    private IFlyoutService _flyoutService;
+    public LandingViewModel(ILoggingService loggingService, IFlyoutService flyoutService)
     {
-        //FlyoutService.OnFlyoutOpened += FlyoutOpened;
-        //FlyoutService.OnFlyoutClosed += FlyoutClosed;
+
+        _loggingService = loggingService;
+        _flyoutService = flyoutService;
+        _flyoutService.OnFlyoutOpened += FlyoutOpened;
+        _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
 
-    
 
-private void FlyoutOpened(string flyout)
+    [RelayCommand]
+    private void FlyoutOpened(string flyout)
     {
+        _loggingService.LogInformation(flyout);
         //FlyoutService.ShowFlyout(flyout);
     }
-
+    [RelayCommand]
     private void FlyoutClosed(string flyout)
     {
+        _loggingService.LogInformation(flyout);
         //FlyoutService.CloseFlyout(flyout);
     }
 }

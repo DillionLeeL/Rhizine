@@ -22,7 +22,7 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
-
+    private readonly ILoggingService _loggingService;
     [ObservableProperty]
     private AppTheme _theme;
     [ObservableProperty]
@@ -31,13 +31,14 @@ public partial class SettingsViewModel : BaseViewModel
     private FlyoutsControl _flyoutsControl;
     [ObservableProperty]
     public Flyout testFlyout;
-    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService, IApplicationInfoService applicationInfoService)
+    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService, 
+                             IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
         _appConfig = appConfig.Value;
         _themeSelectorService = themeSelectorService;
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
-
+        _loggingService = loggingService;
         //this.OpenFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, true));
         //this.CloseFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, false));
     }

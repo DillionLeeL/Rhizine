@@ -10,24 +10,31 @@ using MahApps.Metro.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Windows.System;
 using System.Windows.Controls;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Services
 {
     public partial class FlyoutService : IFlyoutService
     {
+        private readonly ILoggingService _loggingService;
+
         // TODO: CHANGE TO FLYOUTCONTROL TO SEE IF THAT WORKS
         private readonly Dictionary<string, Lazy<FlyoutBaseViewModel>> _flyouts = new();
         public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; } = new ObservableCollection<FlyoutBaseViewModel>();
+
         private FlyoutsControl _flyoutsControl;
         //private Dictionary<string, FlyoutViewModel> flyoutMap;
         //private Dictionary<string, Action> flyoutOpenActions;
 
-        public event Action<FlyoutBaseViewModel> OnFlyoutOpened;
-        public event Action<FlyoutBaseViewModel> OnFlyoutClosed;
+        public event Action<string> OnFlyoutOpened;
+        public event Action<string> OnFlyoutClosed;
 
-        public FlyoutService()
+        public FlyoutService(ILoggingService loggingService)
         {
-
+            _loggingService = loggingService;
+            _loggingService.LogInformation("Registering flyouts.");
+            RegisterFrameFlyout3("WebFrameFlyout", new Uri(@"pack://application:,,,/Displays/Pages/WebViewPage.xaml", UriKind.RelativeOrAbsolute));
+            RegisterFlyout<SettingsFlyoutViewModel>("SettingsFlyout");
             //flyoutOpenActions = new Dictionary<string, Action>();
             //flyoutMap = new Dictionary<string, FlyoutViewModel>();
             //InitializeFlyoutActions();
@@ -49,8 +56,25 @@ namespace Rhizine.Services
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(viewModel);
         }
+        public void RegisterFrameFlyout<T>(string flyoutName, object param) where T : FlyoutBaseViewModel, new()
+        {
+            _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
+                    () => (T)Activator.CreateInstance(typeof(T), new object[] { param }));
+        }
+        // TODO: TEST THIS 
+        public void RegisterFrameFlyout2(string flyoutName, object param)
+        {
+            _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
+                () => Activator.CreateInstance(typeof(SimpleFrameFlyoutViewModel), new object[] { param }) as FlyoutBaseViewModel);
+        }
+        public void RegisterFrameFlyout3(string flyoutName, object param)
+        {
+            _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(() => new SimpleFrameFlyoutViewModel(param));
+        }
+        [RelayCommand]
         public void OpenFlyout(string flyoutName)
         {
+            _loggingService.LogInformation("opening"+flyoutName);
             if (_flyouts.TryGetValue(flyoutName, out var lazyFlyout))
             {
                 var flyout = lazyFlyout.Value;
@@ -64,7 +88,7 @@ namespace Rhizine.Services
                 }
             }
         }
-
+        [RelayCommand]
         public void CloseFlyout(string flyoutName)
         {
             if (_flyouts.TryGetValue(flyoutName, out var lazyFlyout))
@@ -99,7 +123,7 @@ namespace Rhizine.Services
                 OnFlyoutClosed?.Invoke(flyout);
             }
         }
-        /*
+        
         public void ShowFlyout(string flyoutName)
         {
             if (flyoutMap.TryGetValue(flyoutName, out var flyoutViewModel))
@@ -131,8 +155,7 @@ namespace Rhizine.Services
             return flyoutViewModel;
         }
 
-        */
-        /*
+
         public T CreateFlyout<T>(object param) where T : FlyoutViewModel, new()
         {
             Console.WriteLine("Creating flyout");
@@ -175,7 +198,7 @@ namespace Rhizine.Services
             // Set up the flyout as needed
             ShowFlyout(flyout);
         }
-        */
+        
         public FlyoutBaseViewModel CreateFlyout(string header)
         {
             Console.WriteLine("Creating flyout");
@@ -189,7 +212,7 @@ namespace Rhizine.Services
         }
             
 
-        /*
+        
 
         [RelayCommand]
         public void OpenFlyout(string flyoutName)

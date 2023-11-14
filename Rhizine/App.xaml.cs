@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Rhizine.Displays.Interfaces;
 using Rhizine.Displays.Pages;
 using Rhizine.Displays.Windows;
@@ -46,13 +47,15 @@ public partial class App : Application
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-
+        services.AddLogging(configure => configure.AddConsole());
+        //.AddTransient<App>();
         // Activation Handlers
 
         // Core Services
         services.AddSingleton<IFileService, FileService>();
 
         // Services
+        services.AddSingleton<ILoggingService, LoggingService>();
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();
         services.AddSingleton<IPersistAndRestoreService, PersistAndRestoreService>();
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
