@@ -20,9 +20,9 @@ namespace Rhizine.Services
 
         // TODO: CHANGE TO FLYOUTCONTROL TO SEE IF THAT WORKS
         private readonly Dictionary<string, Lazy<FlyoutBaseViewModel>> _flyouts = new();
-        public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; } = new ObservableCollection<FlyoutBaseViewModel>();
+        public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; }
 
-        private FlyoutsControl _flyoutsControl;
+       // private FlyoutsControl _flyoutsControl;
         //private Dictionary<string, FlyoutViewModel> flyoutMap;
         //private Dictionary<string, Action> flyoutOpenActions;
 
@@ -32,20 +32,24 @@ namespace Rhizine.Services
         public FlyoutService(ILoggingService loggingService)
         {
             _loggingService = loggingService;
+            ActiveFlyouts = new ObservableCollection<FlyoutBaseViewModel>();
             _loggingService.LogInformation("Registering flyouts.");
             RegisterFrameFlyout3("WebFrameFlyout", new Uri(@"pack://application:,,,/Displays/Pages/WebViewPage.xaml", UriKind.RelativeOrAbsolute));
-            RegisterFlyout<SettingsFlyoutViewModel>("SettingsFlyout");
+            RegisterFlyout<SettingsFlyoutViewModel>("SettingsFlyout", loggingService);
             //flyoutOpenActions = new Dictionary<string, Action>();
             //flyoutMap = new Dictionary<string, FlyoutViewModel>();
             //InitializeFlyoutActions();
         }
-        public void Initialize(FlyoutsControl flyoutsControl)
+        
+        public void Initialize() // FlyoutsControl flyoutsControl
         {
+            /*
             if (_flyoutsControl == null)
             {
                 _flyoutsControl = flyoutsControl;
                 _flyoutsControl.ItemsSource = ActiveFlyouts;
             }
+            */
         }
         //flyoutService.RegisterFlyout<SettingsFlyoutViewModel>("SettingsFlyout");
         public void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new()
@@ -56,7 +60,7 @@ namespace Rhizine.Services
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(viewModel);
         }
-        public void RegisterFrameFlyout<T>(string flyoutName, object param) where T : FlyoutBaseViewModel, new()
+        public void RegisterFlyout<T>(string flyoutName, object param) where T : FlyoutBaseViewModel, new()
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
                     () => (T)Activator.CreateInstance(typeof(T), new object[] { param }));

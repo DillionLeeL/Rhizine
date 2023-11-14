@@ -79,7 +79,7 @@ public class ApplicationHostService : IHostedService
             // Default activation that navigates to the apps default page
             _shellWindow = _serviceProvider.GetService(typeof(IShellWindow)) as IShellWindow;
             _navigationService.Initialize(_shellWindow.GetNavigationFrame());
-            _flyoutService.Initialize(_shellWindow.GetFlyoutsControl());
+            _flyoutService.Initialize(); // removed _shellWindow.GetFlyoutsControl()
             _shellWindow.ShowWindow();
             _navigationService.NavigateTo(typeof(LandingViewModel).FullName);
             await Task.CompletedTask;

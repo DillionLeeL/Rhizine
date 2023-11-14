@@ -95,9 +95,7 @@
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
-                    <Hyperlink d:DataContext="{d:DesignInstance Type=window:ShellViewModel}"
-                               Command="{Binding FlyoutService.OpenFlyoutCommand}"
-                               CommandParameter="SettingsFlyout" >
+                    <Hyperlink >
                               
                         <!-- CommandParameter="{x:Reference SettingsPage}" -->
                         <TextBlock

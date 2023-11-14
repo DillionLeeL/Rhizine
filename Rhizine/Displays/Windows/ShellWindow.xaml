@@ -8,6 +8,7 @@
                       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:properties="clr-namespace:Rhizine.Properties"
                       xmlns:templateSelectors="clr-namespace:Rhizine.Helpers.TemplateSelectors"
+                      xmlns:flyouts="clr-namespace:Rhizine.Displays.Flyouts"
                       Style="{StaticResource CustomMetroWindow}"
                       mc:Ignorable="d"
                       MinWidth="500"
@@ -79,13 +80,27 @@
                 </DataTemplate>
             </templateSelectors:MenuItemTemplateSelector.ImageDataTemplate>
         </templateSelectors:MenuItemTemplateSelector>
-       
+        
+        <templateSelectors:FlyoutTemplateSelector x:Key="FlyoutTemplateSelector">
+            <templateSelectors:FlyoutTemplateSelector.SettingsFlyoutTemplate>
+                <DataTemplate DataType="{x:Type flyouts:SettingsFlyoutViewModel}">
+                    <flyouts:SettingsFlyout />
+                </DataTemplate>
+            </templateSelectors:FlyoutTemplateSelector.SettingsFlyoutTemplate>
+            <templateSelectors:FlyoutTemplateSelector.SimpleFrameFlyoutTemplate>
+                <DataTemplate DataType="{x:Type flyouts:SimpleFrameFlyoutViewModel}">
+                    <flyouts:SimpleFrameFlyout />
+                </DataTemplate>
+            </templateSelectors:FlyoutTemplateSelector.SimpleFrameFlyoutTemplate>
+        </templateSelectors:FlyoutTemplateSelector>
+
+
     </controls:MetroWindow.Resources>
 
     <mah:MetroWindow.Flyouts>
-        <mah:FlyoutsControl x:Name="flyoutsControl"
-                            ItemsSource="{Binding FlyoutService.ActiveFlyouts}"
-                            ItemContainerStyle="{StaticResource CustomFlyoutStyle}">
+        <mah:FlyoutsControl ItemsSource="{Binding FlyoutService.ActiveFlyouts}"
+                            ItemContainerStyle="{StaticResource CustomFlyoutStyle}"
+                            ItemTemplateSelector="{StaticResource FlyoutTemplateSelector}">
         </mah:FlyoutsControl>
     </mah:MetroWindow.Flyouts>
 

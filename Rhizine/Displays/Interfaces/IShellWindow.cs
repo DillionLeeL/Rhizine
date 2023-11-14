@@ -6,7 +6,7 @@ namespace Rhizine.Displays.Interfaces;
 public interface IShellWindow
 {
     Frame GetNavigationFrame();
-    FlyoutsControl GetFlyoutsControl();
+    //FlyoutsControl GetFlyoutsControl();
     void ShowWindow();
 
     void CloseWindow();

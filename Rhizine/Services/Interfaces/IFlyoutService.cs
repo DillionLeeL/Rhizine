@@ -14,7 +14,7 @@ namespace Rhizine.Services
     {
         event Action<string> OnFlyoutOpened;
         event Action<string> OnFlyoutClosed;
-        void Initialize(FlyoutsControl flyoutsControl);
+        void Initialize(); // removed FlyoutsControl flyoutsControl
         void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new();
 
         void RegisterFlyout<T>(string flyoutName, T viewModel) where T : FlyoutBaseViewModel;

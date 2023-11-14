@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:flyouts="clr-namespace:Rhizine.Displays.Flyouts">
 
     <Style x:Key="CustomFlyoutStyle"
            BasedOn="{StaticResource {x:Type mah:Flyout}}"
@@ -13,5 +14,7 @@
                 Value="{Binding Position}" />
         <Setter Property="Theme"
                 Value="{Binding Theme}" />
+        <Setter Property="IsModal"
+                Value="{Binding IsModal}" />
     </Style>
 </ResourceDictionary>

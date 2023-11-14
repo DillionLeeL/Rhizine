@@ -18,8 +18,12 @@ namespace Rhizine.Displays.Flyouts
     /// <summary>
     /// Interaction logic for FrameFlyout.xaml
     /// </summary>
-    public partial class SimpleFrameFlyout : Flyout
+    public partial class SimpleFrameFlyout : UserControl
     {
+        public SimpleFrameFlyout()
+        {
+            InitializeComponent();
+        }
         public SimpleFrameFlyout(SimpleFrameFlyoutViewModel viewModel)
         {
             InitializeComponent();

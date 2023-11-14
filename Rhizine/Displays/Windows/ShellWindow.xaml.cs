@@ -16,7 +16,7 @@ public partial class ShellWindow : MetroWindow, IShellWindow
     }
 
     public Frame GetNavigationFrame() => shellFrame;
-    public FlyoutsControl GetFlyoutsControl() => flyoutsControl;
+    //public FlyoutsControl GetFlyoutsControl() => flyoutsControl;
     public void ShowWindow() => Show();
 
     public void CloseWindow() => Close();
