@@ -1,10 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Rhizine.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Rhizine.Displays.Interfaces;
+using Rhizine.Models;
 using Rhizine.Services.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace Rhizine.Displays.Pages;
 

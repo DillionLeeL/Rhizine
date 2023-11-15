@@ -2,6 +2,7 @@
 
 namespace Rhizine.Services.Interfaces;
 
+// TODO: Navigation Relay commands
 public interface INavigationService
 {
     event EventHandler<string> Navigated;

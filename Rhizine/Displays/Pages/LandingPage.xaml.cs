@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Rhizine.Displays.Pages;
+﻿using Rhizine.Displays.Pages;
+using System.Windows.Controls;
 
 namespace Rhizine.Views;
 
@@ -10,6 +10,4 @@ public partial class LandingPage : Page
         InitializeComponent();
         DataContext = viewModel;
     }
-
-
 }

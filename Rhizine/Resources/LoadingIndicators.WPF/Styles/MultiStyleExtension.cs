@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Markup;
 
 namespace LoadingIndicators.WPF.Styles
@@ -16,7 +15,7 @@ namespace LoadingIndicators.WPF.Styles
                 throw new ArgumentNullException(nameof(inputResourceKeys));
             }
 
-            _resourceKeys = inputResourceKeys.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            _resourceKeys = inputResourceKeys.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (_resourceKeys.Length == 0)
             {
@@ -31,10 +30,10 @@ namespace LoadingIndicators.WPF.Styles
 
             foreach (var resourceKey in _resourceKeys)
             {
-                var key = (object) resourceKey;
+                var key = (object)resourceKey;
                 if (resourceKey == ".")
                 {
-                    var service = (IProvideValueTarget) serviceProvider.GetService(typeof(IProvideValueTarget));
+                    var service = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
                     key = service.TargetObject.GetType();
                 }
 

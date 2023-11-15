@@ -1,22 +1,9 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+﻿using System.Windows.Controls;
 
 namespace Rhizine.Displays.Flyouts
 {
     /// <summary>
-    /// Interaction logic for FrameFlyout.xaml
+    /// TODO: 
     /// </summary>
     public partial class SimpleFrameFlyout : UserControl
     {
@@ -25,7 +12,7 @@ namespace Rhizine.Displays.Flyouts
         {
             InitializeComponent();
         }
-        
+
         public SimpleFrameFlyout(SimpleFrameFlyoutViewModel viewModel)
         {
             InitializeComponent();

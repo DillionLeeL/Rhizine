@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 
+// TODO: Structured logging
 namespace Rhizine.Services
 {
     public class LoggingService : ILoggingService
@@ -16,7 +13,7 @@ namespace Rhizine.Services
         {
             _logger = logger;
         }
-
+        /*
         public void LogInformation(string message)
         {
             _logger.LogInformation("{Message}", message);
@@ -32,13 +29,15 @@ namespace Rhizine.Services
             _logger.LogError("{Message}", message);
         }
 
-        public void logError(Exception exception)
-        {
-            _logger.LogError("{Error}", exception);
-        }
+
         public void LogError(Exception exception, string message)
         {
             _logger.LogError(exception, message);
+        }
+        */
+        public void logError(Exception exception)
+        {
+            _logger.LogError("{Error}", exception);
         }
         public void LogInformation(string message, params object[] args)
         {
@@ -58,6 +57,25 @@ namespace Rhizine.Services
         public void LogError(Exception exception, string message, params object[] args)
         {
             _logger.LogError(exception, message, args);
+        }
+        public void LogInformation(string message)
+        {
+            LoggingMessages.LogInformation(_logger, message);
+        }
+
+        public void LogWarning(string message)
+        {
+            LoggingMessages.LogWarning(_logger, message);
+        }
+
+        public void LogError(string message)
+        {
+            LoggingMessages.LogError(_logger, message);
+        }
+
+        public void LogError(Exception exception, string message)
+        {
+            LoggingMessages.LogException(_logger, exception, message);
         }
     }
 }

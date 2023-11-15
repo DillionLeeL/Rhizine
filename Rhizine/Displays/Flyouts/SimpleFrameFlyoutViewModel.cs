@@ -1,24 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Rhizine.Displays.Pages;
-using Rhizine.Models;
-using Rhizine.Services;
-using Rhizine.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using MahApps.Metro.Controls;
-using Rhizine.Displays.Pages;
 using Rhizine.Services.Interfaces;
-using CommunityToolkit.Mvvm.ComponentModel;
+using System.Windows.Controls;
 
 namespace Rhizine.Displays.Flyouts
 {
     public partial class SimpleFrameFlyoutViewModel : FlyoutBaseViewModel
     {
-        // private readonly INavigationService _navigationService;
         private readonly ILoggingService _loggingService;
         public SimpleFrameFlyoutViewModel() { }
         public SimpleFrameFlyoutViewModel(Uri source)
@@ -27,7 +15,7 @@ namespace Rhizine.Displays.Flyouts
             this.Header = "frame";
             this.Position = Position.Left;
         }
-        public SimpleFrameFlyoutViewModel(Uri source, ILoggingService loggingService) 
+        public SimpleFrameFlyoutViewModel(Uri source, ILoggingService loggingService)
         {
             CurrentUri = source;
             this.Header = "frame";
@@ -48,7 +36,5 @@ namespace Rhizine.Displays.Flyouts
         private Page _currentPage;
         [ObservableProperty]
         private Uri _currentUri;
-        //[ObservableProperty]
-        //private Frame _flyoutFrame;
     }
 }

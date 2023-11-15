@@ -1,7 +1,6 @@
-﻿using System.Windows.Controls;
-
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 using Rhizine.Displays.Pages;
+using System.Windows.Controls;
 
 namespace Rhizine.Views;
 

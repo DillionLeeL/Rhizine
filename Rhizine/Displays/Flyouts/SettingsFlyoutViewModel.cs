@@ -1,7 +1,6 @@
-﻿using MahApps.Metro.Controls;
-using Rhizine.Displays.Pages;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MahApps.Metro.Controls;
 using Rhizine.Services.Interfaces;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Rhizine.Displays.Flyouts
 {
@@ -18,7 +17,6 @@ namespace Rhizine.Displays.Flyouts
             _loggingService = loggingService;
             this.Header = "settings";
             this.Position = Position.Left;
-            _loggingService.LogInformation("SettingsFlyoutViewModel constructor");
             SettingsText = "test";
         }
         [ObservableProperty]

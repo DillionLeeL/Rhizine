@@ -1,7 +1,6 @@
-﻿using System;
+﻿using LoadingIndicators.WPF.Utilities;
 using System.Windows;
 using System.Windows.Controls;
-using LoadingIndicators.WPF.Utilities;
 
 namespace LoadingIndicators.WPF
 {
@@ -43,7 +42,7 @@ namespace LoadingIndicators.WPF
 
         public LoadingIndicatorMode Mode
         {
-            get => (LoadingIndicatorMode) GetValue(ModeProperty);
+            get => (LoadingIndicatorMode)GetValue(ModeProperty);
             set => SetValue(ModeProperty, value);
         }
 
@@ -52,7 +51,7 @@ namespace LoadingIndicators.WPF
         /// </summary>
         public double SpeedRatio
         {
-            get => (double) GetValue(SpeedRatioProperty);
+            get => (double)GetValue(SpeedRatioProperty);
             set => SetValue(SpeedRatioProperty, value);
         }
 
@@ -61,32 +60,32 @@ namespace LoadingIndicators.WPF
         /// </summary>
         public bool IsActive
         {
-            get => (bool) GetValue(IsActiveProperty);
+            get => (bool)GetValue(IsActiveProperty);
             set => SetValue(IsActiveProperty, value);
         }
 
         private static void OnSpeedRatioChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var li = (LoadingIndicator) o;
+            var li = (LoadingIndicator)o;
 
             if (li.PART_Border == null || li.IsActive == false)
             {
                 return;
             }
 
-            SetStoryBoardSpeedRatio(li.PART_Border, (double) e.NewValue);
+            SetStoryBoardSpeedRatio(li.PART_Border, (double)e.NewValue);
         }
 
         private static void OnIsActiveChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var li = (LoadingIndicator) o;
+            var li = (LoadingIndicator)o;
 
             if (li.PART_Border == null)
             {
                 return;
             }
 
-            if ((bool) e.NewValue == false)
+            if ((bool)e.NewValue == false)
             {
                 VisualStateManager.GoToElementState(li.PART_Border, IndicatorVisualStateNames.InactiveState.Name,
                     false);
@@ -117,7 +116,7 @@ namespace LoadingIndicators.WPF
         {
             base.OnApplyTemplate();
 
-            PART_Border = (Border) GetTemplateChild(TemplateBorderName);
+            PART_Border = (Border)GetTemplateChild(TemplateBorderName);
 
             if (PART_Border == null)
             {

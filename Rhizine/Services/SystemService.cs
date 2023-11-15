@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using Rhizine.Services.Interfaces;
+﻿using Rhizine.Services.Interfaces;
+using System.Diagnostics;
 
 namespace Rhizine.Services;
 

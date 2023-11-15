@@ -1,21 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.Options;
-using Rhizine.Displays.Flyouts;
-using Rhizine.Displays.Interfaces;
 using Rhizine.Models;
-using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
-// TODO: Change the URL for your privacy policy in the appsettings.json file, currently set to https://YourPrivacyUrlGoesHere
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly AppConfig _appConfig;
@@ -31,7 +23,7 @@ public partial class SettingsViewModel : BaseViewModel
     private FlyoutsControl _flyoutsControl;
     [ObservableProperty]
     public Flyout testFlyout;
-    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService, 
+    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService,
                              IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
         _appConfig = appConfig.Value;
@@ -39,17 +31,15 @@ public partial class SettingsViewModel : BaseViewModel
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
         _loggingService = loggingService;
-        //this.OpenFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, true));
-        //this.CloseFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, false));
     }
 
-    public void OnNavigatedTo(object parameter)
+    public override void OnNavigatedTo(object parameter)
     {
         VersionDescription = $"{Properties.Resources.AppDisplayName} - {_applicationInfoService.GetVersion()}";
         Theme = _themeSelectorService.GetCurrentTheme();
     }
 
-    public void OnNavigatedFrom()
+    public override void OnNavigatedFrom()
     {
     }
     [RelayCommand]

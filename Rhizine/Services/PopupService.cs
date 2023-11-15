@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
-using System.Windows;
-using WPFBase.Displays.Popups;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Rhizine.Displays.Popups;
+using System.Windows;
+using System.Windows.Media.Animation;
+using WPFBase.Displays.Popups;
 
 namespace WPFBase.Services;
 
 public class PopupService
 {
-    // Dictionary to keep track of open popups and their associated ViewModels.
+    // Dictionary to keep track of open popups and their associated ViewModels
     private readonly Dictionary<PopupBaseViewModel, Window> _openPopups = new();
     private WaitPopup _popup;
     private readonly object _lock = new();

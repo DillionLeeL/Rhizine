@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rhizine.Displays.Interfaces;
@@ -19,42 +18,38 @@ namespace Rhizine;
 public partial class App : Application
 {
     private IHost _host;
+    public App() { }
 
     public T GetService<T>() where T : class => _host.Services.GetService(typeof(T)) as T;
-    public App() { }
+
     private async void OnStartup(object sender, StartupEventArgs e)
-    {   // TODO: make this optional
+    {
         // NOTE: Entry Assembly logic removed from app configure when building as single exe
+        // TODO: make this optional
         var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         _host = Host.CreateDefaultBuilder(e.Args)
-            /* Looks for the .dll which will fail when embedded in .exe
-                .ConfigureAppConfiguration(c =>
-                {
-                    c.SetBasePath(appLocation);
-                })
-            */
+                /* Looks for the .dll which will fail when embedded in .exe
+                    .ConfigureAppConfiguration(c =>
+                    {
+                        c.SetBasePath(appLocation);
+                    })
+                */
                 .ConfigureServices(ConfigureServices)
                 .Build();
 
         await _host.StartAsync();
     }
 
-    // When adding a service 
-    // C:\Users\Main\source\repos\Rhizine\Rhizine\Services\ApplicationHostService.cs
-
+    // When adding a service, add it below and in Services\ApplicationHostService.cs
     private void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-        services.AddLogging(configure => configure.AddConsole());
-        //.AddTransient<App>();
-        // Activation Handlers
-
-        // Core Services
-        services.AddSingleton<IFileService, FileService>();
+        services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
 
         // Services
+        services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILoggingService, LoggingService>();
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();
         services.AddSingleton<IPersistAndRestoreService, PersistAndRestoreService>();

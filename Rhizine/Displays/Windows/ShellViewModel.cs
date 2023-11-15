@@ -1,17 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using MahApps.Metro.Controls;
-using Rhizine.Displays.Flyouts;
 using Rhizine.Displays.Pages;
-using Rhizine.Models;
 using Rhizine.Properties;
 using Rhizine.Services;
 using Rhizine.Services.Interfaces;
+using System.Collections.ObjectModel;
 using WPFBase.Displays;
 
 namespace Rhizine.Displays.Windows;

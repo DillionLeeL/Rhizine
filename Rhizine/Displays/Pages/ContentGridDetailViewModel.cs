@@ -1,21 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Rhizine.Models;
 using Rhizine.Displays.Interfaces;
+using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Displays.Pages;
 
-public class ContentGridDetailViewModel : ObservableObject, INavigationAware
+public partial class ContentGridDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
+    [ObservableProperty]
     private SampleOrder _item;
-
-    public SampleOrder Item
-    {
-        get { return _item; }
-        set { SetProperty(ref _item, value); }
-    }
 
     public ContentGridDetailViewModel(ISampleDataService sampleDataService)
     {
