@@ -50,32 +50,4 @@ public partial class SettingsViewModel : BaseViewModel
     }
     [RelayCommand]
     private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
-
-
-
-    /*
-    public ICommand OpenFlyoutCommand { get; }
-
-    public ICommand CloseFlyoutCommand { get; }
-    private void ShowDynamicFlyout(object sender, RoutedEventArgs e)
-    {
-        var flyout = new DynamicFlyout
-        {
-            Header = "Dynamic flyout"
-        };
-
-        // when the flyout is closed, remove it from the hosting FlyoutsControl
-        void ClosingFinishedHandler(object o, RoutedEventArgs args)
-        {
-            flyout.ClosingFinished -= ClosingFinishedHandler;
-            this.flyoutsControl.Items.Remove(flyout);
-        }
-
-        flyout.ClosingFinished += ClosingFinishedHandler;
-
-        this.flyoutsControl.Items.Add(flyout);
-
-        flyout.IsOpen = true;
-    }
-    */
 }

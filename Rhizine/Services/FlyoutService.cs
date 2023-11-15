@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using MahApps.Metro.Controls;
 using Rhizine.Displays.Flyouts;
 using Rhizine.Displays.Pages;
 using Rhizine.Services.Interfaces;
@@ -26,6 +27,9 @@ namespace Rhizine.Services
         public void Initialize()
         {
             _loggingService.LogInformation("Registering flyouts.");
+            _loggingService.LogInformation("Registering flyouts.");
+            _loggingService.LogWarning("Registering flyouts.");
+            _loggingService.LogError("Registering flyouts.");
             RegisterFlyout<SettingsFlyoutViewModel>("SettingsFlyout", _loggingService);
 
             // Example frameflyout for either pages or URIs
@@ -60,7 +64,7 @@ namespace Rhizine.Services
                     flyout.IsOpen = true;
                     if (!ActiveFlyouts.Contains(flyout))
                     {
-                        _loggingService.LogInformation("Adding {Flyout} to active flyouts", flyout);
+                        _loggingService.LogInformation($"Adding {flyout} to active flyouts");
                         ActiveFlyouts.Add(flyout);
                     }
                 }

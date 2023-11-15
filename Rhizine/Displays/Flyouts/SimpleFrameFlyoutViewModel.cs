@@ -21,7 +21,7 @@ namespace Rhizine.Displays.Flyouts
             this.Header = "frame";
             this.Position = Position.Left;
             _loggingService = loggingService;
-            _loggingService.LogInformation("SimpleFrameFlyoutViewModel constructor with {0}", source);
+            _loggingService.LogDebug($"SimpleFrameFlyoutViewModel constructor with {source}" );
         }
         public SimpleFrameFlyoutViewModel(Page page, ILoggingService loggingService)
         {
@@ -29,7 +29,7 @@ namespace Rhizine.Displays.Flyouts
             this.Header = "frame";
             this.Position = Position.Left;
             _loggingService = loggingService;
-            _loggingService.LogInformation("SimpleFrameFlyoutViewModel constructor with {0}", page);
+            _loggingService.LogInformation($"SimpleFrameFlyoutViewModel constructor with {page}");
 
         }
         [ObservableProperty]

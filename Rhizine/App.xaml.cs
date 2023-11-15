@@ -46,7 +46,7 @@ public partial class App : Application
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-        services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
+        //services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
 
         // Services
         services.AddSingleton<IFileService, FileService>();

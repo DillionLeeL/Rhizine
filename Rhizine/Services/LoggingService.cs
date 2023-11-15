@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
+using System.Diagnostics;
 
 // TODO: Structured logging
 namespace Rhizine.Services
@@ -13,50 +14,10 @@ namespace Rhizine.Services
         {
             _logger = logger;
         }
-        /*
-        public void LogInformation(string message)
-        {
-            _logger.LogInformation("{Message}", message);
-        }
 
-        public void LogWarning(string message)
+        public void LogDebug(string message)
         {
-            _logger.LogWarning("{Message}", message);
-        }
-
-        public void LogError(string message)
-        {
-            _logger.LogError("{Message}", message);
-        }
-
-
-        public void LogError(Exception exception, string message)
-        {
-            _logger.LogError(exception, message);
-        }
-        */
-        public void logError(Exception exception)
-        {
-            _logger.LogError("{Error}", exception);
-        }
-        public void LogInformation(string message, params object[] args)
-        {
-            _logger.LogInformation(message, args);
-        }
-
-        public void LogWarning(string message, params object[] args)
-        {
-            _logger.LogWarning(message, args);
-        }
-
-        public void LogError(string message, params object[] args)
-        {
-            _logger.LogError(message, args);
-        }
-
-        public void LogError(Exception exception, string message, params object[] args)
-        {
-            _logger.LogError(exception, message, args);
+            LoggingMessages.LogDebug(_logger, message);
         }
         public void LogInformation(string message)
         {
@@ -77,5 +38,19 @@ namespace Rhizine.Services
         {
             LoggingMessages.LogException(_logger, exception, message);
         }
+        public void LogPerformance(Action action, string actionName)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                stopwatch.Stop();
+                LoggingMessages.LogPerformance(_logger, actionName, stopwatch.ElapsedMilliseconds);
+            }
+        }
+
     }
 }
