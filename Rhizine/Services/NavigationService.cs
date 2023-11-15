@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-using System.Windows.Navigation;
-using Rhizine.Displays.Interfaces;
+﻿using Rhizine.Displays.Interfaces;
 using Rhizine.Services.Interfaces;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Rhizine.Services;
 

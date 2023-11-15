@@ -1,23 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using WPFBase.Services;
+using Rhizine.Displays.Interfaces;
 
 namespace WPFBase.Displays;
 
-public partial class ViewModelBase : ObservableRecipient
+public partial class BaseViewModel : ObservableObject, INavigationAware
 {
     // Replace these with logic
     [ObservableProperty]
     private bool _canExecute;
     [ObservableProperty]
     private bool _canExecuteAsync;
-
+    public IAsyncRelayCommand LoadCommand { get; set; }
+    public BaseViewModel()
+    {
+        LoadCommand = new AsyncRelayCommand(LoadAsync);
+    }
+    // TODO: Command execution
     [RelayCommand(CanExecute = nameof(CanExecuteCommand))]
     private void MyCommand()
     {
@@ -29,7 +28,6 @@ public partial class ViewModelBase : ObservableRecipient
         return CanExecute;
     }
 
-
     [RelayCommand(CanExecute = nameof(CanExecuteAsyncCommand))]
     private async Task MyAsyncCommandAsync()
     {
@@ -39,18 +37,17 @@ public partial class ViewModelBase : ObservableRecipient
     {
         return CanExecuteAsync;
     }
-    public IAsyncRelayCommand LoadCommand { get; set; }
-
-    public ViewModelBase()
-    {
-        LoadCommand = new AsyncRelayCommand(LoadAsync);
-    }
 
     public virtual Task LoadAsync()
     {
         // Override in derived view models to load data
         return Task.CompletedTask;
     }
-    
+    public virtual void OnNavigatedTo(object parameter)
+    {
+    }
 
+    public virtual void OnNavigatedFrom()
+    {
+    }
 }

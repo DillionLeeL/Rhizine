@@ -1,8 +1,7 @@
-﻿using System.Windows.Controls;
-
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using Rhizine.Displays.Interfaces;
 using Rhizine.Displays.Windows;
+using System.Windows.Controls;
 
 namespace Rhizine.Views;
 
@@ -14,12 +13,9 @@ public partial class ShellWindow : MetroWindow, IShellWindow
         DataContext = viewModel;
     }
 
-    public Frame GetNavigationFrame()
-        => shellFrame;
+    public Frame GetNavigationFrame() => shellFrame;
 
-    public void ShowWindow()
-        => Show();
+    public void ShowWindow() => Show();
 
-    public void CloseWindow()
-        => Close();
+    public void CloseWindow() => Close();
 }

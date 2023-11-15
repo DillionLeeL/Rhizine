@@ -1,17 +1,15 @@
-﻿using System.Windows;
-
-using ControlzEx.Theming;
-
+﻿using ControlzEx.Theming;
 using MahApps.Metro.Theming;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
+using System.Windows;
 
 namespace Rhizine.Services;
 
 public class ThemeSelectorService : IThemeSelectorService
 {
-    private const string HcDarkTheme = "pack://application:,,,/Styles/Themes/HC.Dark.Blue.xaml";
-    private const string HcLightTheme = "pack://application:,,,/Styles/Themes/HC.Light.Blue.xaml";
+    private const string HcDarkTheme = "pack://application:,,,/Styles/Themes/HC.Dark.Teal.xaml";
+    private const string HcLightTheme = "pack://application:,,,/Styles/Themes/HC.Light.Teal.xaml";
 
     public ThemeSelectorService()
     {
@@ -19,9 +17,7 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public void InitializeTheme()
     {
-        // TODO: Mahapps.Metro supports syncronization with high contrast but you have to provide custom high contrast themes
-        // We've added basic high contrast dictionaries for Dark and Light themes
-        // Please complete these themes following the docs on https://mahapps.com/docs/themes/thememanager#creating-custom-themes
+        // https://mahapps.com/docs/themes/thememanager#creating-custom-themes
         ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcDarkTheme), MahAppsLibraryThemeProvider.DefaultInstance));
         ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcLightTheme), MahAppsLibraryThemeProvider.DefaultInstance));
 
@@ -40,7 +36,7 @@ public class ThemeSelectorService : IThemeSelectorService
         {
             ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
             ThemeManager.Current.SyncTheme();
-            ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Blue", SystemParameters.HighContrast);
+            ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Teal", SystemParameters.HighContrast);
         }
 
         App.Current.Properties["Theme"] = theme.ToString();

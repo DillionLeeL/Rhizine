@@ -6,25 +6,42 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:properties="clr-namespace:Rhizine.Properties"
-    mc:Ignorable="d"
+      xmlns:window="clr-namespace:Rhizine.Displays.Windows"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
             Text="{x:Static properties:Resources.LandingPageTitle}" />
+        <Button
+                Grid.Row="1"
+                Width="110"
+                Height="50"
+                Content="settingsflyout"
+                HorizontalAlignment="left"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding FlyoutService.OpenFlyoutCommand}"
+                CommandParameter="SettingsFlyout" />
+        <Button 
+                Grid.Row="1"
+                Width="110"
+                Height="50"
+                Content="frane flyout"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding FlyoutService.OpenFlyoutCommand}"
+                CommandParameter="WebFrameFlyout" />
         <Grid
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="{StaticResource MediumLeftRightMargin}"
             Background="{DynamicResource MahApps.Brushes.Gray10}">
-            <!--
-            The Mahapps Gray10 color represents where you should place your content.
-            Place your content here.
-            -->
+            
         </Grid>
     </Grid>
 </Page>

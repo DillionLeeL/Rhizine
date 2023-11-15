@@ -1,22 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rhizine.Displays.Popups;
 
-public abstract partial class PopupViewModelBase : ObservableObject
+public abstract partial class PopupBaseViewModel : ObservableRecipient
 {
     // Event to signal when the popup is closing.
     public event EventHandler Closing;
 
     // Command to close the popup.
     [RelayCommand]
-    public void CloseCommand()
+    public void Close()
     {
         OnClosing();
         ClosePopup();
@@ -35,9 +30,11 @@ public abstract partial class PopupViewModelBase : ObservableObject
     }
 
     // Method to show the popup. Must be implemented by derived classes.
+    [RelayCommand]
     public abstract void Show();
 
     // Method to hide the popup. Can be overridden in derived classes.
+    [RelayCommand]
     public virtual void Hide()
     {
 
@@ -46,9 +43,9 @@ public abstract partial class PopupViewModelBase : ObservableObject
 // Message class used to signal that a popup should close.
 public class ClosePopupMessage
 {
-    public PopupViewModelBase Popup { get; }
+    public PopupBaseViewModel Popup { get; }
 
-    public ClosePopupMessage(PopupViewModelBase popup)
+    public ClosePopupMessage(PopupBaseViewModel popup)
     {
         Popup = popup;
     }

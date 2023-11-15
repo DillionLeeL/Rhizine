@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
-using System.Windows;
-using WPFBase.Displays.Popups;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Rhizine.Displays.Popups;
+using System.Windows;
+using System.Windows.Media.Animation;
+using WPFBase.Displays.Popups;
 
 namespace WPFBase.Services;
 
 public class PopupService
 {
-    // Dictionary to keep track of open popups and their associated ViewModels.
-    private readonly Dictionary<PopupViewModelBase, Window> _openPopups = new();
+    // Dictionary to keep track of open popups and their associated ViewModels
+    private readonly Dictionary<PopupBaseViewModel, Window> _openPopups = new();
     private WaitPopup _popup;
     private readonly object _lock = new();
     public bool DialogResult { get; private set; }
@@ -46,7 +38,7 @@ public class PopupService
             }
         });
     }
-    public void ShowPopup(PopupViewModelBase viewModel, Window popupView)
+    public void ShowPopup(PopupBaseViewModel viewModel, Window popupView)
     {
         // Associate the ViewModel with its View.
         _openPopups[viewModel] = popupView;
@@ -64,7 +56,7 @@ public class PopupService
             }
         });
     }
-    private void ClosePopup(PopupViewModelBase viewModel)
+    private void ClosePopup(PopupBaseViewModel viewModel)
     {
         // Check if the ViewModel has an associated View.
         if (_openPopups.TryGetValue(viewModel, out var popupView))
