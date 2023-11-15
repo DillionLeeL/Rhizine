@@ -21,8 +21,5 @@
         <TextBox mah:TextBoxHelper.Watermark="{Binding SettingsText, Mode=TwoWay}" />
         <TextBlock Text="{Binding SettingsText}" />
         <TextBlock Text="{Binding SettingsText}" />
-
     </StackPanel>
-
 </UserControl>
-

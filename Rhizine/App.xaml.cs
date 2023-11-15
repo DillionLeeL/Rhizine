@@ -18,7 +18,9 @@ namespace Rhizine;
 public partial class App : Application
 {
     private IHost _host;
-    public App() { }
+
+    public App()
+    { }
 
     public T GetService<T>() where T : class => _host.Services.GetService(typeof(T)) as T;
 

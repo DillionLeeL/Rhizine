@@ -11,11 +11,11 @@ namespace Rhizine.Displays.Flyouts
         {
             InitializeComponent();
         }
+
         public SettingsFlyout(SettingsFlyoutViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
-
     }
 }

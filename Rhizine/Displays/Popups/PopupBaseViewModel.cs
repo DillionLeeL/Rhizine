@@ -37,9 +37,9 @@ public abstract partial class PopupBaseViewModel : ObservableRecipient
     [RelayCommand]
     public virtual void Hide()
     {
-
     }
 }
+
 // Message class used to signal that a popup should close.
 public class ClosePopupMessage
 {
@@ -50,4 +50,3 @@ public class ClosePopupMessage
         Popup = popup;
     }
 }
-

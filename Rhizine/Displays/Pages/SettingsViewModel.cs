@@ -15,14 +15,19 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
     private readonly ILoggingService _loggingService;
+
     [ObservableProperty]
     private AppTheme _theme;
+
     [ObservableProperty]
     private string _versionDescription;
+
     [ObservableProperty]
     private FlyoutsControl _flyoutsControl;
+
     [ObservableProperty]
     public Flyout testFlyout;
+
     public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService,
                              IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
@@ -42,12 +47,14 @@ public partial class SettingsViewModel : BaseViewModel
     public override void OnNavigatedFrom()
     {
     }
+
     [RelayCommand]
     private void SetTheme(string themeName)
     {
         var theme = (AppTheme)Enum.Parse(typeof(AppTheme), themeName);
         _themeSelectorService.SetTheme(theme);
     }
+
     [RelayCommand]
     private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
 }

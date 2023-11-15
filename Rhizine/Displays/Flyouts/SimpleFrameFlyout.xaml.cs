@@ -3,7 +3,7 @@
 namespace Rhizine.Displays.Flyouts
 {
     /// <summary>
-    /// TODO: 
+    /// TODO:
     /// </summary>
     public partial class SimpleFrameFlyout : UserControl
     {

@@ -19,6 +19,7 @@ namespace Rhizine.Services
         {
             LoggingMessages.LogDebug(_logger, message);
         }
+
         public void LogInformation(string message)
         {
             LoggingMessages.LogInformation(_logger, message);
@@ -38,6 +39,7 @@ namespace Rhizine.Services
         {
             LoggingMessages.LogException(_logger, exception, message);
         }
+
         public void LogPerformance(Action action, string actionName)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -51,6 +53,5 @@ namespace Rhizine.Services
                 LoggingMessages.LogPerformance(_logger, actionName, stopwatch.ElapsedMilliseconds);
             }
         }
-
     }
 }

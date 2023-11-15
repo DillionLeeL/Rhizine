@@ -14,7 +14,6 @@ namespace Rhizine.Services
         private readonly Dictionary<string, Lazy<FlyoutBaseViewModel>> _flyouts = new();
         public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; }
 
-
         public FlyoutService(ILoggingService loggingService)
         {
             _loggingService = loggingService;
@@ -22,6 +21,7 @@ namespace Rhizine.Services
         }
 
         public event Action<string> OnFlyoutOpened;
+
         public event Action<string> OnFlyoutClosed;
 
         public void Initialize()
@@ -43,15 +43,18 @@ namespace Rhizine.Services
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(() => new T());
         }
+
         public void RegisterFlyout<T>(string flyoutName, T viewModel) where T : FlyoutBaseViewModel
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(viewModel);
         }
+
         public void RegisterFlyout<T>(string flyoutName, params object[] paramArray) where T : FlyoutBaseViewModel, new()
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
                     () => (T)Activator.CreateInstance(typeof(T), args: paramArray));
         }
+
         [RelayCommand]
         public void OpenFlyout(string flyoutName)
         {
@@ -70,6 +73,7 @@ namespace Rhizine.Services
                 }
             }
         }
+
         [RelayCommand]
         public void CloseFlyout(string flyoutName)
         {

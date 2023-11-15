@@ -9,13 +9,17 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
     // Replace these with logic
     [ObservableProperty]
     private bool _canExecute;
+
     [ObservableProperty]
     private bool _canExecuteAsync;
+
     public IAsyncRelayCommand LoadCommand { get; set; }
+
     public BaseViewModel()
     {
         LoadCommand = new AsyncRelayCommand(LoadAsync);
     }
+
     // TODO: Command execution
     [RelayCommand(CanExecute = nameof(CanExecuteCommand))]
     private void MyCommand()
@@ -33,6 +37,7 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
     {
         // Asynchronous command execution logic here
     }
+
     private bool CanExecuteAsyncCommand()
     {
         return CanExecuteAsync;
@@ -43,6 +48,7 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
         // Override in derived view models to load data
         return Task.CompletedTask;
     }
+
     public virtual void OnNavigatedTo(object parameter)
     {
     }

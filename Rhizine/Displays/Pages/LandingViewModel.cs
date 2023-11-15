@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MahApps.Metro.Controls;
 using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using WPFBase.Displays;
@@ -10,14 +9,15 @@ namespace Rhizine.Displays.Pages;
 public partial class LandingViewModel : BaseViewModel
 {
     private readonly ILoggingService _loggingService;
+
     [ObservableProperty]
     private IFlyoutService _flyoutService;
+
     public LandingViewModel(ILoggingService loggingService, IFlyoutService flyoutService)
     {
-
         _loggingService = loggingService;
         _flyoutService = flyoutService;
-        
+
         _flyoutService.OnFlyoutOpened += FlyoutOpened;
         _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
@@ -26,9 +26,8 @@ public partial class LandingViewModel : BaseViewModel
     private void FlyoutOpened(string flyout)
     {
         _loggingService.LogInformation(flyout);
-        _loggingService.LogWarning(flyout);
-        _loggingService.LogError(flyout);
     }
+
     [RelayCommand]
     private void FlyoutClosed(string flyout)
     {

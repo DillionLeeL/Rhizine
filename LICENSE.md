@@ -1,7 +1,23 @@
-MIT License
+﻿Copyright (c) Dillion Lowry
+All rights reserved.
 
-Copyright (c) [year] [fullname]
+This software is licensed under one or more agreements.
+It is licensed to you under the MIT license.
 
+# Windows Community Toolkit - MIT License (MIT)
+Copyright (c) .NET Foundation and Contributors
+All rights reserved. 
+
+# Template Studio - MIT License (MIT)
+Copyright (c) .NET Foundation and Contributors.
+All rights reserved.
+
+# MahApps.Metro - MIT License (MIT)
+Copyright © .NET Foundation, Jan Karger, 
+Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
+
+
+## MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights

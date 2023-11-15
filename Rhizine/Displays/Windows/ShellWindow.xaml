@@ -80,7 +80,7 @@
                 </DataTemplate>
             </templateSelectors:MenuItemTemplateSelector.ImageDataTemplate>
         </templateSelectors:MenuItemTemplateSelector>
-        
+
         <templateSelectors:FlyoutTemplateSelector x:Key="FlyoutTemplateSelector">
             <templateSelectors:FlyoutTemplateSelector.SettingsFlyoutTemplate>
                 <DataTemplate DataType="{x:Type flyouts:SettingsFlyoutViewModel}">
@@ -93,12 +93,10 @@
                 </DataTemplate>
             </templateSelectors:FlyoutTemplateSelector.SimpleFrameFlyoutTemplate>
         </templateSelectors:FlyoutTemplateSelector>
-
-
     </controls:MetroWindow.Resources>
 
     <mah:MetroWindow.Flyouts>
-        
+
         <mah:FlyoutsControl ItemsSource="{Binding FlyoutService.ActiveFlyouts}"
                             ItemContainerStyle="{StaticResource CustomFlyoutStyle}"
                             ItemTemplateSelector="{StaticResource FlyoutTemplateSelector}">

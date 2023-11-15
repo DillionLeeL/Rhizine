@@ -95,8 +95,8 @@
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
-                    <Hyperlink >
-                              
+                    <Hyperlink>
+
                         <!-- CommandParameter="{x:Reference SettingsPage}" -->
                         <TextBlock
                             x:Name="settingsPrivacyStatement"
@@ -105,7 +105,6 @@
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
-
         </Grid>
     </ScrollViewer>
 </Page>

@@ -8,6 +8,7 @@ namespace Rhizine.Displays.Pages;
 public partial class ContentGridDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
+
     [ObservableProperty]
     private SampleOrder _item;
 

@@ -18,6 +18,7 @@ public partial class WaitPopup : Window
         // Register to receive the ClosePopupMessage
         WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) => Close());
     }
+
     protected override void OnClosed(EventArgs e)
     {
         // Unregister the message when the window is closed to prevent memory leaks

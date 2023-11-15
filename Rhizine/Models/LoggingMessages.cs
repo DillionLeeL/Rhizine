@@ -21,7 +21,5 @@ namespace Rhizine.Models
 
         [LoggerMessage(EventId = 10, Level = LogLevel.Debug, Message = "Action {ActionName} completed in {ElapsedMilliseconds} ms")]
         public static partial void LogPerformance(ILogger logger, string actionName, long elapsedMilliseconds);
-
-
     }
 }
