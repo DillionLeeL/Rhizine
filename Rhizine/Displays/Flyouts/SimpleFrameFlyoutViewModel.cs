@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Rhizine.Displays.Pages;
+using Rhizine.Models;
+using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,29 +9,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using Rhizine.Displays.Pages;
+using Rhizine.Services.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Rhizine.Displays.Flyouts
 {
     public partial class SimpleFrameFlyoutViewModel : FlyoutBaseViewModel
     {
-        private readonly INavigationService _navigationService;
+        // private readonly INavigationService _navigationService;
+        private readonly ILoggingService _loggingService;
         public SimpleFrameFlyoutViewModel() { }
-        public SimpleFrameFlyoutViewModel(INavigationService navigationService) 
-        { 
-            _navigationService = navigationService;
-            _navigationService.Initialize(FlyoutFrame);
-        }
-        public SimpleFrameFlyoutViewModel(object content)
+        public SimpleFrameFlyoutViewModel(Uri source)
         {
-            FlyoutFrame = new Frame();
-            FlyoutFrame.Navigate(content);
+            CurrentUri = source;
+            this.Header = "frame";
+            this.Position = Position.Left;
         }
-        public SimpleFrameFlyoutViewModel(Uri source, INavigationService navigationService)
+        public SimpleFrameFlyoutViewModel(Uri source, ILoggingService loggingService) 
         {
-            FlyoutFrame = new Frame();
-            FlyoutFrame.Navigate(source, UriKind.RelativeOrAbsolute);
+            CurrentUri = source;
+            this.Header = "frame";
+            this.Position = Position.Left;
+            _loggingService = loggingService;
+            _loggingService.LogInformation("SimpleFrameFlyoutViewModel constructor with {0}", source);
+        }
+        public SimpleFrameFlyoutViewModel(Page page, ILoggingService loggingService)
+        {
+            CurrentPage = page;
+            this.Header = "frame";
+            this.Position = Position.Left;
+            _loggingService = loggingService;
+            _loggingService.LogInformation("SimpleFrameFlyoutViewModel constructor with {0}", page);
+
         }
         [ObservableProperty]
-        private Frame _flyoutFrame;
+        private Page _currentPage;
+        [ObservableProperty]
+        private Uri _currentUri;
+        //[ObservableProperty]
+        //private Frame _flyoutFrame;
     }
 }

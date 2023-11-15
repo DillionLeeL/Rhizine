@@ -98,6 +98,7 @@
     </controls:MetroWindow.Resources>
 
     <mah:MetroWindow.Flyouts>
+        
         <mah:FlyoutsControl ItemsSource="{Binding FlyoutService.ActiveFlyouts}"
                             ItemContainerStyle="{StaticResource CustomFlyoutStyle}"
                             ItemTemplateSelector="{StaticResource FlyoutTemplateSelector}">

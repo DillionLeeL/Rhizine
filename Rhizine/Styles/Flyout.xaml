@@ -16,5 +16,9 @@
                 Value="{Binding Theme}" />
         <Setter Property="IsModal"
                 Value="{Binding IsModal}" />
+        <Setter Property="Width"
+                Value="200" />
+        <Setter Property="Margin"
+                Value="0 0 0 0"/>
     </Style>
 </ResourceDictionary>

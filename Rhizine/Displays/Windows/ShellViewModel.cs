@@ -48,7 +48,6 @@ public partial class ShellViewModel : BaseViewModel
 
         FlyoutService = flyoutService;
         _loggingService = loggingService;
-        _loggingService.LogInformation("shell constructed");
         _flyoutService.OnFlyoutOpened += FlyoutOpened;
         _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
