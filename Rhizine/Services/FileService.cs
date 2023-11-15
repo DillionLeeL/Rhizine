@@ -38,11 +38,11 @@ public class FileService : IFileService
             File.Delete(Path.Combine(folderPath, fileName));
         }
     }
+
     public async Task<Stream> OpenForReadAsync(string path)
     {
         return await GetEmbeddedFileStreamAsync(GetType(), path);
     }
-
 
     private static async Task<Stream> GetEmbeddedFileStreamAsync(Type assemblyType, string fileName)
     {

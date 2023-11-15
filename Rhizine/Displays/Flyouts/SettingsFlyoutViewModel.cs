@@ -7,11 +7,13 @@ namespace Rhizine.Displays.Flyouts
     public partial class SettingsFlyoutViewModel : FlyoutBaseViewModel
     {
         private readonly ILoggingService _loggingService;
+
         public SettingsFlyoutViewModel()
         {
             this.Header = "settings";
             this.Position = Position.Left;
         }
+
         public SettingsFlyoutViewModel(ILoggingService loggingService)
         {
             _loggingService = loggingService;
@@ -19,6 +21,7 @@ namespace Rhizine.Displays.Flyouts
             this.Position = Position.Left;
             SettingsText = "test";
         }
+
         [ObservableProperty]
         private string _settingsText;
     }

@@ -14,10 +14,13 @@ public partial class ShellViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly ILoggingService _loggingService;
+
     [ObservableProperty]
     private IFlyoutService _flyoutService;
+
     [ObservableProperty]
     private HamburgerMenuItem _selectedMenuItem;
+
     [ObservableProperty]
     private HamburgerMenuItem _selectedOptionsMenuItem;
 
@@ -45,6 +48,7 @@ public partial class ShellViewModel : BaseViewModel
         _flyoutService.OnFlyoutOpened += FlyoutOpened;
         _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
+
     private bool CanGoBack() => _navigationService.CanGoBack;
 
     [RelayCommand]
@@ -52,11 +56,13 @@ public partial class ShellViewModel : BaseViewModel
     {
         _navigationService.Navigated += OnNavigated;
     }
+
     [RelayCommand]
     private void OnUnloaded()
     {
         _navigationService.Navigated -= OnNavigated;
     }
+
     [RelayCommand(CanExecute = nameof(CanGoBack))]
     private void GoBack() => _navigationService.GoBack();
 
@@ -98,6 +104,7 @@ public partial class ShellViewModel : BaseViewModel
     {
         _loggingService.LogInformation("FlyoutOpened");
     }
+
     [RelayCommand]
     private void FlyoutClosed(string flyout)
     {

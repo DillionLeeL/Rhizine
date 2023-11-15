@@ -11,7 +11,7 @@
         <ItemsControl ItemsSource="{Binding WaitingStates}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" HorizontalAlignment="Center" Margin="0,2"/>
+                    <TextBlock Text="{Binding}" HorizontalAlignment="Center" Margin="0,2" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

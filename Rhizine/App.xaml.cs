@@ -18,7 +18,9 @@ namespace Rhizine;
 public partial class App : Application
 {
     private IHost _host;
-    public App() { }
+
+    public App()
+    { }
 
     public T GetService<T>() where T : class => _host.Services.GetService(typeof(T)) as T;
 
@@ -46,7 +48,7 @@ public partial class App : Application
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-        services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
+        //services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
 
         // Services
         services.AddSingleton<IFileService, FileService>();

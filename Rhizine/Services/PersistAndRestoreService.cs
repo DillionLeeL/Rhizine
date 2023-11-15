@@ -13,9 +13,12 @@ public class PersistAndRestoreService : IPersistAndRestoreService
     private readonly string _localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private bool _singleFilePublish = true;
     protected readonly string _defaultAppPropertiesFileName = "AppProperties.json";
+
     protected string FolderPath => _singleFilePublish ? Directory.GetCurrentDirectory()
                                                         : Path.Combine(_localAppData, _appConfig.ConfigurationsFolder);
+
     protected string FileName => _appConfig?.AppPropertiesFileName ?? _defaultAppPropertiesFileName;
+
     public PersistAndRestoreService(IFileService fileService, IOptions<AppConfig> appConfig)
     {
         _fileService = fileService;

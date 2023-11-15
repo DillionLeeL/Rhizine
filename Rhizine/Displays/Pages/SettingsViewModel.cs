@@ -15,14 +15,19 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
     private readonly ILoggingService _loggingService;
+
     [ObservableProperty]
     private AppTheme _theme;
+
     [ObservableProperty]
     private string _versionDescription;
+
     [ObservableProperty]
     private FlyoutsControl _flyoutsControl;
+
     [ObservableProperty]
     public Flyout testFlyout;
+
     public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService,
                              IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
@@ -42,40 +47,14 @@ public partial class SettingsViewModel : BaseViewModel
     public override void OnNavigatedFrom()
     {
     }
+
     [RelayCommand]
     private void SetTheme(string themeName)
     {
         var theme = (AppTheme)Enum.Parse(typeof(AppTheme), themeName);
         _themeSelectorService.SetTheme(theme);
     }
+
     [RelayCommand]
     private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
-
-
-
-    /*
-    public ICommand OpenFlyoutCommand { get; }
-
-    public ICommand CloseFlyoutCommand { get; }
-    private void ShowDynamicFlyout(object sender, RoutedEventArgs e)
-    {
-        var flyout = new DynamicFlyout
-        {
-            Header = "Dynamic flyout"
-        };
-
-        // when the flyout is closed, remove it from the hosting FlyoutsControl
-        void ClosingFinishedHandler(object o, RoutedEventArgs args)
-        {
-            flyout.ClosingFinished -= ClosingFinishedHandler;
-            this.flyoutsControl.Items.Remove(flyout);
-        }
-
-        flyout.ClosingFinished += ClosingFinishedHandler;
-
-        this.flyoutsControl.Items.Add(flyout);
-
-        flyout.IsOpen = true;
-    }
-    */
 }

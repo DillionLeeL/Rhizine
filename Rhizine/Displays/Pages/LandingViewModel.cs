@@ -9,13 +9,15 @@ namespace Rhizine.Displays.Pages;
 public partial class LandingViewModel : BaseViewModel
 {
     private readonly ILoggingService _loggingService;
+
     [ObservableProperty]
     private IFlyoutService _flyoutService;
+
     public LandingViewModel(ILoggingService loggingService, IFlyoutService flyoutService)
     {
-
         _loggingService = loggingService;
         _flyoutService = flyoutService;
+
         _flyoutService.OnFlyoutOpened += FlyoutOpened;
         _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
@@ -25,6 +27,7 @@ public partial class LandingViewModel : BaseViewModel
     {
         _loggingService.LogInformation(flyout);
     }
+
     [RelayCommand]
     private void FlyoutClosed(string flyout)
     {

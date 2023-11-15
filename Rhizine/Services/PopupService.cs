@@ -10,6 +10,7 @@ public class PopupService
 {
     // Dictionary to keep track of open popups and their associated ViewModels
     private readonly Dictionary<PopupBaseViewModel, Window> _openPopups = new();
+
     private WaitPopup _popup;
     private readonly object _lock = new();
     public bool DialogResult { get; private set; }
@@ -19,10 +20,12 @@ public class PopupService
         // Register to receive the ClosePopupMessage
         WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) => ClosePopup(m.Popup));
     }
+
     ~PopupService()
     {
         UnregisterMessages();
     }
+
     public void ShowPopup()
     {
         Application.Current.Dispatcher.Invoke(() =>
@@ -38,6 +41,7 @@ public class PopupService
             }
         });
     }
+
     public void ShowPopup(PopupBaseViewModel viewModel, Window popupView)
     {
         // Associate the ViewModel with its View.
@@ -46,6 +50,7 @@ public class PopupService
         // Show the popup.
         popupView.Show();
     }
+
     public void AddWaitingState(string state)
     {
         Application.Current.Dispatcher.Invoke(() =>
@@ -56,6 +61,7 @@ public class PopupService
             }
         });
     }
+
     private void ClosePopup(PopupBaseViewModel viewModel)
     {
         // Check if the ViewModel has an associated View.
@@ -71,6 +77,7 @@ public class PopupService
             _openPopups.Remove(viewModel);
         }
     }
+
     public void ClosePopup()
     {
         Application.Current.Dispatcher.Invoke(() =>
@@ -78,6 +85,7 @@ public class PopupService
             _popup?.Close();
         });
     }
+
     private void ApplyAnimation(Window window, bool opening)
     {
         var duration = new Duration(TimeSpan.FromMilliseconds(200));
@@ -94,10 +102,10 @@ public class PopupService
         };
         window.BeginAnimation(UIElement.OpacityProperty, anim);
     }
+
     // Call this method to clean up when the application is closing or the service is no longer needed.
     public void UnregisterMessages()
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
     }
 }
-

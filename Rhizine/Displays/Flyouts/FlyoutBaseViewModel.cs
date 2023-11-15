@@ -9,22 +9,26 @@ namespace Rhizine.Displays.Flyouts
     {
         [ObservableProperty]
         private string _header;
+
         [ObservableProperty]
         private bool _isOpen;
+
         [ObservableProperty]
         private Position _position;
+
         [ObservableProperty]
         private FlyoutTheme _theme = FlyoutTheme.Dark;
+
         [ObservableProperty]
         private bool _isModal;
 
-        public FlyoutBaseViewModel() { }
+        public FlyoutBaseViewModel()
+        { }
 
         [RelayCommand]
         private void Close()
         {
             IsOpen = false;
         }
-
     }
 }
