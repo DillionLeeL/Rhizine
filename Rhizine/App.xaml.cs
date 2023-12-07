@@ -27,7 +27,7 @@ public partial class App : Application
     private async void OnStartup(object sender, StartupEventArgs e)
     {
         // NOTE: Entry Assembly logic removed from app configure when building as single exe
-        // TODO: make this optional
+        // TODO: make single exe .ConfigureAppConfiguration optional
         var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         _host = Host.CreateDefaultBuilder(e.Args)
@@ -48,7 +48,7 @@ public partial class App : Application
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-        //services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
+        services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
 
         // Services
         services.AddSingleton<IFileService, FileService>();
@@ -100,7 +100,8 @@ public partial class App : Application
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        // TODO: Please log and handle the exception as appropriate to your scenario
-        // For more info see https://docs.microsoft.com/dotnet/api/system.windows.application.dispatcherunhandledexception?view=netcore-3.0
+        // TODO: Update OnDispatcherUnhandledException
+        MessageBox.Show(e.Exception.Message);
+        e.Handled = true;
     }
 }

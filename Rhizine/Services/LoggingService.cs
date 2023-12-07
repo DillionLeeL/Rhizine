@@ -3,7 +3,6 @@ using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Diagnostics;
 
-// TODO: Structured logging
 namespace Rhizine.Services
 {
     public class LoggingService : ILoggingService
@@ -39,7 +38,10 @@ namespace Rhizine.Services
         {
             LoggingMessages.LogException(_logger, exception, message);
         }
-
+        public void LogError(Exception exception)
+        {
+            LoggingMessages.LogException(_logger, exception);
+        }
         public void LogPerformance(Action action, string actionName)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -53,5 +55,6 @@ namespace Rhizine.Services
                 LoggingMessages.LogPerformance(_logger, actionName, stopwatch.ElapsedMilliseconds);
             }
         }
+
     }
 }

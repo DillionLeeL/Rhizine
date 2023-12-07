@@ -16,10 +16,14 @@ namespace Rhizine.Models
         [LoggerMessage(EventId = 4, Level = LogLevel.Error, Message = "{Message}")]
         public static partial void LogError(ILogger logger, string message);
 
-        [LoggerMessage(EventId = 5, Level = LogLevel.Error, Message = "{Message}", SkipEnabledCheck = true)]
+        [LoggerMessage(EventId = 5, Level = LogLevel.Error, SkipEnabledCheck = true)]
+        public static partial void LogException(ILogger logger, Exception exception);
+
+        [LoggerMessage(EventId = 6, Level = LogLevel.Error, Message = "{Message}", SkipEnabledCheck = true)]
         public static partial void LogException(ILogger logger, Exception exception, string message);
 
         [LoggerMessage(EventId = 10, Level = LogLevel.Debug, Message = "Action {ActionName} completed in {ElapsedMilliseconds} ms")]
         public static partial void LogPerformance(ILogger logger, string actionName, long elapsedMilliseconds);
+        
     }
 }
