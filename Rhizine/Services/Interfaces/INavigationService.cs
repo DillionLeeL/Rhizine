@@ -1,11 +1,12 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Rhizine.Services.Interfaces;
 
 // TODO: Navigation Relay commands
 public interface INavigationService
 {
-    event EventHandler<string> Navigated;
+    event EventHandler<NavigationEventArgs> Navigated;
 
     bool CanGoBack { get; }
 
@@ -17,5 +18,4 @@ public interface INavigationService
 
     void UnsubscribeNavigation();
 
-    void CleanNavigation();
 }
