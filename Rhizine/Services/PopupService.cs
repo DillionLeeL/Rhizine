@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.VisualStudio.Shell;
 using Rhizine.Displays.Popups;
+using Rhizine.Messages;
+using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Media.Animation;
 using WPFBase.Displays.Popups;
@@ -8,85 +12,106 @@ namespace WPFBase.Services;
 
 public class PopupService
 {
-    // Dictionary to keep track of open popups and their associated ViewModels
-    private readonly Dictionary<PopupBaseViewModel, Window> _openPopups = new();
+    private readonly ConcurrentDictionary<PopupBaseViewModel, Window> _openPopups = new();
 
-    private WaitPopup _popup;
-    private readonly object _lock = new();
-    public bool DialogResult { get; private set; }
+    public bool DialogResult { get; }
 
     public PopupService()
     {
-        // Register to receive the ClosePopupMessage
-        WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) => ClosePopup(m.Popup));
+        WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) => ClosePopupAsync(m.ViewModel).ConfigureAwait(false));
+        WeakReferenceMessenger.Default.Register<PopupClosingMessage>(this, (recipient, message) =>
+        {
+            if (_openPopups.TryRemove(message.Value, out Window window))
+            {
+                window.Close();
+            }
+        });
     }
 
     ~PopupService()
     {
         UnregisterMessages();
     }
-
-    public void ShowPopup()
+    private Window CreatePopupView<TViewModel>(TViewModel viewModel) where TViewModel : PopupBaseViewModel
     {
-        Application.Current.Dispatcher.Invoke(() =>
+        var popupView = new Window
         {
-            lock (_lock)
-            {
-                if (_popup != null) return; // Popup is already shown
-
-                _popup = new WaitPopup();
-                _popup.Closed += (s, e) => _popup = null;
-                ApplyAnimation(_popup, true);
-                _popup.Show();
-            }
-        });
+            DataContext = viewModel,
+            // Other initialization logic...
+        };
+        return popupView;
     }
-
-    public void ShowPopup(PopupBaseViewModel viewModel, Window popupView)
+    public async Task ShowPopupAsync(PopupBaseViewModel viewModel, Window popupView)
     {
-        // Associate the ViewModel with its View.
-        _openPopups[viewModel] = popupView;
+        if (popupView == null || viewModel == null)
+            throw new ArgumentNullException();
 
-        // Show the popup.
+        if (!_openPopups.TryAdd(viewModel, popupView))
+            throw new InvalidOperationException("Popup already shown for this ViewModel.");
+
+        popupView.Closed += (s, e) => _openPopups.TryRemove(viewModel, out _);
+
+        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
         popupView.Show();
     }
 
-    public void AddWaitingState(string state)
+    public async Task ShowPopupAsync<TViewModel>(TViewModel viewModel) where TViewModel : PopupBaseViewModel
     {
-        Application.Current.Dispatcher.Invoke(() =>
+        ArgumentNullException.ThrowIfNull(viewModel);
+
+        var popupView = CreatePopupView(viewModel);
+        if (!_openPopups.TryAdd(viewModel, popupView))
+            throw new InvalidOperationException("Popup already shown for this ViewModel.");
+
+        popupView.Closed += (s, e) => _openPopups.TryRemove(viewModel, out _);
+
+        await Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            if (_popup?.DataContext is WaitPopupViewModel viewModel)
-            {
-                viewModel.WaitingStates.Add(state);
-            }
+            ApplyAnimation(popupView, true);
+            popupView.Show();
         });
     }
-
-    private void ClosePopup(PopupBaseViewModel viewModel)
+    public async Task<TResult> ShowPopupAsync<TViewModel, TResult>(TViewModel viewModel) where TViewModel : PopupBaseViewModel, IResultProvider<TResult>
     {
-        // Check if the ViewModel has an associated View.
-        if (_openPopups.TryGetValue(viewModel, out var popupView))
-        {
-            // Close the popup on the UI thread.
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                popupView.Close();
-            });
+        ArgumentNullException.ThrowIfNull(viewModel);
 
-            // Remove the ViewModel from the dictionary.
-            _openPopups.Remove(viewModel);
+        var popupView = CreatePopupView(viewModel);
+        if (!_openPopups.TryAdd(viewModel, popupView))
+            throw new InvalidOperationException("Popup already shown for this ViewModel.");
+
+        TaskCompletionSource<TResult> tcs = new TaskCompletionSource<TResult>();
+
+        EventHandler handler = null;
+        handler = (sender, args) =>
+        {
+            _openPopups.TryRemove(viewModel, out _);
+            tcs.TrySetResult(viewModel.Result);
+            viewModel.Closing -= handler;
+        };
+
+        viewModel.Closing += handler;
+        popupView.Closed += (s, e) => viewModel.Close();
+
+        await Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            ApplyAnimation(popupView, true);
+            popupView.Show();
+        });
+
+        return await tcs.Task;
+    }
+
+    private async Task ClosePopupAsync(PopupBaseViewModel viewModel)
+    {
+        if (_openPopups.TryRemove(viewModel, out var popupView))
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            WeakReferenceMessenger.Default.Send(new ClosePopupMessage(viewModel));
+            popupView.Close();
         }
     }
 
-    public void ClosePopup()
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            _popup?.Close();
-        });
-    }
-
-    private void ApplyAnimation(Window window, bool opening)
+    private static void ApplyAnimation(Window window, bool opening)
     {
         var duration = new Duration(TimeSpan.FromMilliseconds(200));
         var anim = new DoubleAnimation(opening ? 0 : 1, opening ? 1 : 0, duration)
@@ -97,15 +122,19 @@ public class PopupService
         {
             if (!opening)
             {
-                window.Opacity = 1; // Reset opacity after closing animation
+                window.SetCurrentValue(UIElement.OpacityProperty, 1.0); // Reset opacity after closing animation
             }
         };
         window.BeginAnimation(UIElement.OpacityProperty, anim);
     }
 
-    // Call this method to clean up when the application is closing or the service is no longer needed.
     public void UnregisterMessages()
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
     }
+}
+
+public interface IResultProvider<TResult>
+{
+    TResult Result { get; }
 }
