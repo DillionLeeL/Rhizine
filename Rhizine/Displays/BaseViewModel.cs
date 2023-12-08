@@ -49,11 +49,11 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
         return Task.CompletedTask;
     }
 
-    public virtual void OnNavigatedTo(object parameter)
+    public virtual async Task OnNavigatedTo(object parameter)
     {
     }
 
-    public virtual void OnNavigatedFrom()
+    public virtual async Task OnNavigatedFrom()
     {
     }
 }

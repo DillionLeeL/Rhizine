@@ -6,6 +6,7 @@ using Rhizine.Properties;
 using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
+using System.Windows.Navigation;
 using WPFBase.Displays;
 
 namespace Rhizine.Displays.Windows;
@@ -24,7 +25,7 @@ public partial class ShellViewModel : BaseViewModel
     [ObservableProperty]
     private HamburgerMenuItem _selectedOptionsMenuItem;
 
-    // TODO: Change the icons and titles for all HamburgerMenuItems here.
+    // TODO: Change the icons and titles for all HamburgerMenuItems here
     public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
     {
         new HamburgerMenuGlyphItem() { Label = Resources.ShellLandingPage, Glyph = "\uE8A5", TargetPageType = typeof(LandingViewModel) },
@@ -80,25 +81,28 @@ public partial class ShellViewModel : BaseViewModel
         }
     }
 
-    private void OnNavigated(object sender, string viewModelName)
+    private void OnNavigated(object sender, NavigationEventArgs e)
     {
-        var item = MenuItems
-                    .OfType<HamburgerMenuItem>()
-                    .FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
-        if (item != null)
-        {
-            SelectedMenuItem = item;
-        }
-        else
-        {
-            SelectedOptionsMenuItem = OptionMenuItems
-                    .OfType<HamburgerMenuItem>()
-                    .FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
-        }
+        string viewModelName = e?.Content?.GetType()?.FullName;
 
-        GoBackCommand.NotifyCanExecuteChanged();
+        if (!string.IsNullOrEmpty(viewModelName))
+        {
+            var menuItem = FindMenuItem(MenuItems, viewModelName) ?? FindMenuItem(OptionMenuItems, viewModelName);
+
+            if (menuItem != null)
+            {
+                SelectedMenuItem = menuItem;
+                SelectedOptionsMenuItem = OptionMenuItems.Contains(menuItem) ? menuItem as HamburgerMenuItem : null;
+
+                GoBackCommand.NotifyCanExecuteChanged();
+            }
+        }
     }
 
+    private static HamburgerMenuItem FindMenuItem(IEnumerable<HamburgerMenuItem> items, string viewModelName)
+    {
+        return items?.FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
+    }
     [RelayCommand]
     private void FlyoutOpened(string flyout)
     {

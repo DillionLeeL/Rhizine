@@ -2,66 +2,66 @@
 using Rhizine.Displays.Pages;
 using Rhizine.Services.Interfaces;
 using Rhizine.Views;
+using System.Collections.Concurrent;
 using System.Windows.Controls;
 
 namespace Rhizine.Services;
 
 public class PageService : IPageService
 {
-    private readonly Dictionary<string, Type> _pages = new Dictionary<string, Type>();
+    private readonly ConcurrentDictionary<string, Lazy<Page>> _pagesCache = new ConcurrentDictionary<string, Lazy<Page>>();
+    private readonly ConcurrentDictionary<string, Type> _pageTypes = new ConcurrentDictionary<string, Type>();
     private readonly IServiceProvider _serviceProvider;
 
     public PageService(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        Configure<LandingViewModel, LandingPage>();
-        Configure<WebViewViewModel, WebViewPage>();
-        Configure<DataGridViewModel, DataGridPage>();
-        Configure<ContentGridViewModel, ContentGridPage>();
-        Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
-        Configure<ListDetailsViewModel, ListDetailsPage>();
-        Configure<SettingsViewModel, SettingsPage>();
+        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        Initialize();
     }
-
-    public Type GetPageType(string key)
+    private void Initialize()
     {
-        Type pageType;
-        lock (_pages)
-        {
-            if (!_pages.TryGetValue(key, out pageType))
-            {
-                throw new ArgumentException($"Page not found: {key}. Did you forget to call PageService.Configure?");
-            }
-        }
-
-        return pageType;
+        Register<LandingViewModel, LandingPage>();
+        Register<WebViewViewModel, WebViewPage>();
+        Register<DataGridViewModel, DataGridPage>();
+        Register<ContentGridViewModel, ContentGridPage>();
+        Register<ContentGridDetailViewModel, ContentGridDetailPage>();
+        Register<ListDetailsViewModel, ListDetailsPage>();
+        Register<SettingsViewModel, SettingsPage>();
     }
-
     public Page GetPage(string key)
     {
-        var pageType = GetPageType(key);
-        return _serviceProvider.GetService(pageType) as Page;
-    }
-
-    private void Configure<VM, V>()
-        where VM : ObservableObject
-        where V : Page
-    {
-        lock (_pages)
+        if (!_pagesCache.TryGetValue(key, out var lazyPage))
         {
-            var key = typeof(VM).FullName;
-            if (_pages.ContainsKey(key))
+            if (!_pageTypes.TryGetValue(key, out var pageType))
             {
-                throw new ArgumentException($"The key {key} is already configured in PageService");
+                throw new ArgumentException($"Page not found for key {key}. Ensure it is configured properly in PageService.");
             }
 
-            var type = typeof(V);
-            if (_pages.Any(p => p.Value == type))
+            lazyPage = new Lazy<Page>(() =>
             {
-                throw new ArgumentException($"This type is already configured with key {_pages.First(p => p.Value == type).Key}");
-            }
+                if (_serviceProvider.GetService(pageType) is Page page)
+                {
+                    return page;
+                }
 
-            _pages.Add(key, type);
+                throw new InvalidOperationException($"The requested service of type {pageType.FullName} could not be resolved as a Page.");
+            });
+
+            _pagesCache[key] = lazyPage;
+        }
+
+        return lazyPage.Value;
+    }
+    private void Register<VM, V>()
+            where VM : ObservableObject
+            where V : Page
+    {
+        var key = typeof(VM).FullName;
+        var type = typeof(V);
+
+        if (!_pageTypes.TryAdd(key, type))
+        {
+            throw new ArgumentException($"The key {key} is already configured in PageService.");
         }
     }
 }

@@ -26,27 +26,24 @@ public partial class SettingsViewModel : BaseViewModel
     private FlyoutsControl _flyoutsControl;
 
     [ObservableProperty]
-    public Flyout testFlyout;
+    private Flyout _testFlyout;
 
     public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService,
                              IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
-        _appConfig = appConfig.Value;
+        _appConfig = appConfig?.Value ?? new AppConfig();
         _themeSelectorService = themeSelectorService;
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
         _loggingService = loggingService;
     }
 
-    public override void OnNavigatedTo(object parameter)
+    public override async Task OnNavigatedTo(object parameter)
     {
         VersionDescription = $"{Properties.Resources.AppDisplayName} - {_applicationInfoService.GetVersion()}";
         Theme = _themeSelectorService.GetCurrentTheme();
     }
 
-    public override void OnNavigatedFrom()
-    {
-    }
 
     [RelayCommand]
     private void SetTheme(string themeName)
@@ -55,6 +52,6 @@ public partial class SettingsViewModel : BaseViewModel
         _themeSelectorService.SetTheme(theme);
     }
 
-    [RelayCommand]
-    private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
+    //[RelayCommand]
+    //private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
 }

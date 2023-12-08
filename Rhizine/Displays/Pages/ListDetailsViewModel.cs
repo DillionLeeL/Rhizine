@@ -1,14 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Rhizine.Displays.Interfaces;
-using Rhizine.Models;
+﻿using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
+using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
-public class ListDetailsViewModel : ObservableObject, INavigationAware
+public class ListDetailsViewModel : BaseViewModel
 {
     private readonly ISampleDataService _sampleDataService;
+    private readonly ILoggingService _loggingService;
     private SampleOrder _selected;
 
     public SampleOrder Selected
@@ -17,15 +17,17 @@ public class ListDetailsViewModel : ObservableObject, INavigationAware
         set { SetProperty(ref _selected, value); }
     }
 
-    public ObservableCollection<SampleOrder> SampleItems { get; private set; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> SampleItems { get; } = new ObservableCollection<SampleOrder>();
 
-    public ListDetailsViewModel(ISampleDataService sampleDataService)
+    public ListDetailsViewModel(ISampleDataService sampleDataService, ILoggingService loggingService)
     {
         _sampleDataService = sampleDataService;
+        _loggingService = loggingService;
     }
 
-    public async void OnNavigatedTo(object parameter)
+    public override async Task OnNavigatedTo(object parameter)
     {
+        _loggingService.LogInformation("Navigated to List Details");
         SampleItems.Clear();
 
         var data = await _sampleDataService.GetListDetailsDataAsync();
@@ -38,7 +40,4 @@ public class ListDetailsViewModel : ObservableObject, INavigationAware
         Selected = SampleItems.First();
     }
 
-    public void OnNavigatedFrom()
-    {
-    }
 }

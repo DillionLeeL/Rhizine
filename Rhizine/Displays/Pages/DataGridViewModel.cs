@@ -1,23 +1,22 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Rhizine.Displays.Interfaces;
-using Rhizine.Models;
+﻿using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
+using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
-public class DataGridViewModel : ObservableObject, INavigationAware
+public class DataGridViewModel : BaseViewModel
 {
     private readonly ISampleDataService _sampleDataService;
 
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> Source { get; } = [];
 
     public DataGridViewModel(ISampleDataService sampleDataService)
     {
         _sampleDataService = sampleDataService;
     }
 
-    public async void OnNavigatedTo(object parameter)
+    public override async Task OnNavigatedTo(object parameter)
     {
         Source.Clear();
 
@@ -30,7 +29,7 @@ public class DataGridViewModel : ObservableObject, INavigationAware
         }
     }
 
-    public void OnNavigatedFrom()
+    public override async Task OnNavigatedFrom()
     {
     }
 }

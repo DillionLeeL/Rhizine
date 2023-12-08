@@ -64,13 +64,13 @@ public class WebViewViewModel : ObservableObject
         set { SetProperty(ref _failedMesageVisibility, value); }
     }
 
-    public ICommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new RelayCommand(OnRefresh));
+    public ICommand RefreshCommand => _refreshCommand ??= new RelayCommand(OnRefresh);
 
-    public RelayCommand BrowserBackCommand => _browserBackCommand ?? (_browserBackCommand = new RelayCommand(() => _webView?.GoBack(), () => _webView?.CanGoBack ?? false));
+    public RelayCommand BrowserBackCommand => _browserBackCommand ??= new RelayCommand(() => _webView?.GoBack(), () => _webView?.CanGoBack ?? false);
 
-    public RelayCommand BrowserForwardCommand => _browserForwardCommand ?? (_browserForwardCommand = new RelayCommand(() => _webView?.GoForward(), () => _webView?.CanGoForward ?? false));
+    public RelayCommand BrowserForwardCommand => _browserForwardCommand ??= new RelayCommand(() => _webView?.GoForward(), () => _webView?.CanGoForward ?? false);
 
-    public ICommand OpenInBrowserCommand => _openInBrowserCommand ?? (_openInBrowserCommand = new RelayCommand(OnOpenInBrowser));
+    public ICommand OpenInBrowserCommand => _openInBrowserCommand ??= new RelayCommand(OnOpenInBrowser);
 
     public WebViewViewModel(ISystemService systemService)
     {
@@ -86,7 +86,7 @@ public class WebViewViewModel : ObservableObject
     public void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         IsLoading = false;
-        if (e != null && !e.IsSuccess)
+        if (e?.IsSuccess == false)
         {
             // Use `e.WebErrorStatus` to vary the displayed message based on the error reason
             IsShowingFailedMessage = true;

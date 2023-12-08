@@ -1,22 +1,21 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Rhizine.Displays.Interfaces;
+﻿using CommunityToolkit.Mvvm.Input;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using WPFBase.Displays;
 
 namespace Rhizine.Displays.Pages;
 
-public class ContentGridViewModel : ObservableObject, INavigationAware
+public class ContentGridViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly ISampleDataService _sampleDataService;
     private ICommand _navigateToDetailCommand;
 
-    public ICommand NavigateToDetailCommand => _navigateToDetailCommand ?? (_navigateToDetailCommand = new RelayCommand<SampleOrder>(NavigateToDetail));
+    public ICommand NavigateToDetailCommand => _navigateToDetailCommand ??= new RelayCommand<SampleOrder>(NavigateToDetail);
 
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> Source { get; } = [];
 
     public ContentGridViewModel(ISampleDataService sampleDataService, INavigationService navigationService)
     {
@@ -24,7 +23,7 @@ public class ContentGridViewModel : ObservableObject, INavigationAware
         _navigationService = navigationService;
     }
 
-    public async void OnNavigatedTo(object parameter)
+    public override async Task OnNavigatedTo(object parameter)
     {
         Source.Clear();
 
@@ -34,10 +33,6 @@ public class ContentGridViewModel : ObservableObject, INavigationAware
         {
             Source.Add(item);
         }
-    }
-
-    public void OnNavigatedFrom()
-    {
     }
 
     private void NavigateToDetail(SampleOrder order)
