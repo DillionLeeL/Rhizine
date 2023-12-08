@@ -22,9 +22,6 @@ namespace Rhizine.Displays.Flyouts
         [ObservableProperty]
         private bool _isModal;
 
-        public FlyoutBaseViewModel()
-        { }
-
         [RelayCommand]
         private void Close()
         {

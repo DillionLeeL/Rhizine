@@ -14,7 +14,7 @@ namespace Rhizine.Services
 
         void RegisterFlyout<T>(string flyoutName, T viewModel) where T : FlyoutBaseViewModel;
 
-        void RegisterFlyout<T>(string flyoutName, params object[] paramArray) where T : FlyoutBaseViewModel, new();
+        void RegisterFlyout<T>(string flyoutName, params object[] pArray) where T : FlyoutBaseViewModel, new();
 
         void OpenFlyout(string flyoutName);
 

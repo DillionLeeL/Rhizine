@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using MahApps.Metro.Controls;
 using Rhizine.Displays.Flyouts;
 using Rhizine.Displays.Pages;
 using Rhizine.Services.Interfaces;
@@ -36,7 +35,7 @@ namespace Rhizine.Services
             RegisterFlyout<SimpleFrameFlyoutViewModel>("WebFrameFlyout",
                                                     new Uri(@"https://www.google.com"), _loggingService);
             RegisterFlyout<SimpleFrameFlyoutViewModel>("PageFrameFlyout",
-                                                    new ContentGridDetailPage(new ContentGridDetailViewModel(null)), _loggingService);
+                                                    new ContentGridDetailPage(new ContentGridDetailViewModel(null, _loggingService)), _loggingService);
         }
 
         public void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new()
@@ -49,10 +48,10 @@ namespace Rhizine.Services
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(viewModel);
         }
 
-        public void RegisterFlyout<T>(string flyoutName, params object[] paramArray) where T : FlyoutBaseViewModel, new()
+        public void RegisterFlyout<T>(string flyoutName, params object[] pArray) where T : FlyoutBaseViewModel, new()
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
-                    () => (T)Activator.CreateInstance(typeof(T), args: paramArray));
+                    () => (T)Activator.CreateInstance(typeof(T), args: pArray));
         }
 
         [RelayCommand]
