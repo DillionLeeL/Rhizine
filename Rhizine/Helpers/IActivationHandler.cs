@@ -1,4 +1,4 @@
-﻿namespace Rhizine.Services.Interfaces;
+﻿namespace Rhizine.Helpers;
 
 public interface IActivationHandler
 {
