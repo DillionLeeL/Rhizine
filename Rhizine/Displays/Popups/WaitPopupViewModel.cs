@@ -1,18 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.VisualStudio.Shell;
 using Rhizine.Displays.Popups;
+using Rhizine.Messages;
+using Rhizine.Services;
+using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 using System.Windows;
 
 namespace WPFBase.Displays.Popups;
 
 public partial class WaitPopupViewModel : PopupBaseViewModel
 {
+    private readonly ILoggingService _loggingService;
     public ObservableCollection<string> WaitingStates { get; } = new();
     public bool? DialogResult { get; private set; }
 
-    public WaitPopupViewModel()
+    public WaitPopupViewModel(ILoggingService loggingService)
     {
+        _loggingService = loggingService;
         IsVisible = true;
+        ProgressBarVisibility = true;
     }
 
     [ObservableProperty]
@@ -21,21 +31,37 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
     [ObservableProperty]
     private string _currentStatus;
 
+    [ObservableProperty]
+    private bool _progressBarVisibility;
+
     public override void Show()
     {
     }
-
-    /*
     [RelayCommand]
-    protected override void ClosePopup()
+    public override void Close()
     {
-        // Send a message that the popup should be closed.
-        base.ClosePopup();
+        try
+        {
+            if (this.IsClosed)
+                return;
+
+            this.IsClosed = true;
+            OnClosing();
+            Dispose();
+        }
+        catch (Exception ex)
+        {
+            _loggingService?.Log(ex);
+        }
     }
-    */
+    public void AddWaitingState(string state)
+    {
+        WaitingStates.Add(state);
+    }
 
     public void ShowButtons()
     {
+        // TODO: Show buttons
         //progressBar.Visibility = Visibility.Collapsed;
         //buttonPanel.Visibility = Visibility.Visible;
     }

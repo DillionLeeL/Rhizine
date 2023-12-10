@@ -1,24 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Build.Framework;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
 using Rhizine.Displays.Popups;
 using Rhizine.Messages;
+using Rhizine.Services.Interfaces;
 using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Media.Animation;
-using WPFBase.Displays.Popups;
+using Rhizine.Helpers;
 
 namespace WPFBase.Services;
 
-public class PopupService
+public class PopupService : IPopupService
 {
     private readonly ConcurrentDictionary<PopupBaseViewModel, Window> _openPopups = new();
+    private readonly ILoggingService _loggingService;
 
     public bool DialogResult { get; }
 
-    public PopupService()
+    public PopupService(ILoggingService loggingService)
     {
-        WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) => ClosePopupAsync(m.ViewModel).ConfigureAwait(false));
+        _loggingService = loggingService;
+        WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, handler: (r, m) => ClosePopupAsync(m.ViewModel).ConfigureAwait(false));
         WeakReferenceMessenger.Default.Register<PopupClosingMessage>(this, (recipient, message) =>
         {
             if (_openPopups.TryRemove(message.Value, out Window window))
@@ -32,34 +37,43 @@ public class PopupService
     {
         UnregisterMessages();
     }
-    private Window CreatePopupView<TViewModel>(TViewModel viewModel) where TViewModel : PopupBaseViewModel
+
+    public TView CreatePopupView<TViewModel, TView>(TViewModel viewModel)
+        where TViewModel : PopupBaseViewModel
+        where TView : Window, new()
     {
-        var popupView = new Window
+        return new TView()
         {
             DataContext = viewModel,
-            // Other initialization logic...
+            // TODO: Other initialization logic...
         };
-        return popupView;
-    }
-    public async Task ShowPopupAsync(PopupBaseViewModel viewModel, Window popupView)
-    {
-        if (popupView == null || viewModel == null)
-            throw new ArgumentNullException();
-
-        if (!_openPopups.TryAdd(viewModel, popupView))
-            throw new InvalidOperationException("Popup already shown for this ViewModel.");
-
-        popupView.Closed += (s, e) => _openPopups.TryRemove(viewModel, out _);
-
-        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-        popupView.Show();
     }
 
-    public async Task ShowPopupAsync<TViewModel>(TViewModel viewModel) where TViewModel : PopupBaseViewModel
+    public TViewModel CreatePopupViewModel<TViewModel>(params object[] services)
+        where TViewModel : PopupBaseViewModel
     {
-        ArgumentNullException.ThrowIfNull(viewModel);
+        try
+        {
+            return (TViewModel)Activator.CreateInstance(typeof(TViewModel), services);
+        }
+        catch (MissingMethodException)
+        {
+            throw new InvalidOperationException("ViewModel must have a parameterless constructor.");
+        }
+        catch (Exception ex)
+        {
+            _loggingService.Log(ex);
+            throw;
+        }
+    }
 
-        var popupView = CreatePopupView(viewModel);
+    public async Task ShowPopupAsync<TViewModel, TView>(TViewModel viewModel = null, TView popupView = null)
+        where TViewModel : PopupBaseViewModel
+        where TView : Window, new()
+    {
+        viewModel ??= CreatePopupViewModel<TViewModel>();
+        popupView ??= CreatePopupView<TViewModel, TView>(viewModel);
+
         if (!_openPopups.TryAdd(viewModel, popupView))
             throw new InvalidOperationException("Popup already shown for this ViewModel.");
 
@@ -71,11 +85,15 @@ public class PopupService
             popupView.Show();
         });
     }
-    public async Task<TResult> ShowPopupAsync<TViewModel, TResult>(TViewModel viewModel) where TViewModel : PopupBaseViewModel, IResultProvider<TResult>
-    {
-        ArgumentNullException.ThrowIfNull(viewModel);
 
-        var popupView = CreatePopupView(viewModel);
+    // TODO: Write a popup base view
+    public async Task<TResult> ShowPopupAsync<TViewModel, TView, TResult>(TViewModel viewModel = null)
+        where TViewModel : PopupBaseViewModel, IResultProvider<TResult>
+        where TView : Window, new()
+    {
+        viewModel ??= CreatePopupViewModel<TViewModel>();
+        var popupView = CreatePopupView<TViewModel, TView>(viewModel);
+
         if (!_openPopups.TryAdd(viewModel, popupView))
             throw new InvalidOperationException("Popup already shown for this ViewModel.");
 
@@ -101,17 +119,19 @@ public class PopupService
         return await tcs.Task;
     }
 
-    private async Task ClosePopupAsync(PopupBaseViewModel viewModel)
+    public async Task ClosePopupAsync(PopupBaseViewModel viewModel)
     {
         if (_openPopups.TryRemove(viewModel, out var popupView))
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            WeakReferenceMessenger.Default.Send(new ClosePopupMessage(viewModel));
-            popupView.Close();
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                WeakReferenceMessenger.Default.Send(new ClosePopupMessage(viewModel));
+                popupView.Close();
+            });
         }
     }
 
-    private static void ApplyAnimation(Window window, bool opening)
+    public void ApplyAnimation(Window window, bool opening)
     {
         var duration = new Duration(TimeSpan.FromMilliseconds(200));
         var anim = new DoubleAnimation(opening ? 0 : 1, opening ? 1 : 0, duration)
@@ -132,9 +152,4 @@ public class PopupService
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
     }
-}
-
-public interface IResultProvider<TResult>
-{
-    TResult Result { get; }
 }

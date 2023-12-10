@@ -23,9 +23,9 @@
         <Button Width="110"
                 Height="50"
                 Margin="5"
-                Content="WebFrameflyout"
+                Content="Open popup"
                 Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
-                Command="{Binding FlyoutService.OpenFlyoutCommand}"
-                CommandParameter="WebFrameFlyout" />
+                Command="{Binding ShowPopupCommand}"
+                        />
     </VirtualizingStackPanel>
 </Page>

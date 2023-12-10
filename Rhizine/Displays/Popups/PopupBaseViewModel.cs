@@ -1,34 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using WPFBase.Services;
+using Rhizine.Messages;
 
 namespace Rhizine.Displays.Popups;
 
-public abstract partial class PopupBaseViewModel : ObservableRecipient
+public abstract partial class PopupBaseViewModel : ObservableRecipient, IDisposable
 {
-    // Event to signal when the popup is closing.
-    public event EventHandler Closing;
-
-    // Command to close the popup.
-    [RelayCommand]
-    public void Close()
+    
+    public PopupBaseViewModel()
     {
-        OnClosing();
-        ClosePopup();
+        IsActive = true;
+        WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) =>
+        {
+            if (m.Value==this && !_isClosed)
+            {
+                Close();
+            }
+        });
     }
-
-    // Method to close the popup. Can be overridden in derived classes for custom close logic.
-    protected virtual void ClosePopup()
-    {
-        WeakReferenceMessenger.Default.Send(new ClosePopupMessage(this));
-    }
-
-    // Method called when the popup is closing. Can be overridden in derived classes.
-    protected virtual void OnClosing()
-    {
-        Closing?.Invoke(this, EventArgs.Empty);
-    }
-
+    [ObservableProperty]
+    private bool _isClosed;
     // Method to show the popup. Must be implemented by derived classes.
     [RelayCommand]
     public abstract void Show();
@@ -37,16 +30,30 @@ public abstract partial class PopupBaseViewModel : ObservableRecipient
     [RelayCommand]
     public virtual void Hide()
     {
+        if (this.IsClosed)
+            return;
     }
-}
 
-// Message class used to signal that a popup should close.
-public class ClosePopupMessage
-{
-    public PopupBaseViewModel Popup { get; }
-
-    public ClosePopupMessage(PopupBaseViewModel popup)
+    public virtual void Close()
     {
-        Popup = popup;
+        if (this.IsClosed)
+            return;
+
+        this.IsClosed = true;
+        OnClosing();
+        Dispose();
+    }
+    // Event to signal when the popup is closing.
+    public event EventHandler Closing;
+    // Method called when the popup is closing. Can be overridden in derived classes.
+    protected virtual void OnClosing()
+    {
+        WeakReferenceMessenger.Default.Send(new PopupClosingMessage(this));
+    }
+
+    public void Dispose()
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        GC.SuppressFinalize(this);
     }
 }
