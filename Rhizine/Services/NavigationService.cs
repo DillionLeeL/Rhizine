@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.VisualStudio.Shell;
 using Rhizine.Displays.Interfaces;
+using Rhizine.Messages;
 using Rhizine.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +30,6 @@ public class NavigationService : INavigationService
     {
         _frame = shellFrame ?? throw new ArgumentNullException(nameof(shellFrame));
         _frame.Navigated += OnNavigated;
-
     }
 
     public void UnsubscribeNavigation()
@@ -72,7 +73,6 @@ public class NavigationService : INavigationService
         }
         catch (Exception ex)
         {
-            _loggingService.LogError(ex);
             return false;
         }
     }
@@ -90,11 +90,8 @@ public class NavigationService : INavigationService
 
         try
         {
-            var navigateResult = await ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                return _frame.Navigate(page, parameter);
-            });
-
+            var navigateResult = await Application.Current.Dispatcher.InvokeAsync(() => _frame.Navigate(page, parameter));
+          
             if (!navigateResult) return false;
 
             HandleNavigationAware(page, parameter);

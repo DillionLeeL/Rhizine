@@ -19,13 +19,11 @@ public class SampleDataService : ISampleDataService
     private static IEnumerable<SampleOrder> AllOrders()
     {
         // The following is order summary data
-        var companies = AllCompanies();
+        var companies = AllCompanies;
         return companies.SelectMany(c => c.Orders);
     }
 
-    private static IEnumerable<SampleCompany> AllCompanies()
-    {
-        return new List<SampleCompany>()
+    private static IEnumerable<SampleCompany> AllCompanies => new List<SampleCompany>()
         {
             new SampleCompany()
             {
@@ -484,7 +482,6 @@ public class SampleDataService : ISampleDataService
                 }
             }
         };
-    }
 
     // Remove this once your ContentGrid pages are displaying real data.
     public async Task<IEnumerable<SampleOrder>> GetContentGridDataAsync()
