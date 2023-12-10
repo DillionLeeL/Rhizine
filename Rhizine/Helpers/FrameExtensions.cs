@@ -12,7 +12,7 @@ public static class FrameExtensions
         return null;
     }
 
-    public static void CleanNavigation(this Frame frame)
+    public static void ClearNavigation(this Frame frame)
     {
         while (frame.CanGoBack)
         {

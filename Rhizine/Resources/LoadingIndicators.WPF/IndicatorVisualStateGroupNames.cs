@@ -8,10 +8,10 @@ namespace LoadingIndicators.WPF
         private static IndicatorVisualStateGroupNames _sizeStates;
 
         public static IndicatorVisualStateGroupNames ActiveStates =>
-            _internalActiveStates ?? (_internalActiveStates = new IndicatorVisualStateGroupNames("ActiveStates"));
+            _internalActiveStates ??= new IndicatorVisualStateGroupNames("ActiveStates");
 
         public static IndicatorVisualStateGroupNames SizeStates =>
-            _sizeStates ?? (_sizeStates = new IndicatorVisualStateGroupNames("SizeStates"));
+            _sizeStates ??= new IndicatorVisualStateGroupNames("SizeStates");
 
         private IndicatorVisualStateGroupNames(string name)
         {

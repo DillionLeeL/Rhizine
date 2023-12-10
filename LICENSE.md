@@ -1,4 +1,5 @@
-﻿Copyright (c) Dillion Lowry
+﻿MIT License
+Copyright (c) Dillion Lowry
 All rights reserved.
 
 This software is licensed under one or more agreements.
@@ -13,7 +14,7 @@ Copyright (c) .NET Foundation and Contributors.
 All rights reserved.
 
 # MahApps.Metro - MIT License (MIT)
-Copyright © .NET Foundation, Jan Karger, 
+Copyright (c) .NET Foundation, Jan Karger, 
 Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
 
 

@@ -23,7 +23,6 @@ namespace LoadingIndicators.WPF.Styles
             }
         }
 
-
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var resultStyle = new Style();
@@ -37,9 +36,7 @@ namespace LoadingIndicators.WPF.Styles
                     key = service.TargetObject.GetType();
                 }
 
-                var currentStyle = new StaticResourceExtension(key).ProvideValue(serviceProvider) as Style;
-
-                if (currentStyle == null)
+                if (new StaticResourceExtension(key).ProvideValue(serviceProvider) is not Style currentStyle)
                 {
                     throw new ArgumentException();
                 }
@@ -55,15 +52,9 @@ namespace LoadingIndicators.WPF.Styles
     {
         public static void Merge(this Style style1, Style style2)
         {
-            if (style1 == null)
-            {
-                throw new ArgumentNullException(nameof(style1));
-            }
+            ArgumentNullException.ThrowIfNull(style1);
 
-            if (style2 == null)
-            {
-                throw new ArgumentNullException(nameof(style2));
-            }
+            ArgumentNullException.ThrowIfNull(style2);
 
             if (style1.TargetType.IsAssignableFrom(style2.TargetType))
             {
