@@ -1,12 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Rhizine.Services;
-using Rhizine.Services.Interfaces;
-using System.Windows;
-using System.Windows.Navigation;
-using Rhizine.Displays;
 using Rhizine.Displays.Popups;
 using Rhizine.Services;
+using Rhizine.Services.Interfaces;
 
 namespace Rhizine.Displays.Pages;
 

@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Rhizine.Displays.Interfaces;
 
-namespace WPFBase.Displays;
+namespace Rhizine.Displays;
 
 public partial class BaseViewModel : ObservableObject, INavigationAware
 {

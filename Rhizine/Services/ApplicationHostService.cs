@@ -2,6 +2,7 @@
 using Rhizine.Displays.Interfaces;
 using Rhizine.Displays.Pages;
 using Rhizine.Services.Interfaces;
+using Rhizine.Helpers;
 
 namespace Rhizine.Services;
 
@@ -29,13 +30,12 @@ public class ApplicationHostService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        // Initialize services that you need before app activation
-        await InitializeAsync();
+        if (_isInitialized) return;
 
-        await HandleActivationAsync();
+        _persistAndRestoreService.RestoreData();
+        _themeSelectorService.InitializeTheme();
 
-        // Tasks after activation
-        await StartupAsync();
+        await HandleActivationAsync(cancellationToken);
         _isInitialized = true;
     }
 
@@ -45,44 +45,21 @@ public class ApplicationHostService : IHostedService
         await Task.CompletedTask;
     }
 
-    private async Task InitializeAsync()
-    {
-        if (!_isInitialized)
-        {
-            _persistAndRestoreService.RestoreData();
-            _themeSelectorService.InitializeTheme();
-            await Task.CompletedTask;
-        }
-    }
-
-    private async Task StartupAsync()
-    {
-        if (!_isInitialized)
-        {
-            await Task.CompletedTask;
-        }
-    }
-
-    private async Task HandleActivationAsync()
+    private async Task HandleActivationAsync(CancellationToken cancellationToken)
     {
         var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle());
-
         if (activationHandler != null)
         {
             await activationHandler.HandleAsync();
         }
 
-        await Task.CompletedTask;
-
         if (!System.Windows.Application.Current.Windows.OfType<IShellWindow>().Any())
         {
-            // Default activation that navigates to the apps default page
             _shellWindow = _serviceProvider.GetService(typeof(IShellWindow)) as IShellWindow;
             _navigationService.Initialize(_shellWindow.GetNavigationFrame());
             _flyoutService.Initialize();
             _shellWindow.ShowWindow();
             _navigationService.NavigateTo(typeof(LandingViewModel).FullName);
-            await Task.CompletedTask;
         }
     }
 }

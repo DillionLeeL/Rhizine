@@ -1,15 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.VisualStudio.Shell;
-using Rhizine.Displays.Popups;
+﻿using Rhizine.Displays.Popups;
 using Rhizine.Helpers;
-using Rhizine.Messages;
-using System.Collections.Concurrent;
 using System.Windows;
-using System.Windows.Media.Animation;
-using WPFBase.Displays.Popups;
 
-namespace WPFBase.Services;
+namespace Rhizine.Services.Interfaces;
 
 public interface IPopupService
 {
