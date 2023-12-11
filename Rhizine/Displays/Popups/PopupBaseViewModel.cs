@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using WPFBase.Services;
+using Rhizine.Services;
 using Rhizine.Messages;
 
 namespace Rhizine.Displays.Popups;

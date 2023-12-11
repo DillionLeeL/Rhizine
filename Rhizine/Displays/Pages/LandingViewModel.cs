@@ -4,9 +4,9 @@ using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using System.Windows;
 using System.Windows.Navigation;
-using WPFBase.Displays;
-using WPFBase.Displays.Popups;
-using WPFBase.Services;
+using Rhizine.Displays;
+using Rhizine.Displays.Popups;
+using Rhizine.Services;
 
 namespace Rhizine.Displays.Pages;
 

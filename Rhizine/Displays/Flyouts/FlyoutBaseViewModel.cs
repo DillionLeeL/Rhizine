@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Flyouts
 {

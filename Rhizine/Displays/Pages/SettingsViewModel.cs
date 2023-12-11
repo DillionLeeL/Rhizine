@@ -4,7 +4,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Extensions.Options;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Pages;
 

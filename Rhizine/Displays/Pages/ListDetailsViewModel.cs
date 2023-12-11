@@ -1,7 +1,7 @@
 ﻿using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Pages;
 

@@ -2,7 +2,7 @@
 using Rhizine.Displays.Popups;
 using System.Windows;
 
-namespace WPFBase.Displays.Popups;
+namespace Rhizine.Displays.Popups;
 
 /// <summary>
 /// Interaction logic for WaitPopup.xaml

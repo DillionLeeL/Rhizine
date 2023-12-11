@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Reflection.Metadata;
 using System.Windows;
 
-namespace WPFBase.Displays.Popups;
+namespace Rhizine.Displays.Popups;
 
 public partial class WaitPopupViewModel : PopupBaseViewModel
 {

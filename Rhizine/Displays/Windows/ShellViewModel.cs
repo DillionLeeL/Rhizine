@@ -7,7 +7,7 @@ using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Windows.Navigation;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Windows;
 

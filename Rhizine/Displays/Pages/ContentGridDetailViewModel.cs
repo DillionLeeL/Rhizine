@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Pages;
 

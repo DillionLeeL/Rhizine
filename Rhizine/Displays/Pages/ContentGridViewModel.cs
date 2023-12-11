@@ -3,7 +3,7 @@ using Rhizine.Models;
 using Rhizine.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using WPFBase.Displays;
+using Rhizine.Displays;
 
 namespace Rhizine.Displays.Pages;
 
