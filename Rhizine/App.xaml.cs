@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Rhizine.Displays.Interfaces;
 using Rhizine.Displays.Pages;
 using Rhizine.Displays.Windows;
@@ -8,6 +8,7 @@ using Rhizine.Models;
 using Rhizine.Services;
 using Rhizine.Services.Interfaces;
 using Rhizine.Views;
+using Serilog;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -19,26 +20,31 @@ public partial class App : Application
 {
     private IHost _host;
 
-    public App()
-    { }
-
     public T GetService<T>() where T : class => _host.Services.GetService(typeof(T)) as T;
 
     private async void OnStartup(object sender, StartupEventArgs e)
     {
         // NOTE: Entry Assembly logic removed from app configure when building as single exe
         // TODO: make single exe .ConfigureAppConfiguration optional
-        var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        /* Looks for the .dll which will fail when embedded in .exe
+            .ConfigureAppConfiguration(c =>
+            {
+                c.SetBasePath(appLocation);
+            })
+        */
+        // Configure Serilog
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build())
+            .CreateLogger();
 
-        _host = Host.CreateDefaultBuilder(e.Args)
-                /* Looks for the .dll which will fail when embedded in .exe
-                    .ConfigureAppConfiguration(c =>
-                    {
-                        c.SetBasePath(appLocation);
-                    })
-                */
-                .ConfigureServices(ConfigureServices)
-                .Build();
+        var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+
+        _host = Host.CreateDefaultBuilder()
+            .UseSerilog() // Use Serilog for logging
+            .ConfigureServices(ConfigureServices)
+            .Build();
 
         await _host.StartAsync();
     }
@@ -48,8 +54,11 @@ public partial class App : Application
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
-        services.AddLogging(configure => configure.AddConsole()); // Add other logging providers as needed
-
+        //services.AddLogging(configure => configure.AddConsole()); // default console
+        //services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+        // Add configuration to DI
+        var configuration = context.Configuration;
+        services.AddSingleton(configuration);
         // Services
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILoggingService, LoggingService>();
@@ -61,6 +70,7 @@ public partial class App : Application
         services.AddSingleton<IPageService, PageService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFlyoutService, FlyoutService>();
+        services.AddSingleton<IPopupService, PopupService>();
 
         // Views and ViewModels
         services.AddTransient<IShellWindow, ShellWindow>();
@@ -88,20 +98,20 @@ public partial class App : Application
         services.AddTransient<SettingsPage>();
 
         // Configuration
-        services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
+        services.Configure<AppConfig>(configuration.GetSection(nameof(AppConfig)));
     }
 
-    private async void OnExit(object sender, ExitEventArgs e)
+    protected async void OnExit(object sender, ExitEventArgs e)
     {
+        await Log.CloseAndFlushAsync();
+
         await _host.StopAsync();
         _host.Dispose();
-        _host = null;
     }
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        // TODO: Update OnDispatcherUnhandledException
-        MessageBox.Show(e.Exception.Message);
+        GetService<ILoggingService>().HandleGlobalException(e.Exception);
         e.Handled = true;
     }
 }
