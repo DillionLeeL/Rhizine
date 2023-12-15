@@ -39,14 +39,14 @@ public class ThemeSelectorService : IThemeSelectorService
             ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Teal", SystemParameters.HighContrast);
         }
 
-        App.Current.Properties["Theme"] = theme.ToString();
+        Application.Current.Properties["Theme"] = theme.ToString();
     }
 
     public AppTheme GetCurrentTheme()
     {
-        if (App.Current.Properties.Contains("Theme"))
+        if (Application.Current.Properties.Contains("Theme"))
         {
-            var themeName = App.Current.Properties["Theme"].ToString();
+            var themeName = Application.Current.Properties["Theme"]?.ToString();
             return Enum.TryParse(themeName, out AppTheme theme) ? theme : AppTheme.Default;
         }
 

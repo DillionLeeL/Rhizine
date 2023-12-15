@@ -7,6 +7,7 @@ namespace LoadingIndicators.WPF.Styles
     public class MultiStyleExtension : MarkupExtension
     {
         private readonly string[] _resourceKeys;
+        private static readonly char[] separator = [' '];
 
         public MultiStyleExtension(string inputResourceKeys)
         {
@@ -15,7 +16,7 @@ namespace LoadingIndicators.WPF.Styles
                 throw new ArgumentNullException(nameof(inputResourceKeys));
             }
 
-            _resourceKeys = inputResourceKeys.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            _resourceKeys = inputResourceKeys.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             if (_resourceKeys.Length == 0)
             {
@@ -33,7 +34,7 @@ namespace LoadingIndicators.WPF.Styles
                 if (resourceKey == ".")
                 {
                     var service = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
-                    key = service.TargetObject.GetType();
+                    key = service?.TargetObject?.GetType();
                 }
 
                 if (new StaticResourceExtension(key).ProvideValue(serviceProvider) is not Style currentStyle)

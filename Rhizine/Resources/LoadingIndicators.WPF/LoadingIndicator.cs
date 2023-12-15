@@ -17,18 +17,18 @@ namespace LoadingIndicators.WPF
         ///     Identifies the <see cref="LoadingIndicators.WPF.LoadingIndicator.SpeedRatio" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty SpeedRatioProperty =
-            DependencyProperty.Register("SpeedRatio", typeof(double), typeof(LoadingIndicator), new PropertyMetadata(1d,
+            DependencyProperty.Register(nameof(SpeedRatio), typeof(double), typeof(LoadingIndicator), new PropertyMetadata(1d,
                 OnSpeedRatioChanged));
 
         /// <summary>
         ///     Identifies the <see cref="LoadingIndicators.WPF.LoadingIndicator.IsActive" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsActiveProperty =
-            DependencyProperty.Register("IsActive", typeof(bool), typeof(LoadingIndicator), new PropertyMetadata(true,
+            DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(LoadingIndicator), new PropertyMetadata(true,
                 OnIsActiveChanged));
 
         public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(
-            "Mode", typeof(LoadingIndicatorMode), typeof(LoadingIndicator),
+            nameof(Mode), typeof(LoadingIndicatorMode), typeof(LoadingIndicator),
             new PropertyMetadata(default(LoadingIndicatorMode)));
 
         // ReSharper disable once InconsistentNaming
@@ -68,7 +68,7 @@ namespace LoadingIndicators.WPF
         {
             var li = (LoadingIndicator)o;
 
-            if (li.PART_Border == null || li.IsActive == false)
+            if (li.PART_Border == null || !li.IsActive)
             {
                 return;
             }
@@ -85,7 +85,7 @@ namespace LoadingIndicators.WPF
                 return;
             }
 
-            if ((bool)e.NewValue == false)
+            if (!(bool)e.NewValue)
             {
                 VisualStateManager.GoToElementState(li.PART_Border, IndicatorVisualStateNames.InactiveState.Name,
                     false);

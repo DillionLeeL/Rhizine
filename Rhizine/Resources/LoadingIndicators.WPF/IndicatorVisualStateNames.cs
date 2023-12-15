@@ -8,10 +8,10 @@ namespace LoadingIndicators.WPF
         private static IndicatorVisualStateNames _inactiveState;
 
         public static IndicatorVisualStateNames ActiveState =>
-            _activeState ?? (_activeState = new IndicatorVisualStateNames("Active"));
+            _activeState ??= new IndicatorVisualStateNames("Active");
 
         public static IndicatorVisualStateNames InactiveState =>
-            _inactiveState ?? (_inactiveState = new IndicatorVisualStateNames("Inactive"));
+            _inactiveState ??= new IndicatorVisualStateNames("Inactive");
 
         private IndicatorVisualStateNames(string name)
         {
