@@ -3,6 +3,7 @@ using System.Windows.Data;
 
 namespace Rhizine.Converters;
 
+[ValueConversion(typeof(Enum), typeof(bool))]
 public class EnumToBooleanConverter : IValueConverter
 {
     public Type EnumType { get; set; }
