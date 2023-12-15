@@ -19,10 +19,14 @@ namespace Rhizine.Services
             ActiveFlyouts = new ObservableCollection<FlyoutBaseViewModel>();
         }
 
+        // Triggered when a flyout is opened/closed, providing the name of the flyout
         public event Action<string> OnFlyoutOpened;
 
         public event Action<string> OnFlyoutClosed;
 
+        /// <summary>
+        /// Initializes the FlyoutService, registering default flyouts and performing initial setup.
+        /// </summary>
         public void Initialize()
         {
             _loggingService.LogInformation("Registering flyouts.");
@@ -38,22 +42,43 @@ namespace Rhizine.Services
                                                     new ContentGridDetailPage(new ContentGridDetailViewModel(null, _loggingService)), _loggingService);
         }
 
+        /// <summary>
+        /// Registers a flyout with the service using a parameterless constructor without an initial view model.
+        /// </summary>
+        /// <typeparam name="T">The type of the FlyoutBaseViewModel to register.</typeparam>
+        /// <param name="flyoutName">The name of the flyout.</param>
         public void RegisterFlyout<T>(string flyoutName) where T : FlyoutBaseViewModel, new()
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(() => new T());
         }
 
+        /// <summary>
+        /// Registers a flyout with the service with a specific view model.
+        /// </summary>
+        /// <typeparam name="T">The type of the FlyoutBaseViewModel to register.</typeparam>
+        /// <param name="flyoutName">The name of the flyout.</param>
+        /// <param name="viewModel">The view model to associate with the flyout.</param>
         public void RegisterFlyout<T>(string flyoutName, T viewModel) where T : FlyoutBaseViewModel
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(viewModel);
         }
 
+        /// <summary>
+        /// Registers a flyout with the service, creating the view model using specified parameters.
+        /// </summary>
+        /// <typeparam name="T">The type of the FlyoutBaseViewModel to register.</typeparam>
+        /// <param name="flyoutName">The name of the flyout.</param>
+        /// <param name="pArray">Parameters to use for creating the view model.</param>
         public void RegisterFlyout<T>(string flyoutName, params object[] pArray) where T : FlyoutBaseViewModel, new()
         {
             _flyouts[flyoutName] = new Lazy<FlyoutBaseViewModel>(
                     () => (T)Activator.CreateInstance(typeof(T), args: pArray));
         }
 
+        /// <summary>
+        /// Opens a flyout with the specified name.
+        /// </summary>
+        /// <param name="flyoutName">The name of the flyout to open.</param>
         [RelayCommand]
         public void OpenFlyout(string flyoutName)
         {
@@ -73,6 +98,10 @@ namespace Rhizine.Services
             }
         }
 
+        /// <summary>
+        /// Closes a flyout with the specified name.
+        /// </summary>
+        /// <param name="flyoutName">The name of the flyout to close.</param>
         [RelayCommand]
         public void CloseFlyout(string flyoutName)
         {
