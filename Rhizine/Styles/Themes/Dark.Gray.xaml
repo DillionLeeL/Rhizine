@@ -7,11 +7,11 @@
                     mc:Ignorable="options">
 
     <!--  Matadata  -->
-    <system:String x:Key="Theme.Name">Dark.Grey</system:String>
+    <system:String x:Key="Theme.Name">Custom.Dark.Gray</system:String>
     <system:String x:Key="Theme.Origin">Rhizine</system:String>
-    <system:String x:Key="Theme.DisplayName">Grey (Dark)</system:String>
+    <system:String x:Key="Theme.DisplayName">Gray (Dark)</system:String>
     <system:String x:Key="Theme.BaseColorScheme">Dark</system:String>
-    <system:String x:Key="Theme.ColorScheme">Grey</system:String>
+    <system:String x:Key="Theme.ColorScheme">Gray</system:String>
     <system:Boolean x:Key="Theme.IsHighContrast">true</system:Boolean>
     <Color x:Key="Theme.PrimaryAccentColor">#FF252525</Color>
     <SolidColorBrush x:Key="Theme.ShowcaseBrush"
@@ -26,7 +26,7 @@
     <Color x:Key="MahApps.Colors.Highlight">#FF444444</Color>
     <Color x:Key="MahApps.Colors.AccentBase">#FF252525</Color>
     <!--  80%  -->
-    <Color x:Key="MahApps.Colors.Accent">#FF444444</Color>
+    <Color x:Key="MahApps.Colors.Accent">#FF242424</Color>
     <!--  60%  -->
     <Color x:Key="MahApps.Colors.Accent2">#99647687</Color>
     <!--  40%  -->
@@ -36,22 +36,22 @@
 
     <!--  BASE COLORS  -->
     <Color x:Key="MahApps.Colors.ThemeForeground">#FFFFFFFF</Color>
-    <Color x:Key="MahApps.Colors.ThemeBackground">#FF000000</Color>
+    <Color x:Key="MahApps.Colors.ThemeBackground">#FF232323</Color>
     <Color x:Key="MahApps.Colors.IdealForeground">#FFFFFFFF</Color>
 
-    <Color x:Key="MahApps.Colors.Gray1">#FFF9F9F9</Color>
-    <Color x:Key="MahApps.Colors.Gray2">#FF7F7F7F</Color>
-    <Color x:Key="MahApps.Colors.Gray3">#FF9D9D9D</Color>
-    <Color x:Key="MahApps.Colors.Gray4">#FFA59F93</Color>
-    <Color x:Key="MahApps.Colors.Gray5">#FFB9B9B9</Color>
-    <Color x:Key="MahApps.Colors.Gray6">#FFCCCCCC</Color>
-    <Color x:Key="MahApps.Colors.Gray7">#FF7E7E7E</Color>
-    <Color x:Key="MahApps.Colors.Gray8">#FF454545</Color>
+    <Color x:Key="MahApps.Colors.Gray1">#FF2A2A2A</Color>
+    <Color x:Key="MahApps.Colors.Gray2">#FF2F2F2F</Color>
+    <Color x:Key="MahApps.Colors.Gray3">#FF2D2D2D</Color>
+    <Color x:Key="MahApps.Colors.Gray4">#FF323232</Color>
+    <Color x:Key="MahApps.Colors.Gray5">#FF343434</Color>
+    <Color x:Key="MahApps.Colors.Gray6">#FF3C3C3C</Color>
+    <Color x:Key="MahApps.Colors.Gray7">#FF424242</Color>
+    <Color x:Key="MahApps.Colors.Gray8">#FF464646</Color>
     <Color x:Key="MahApps.Colors.Gray9">#5EC9C9C9</Color>
-    <Color x:Key="MahApps.Colors.Gray10">#FF2F2F2F</Color>
+    <Color x:Key="MahApps.Colors.Gray10">#FF414141</Color>
 
-    <Color x:Key="MahApps.Colors.Gray">#FF7D7D7D</Color>
-    <Color x:Key="MahApps.Colors.Gray.MouseOver">#FFAAAAAA</Color>
+    <Color x:Key="MahApps.Colors.Gray">#FF2D2D2D</Color>
+    <Color x:Key="MahApps.Colors.Gray.MouseOver">#FF3F3F3F</Color>
     <Color x:Key="MahApps.Colors.Gray.SemiTransparent">#40808080</Color>
 
     <Color x:Key="MahApps.Colors.Flyout">#FF2B2B2B</Color>
@@ -104,7 +104,7 @@
                      Color="Transparent"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparent"
-                     Color="{StaticResource MahApps.Colors.SemiTransparent}"
+                     Color="#55000000"
                      options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.AccentBase"
@@ -232,7 +232,7 @@
                       Color="{StaticResource MahApps.Colors.Accent3}" />
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderValue.Disabled"
+    <!--<SolidColorBrush x:Key="MahApps.Brushes.SliderValue.Disabled"
                      Color="{StaticResource MahApps.Colors.SliderValue.Disabled}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Disabled"
@@ -246,7 +246,7 @@
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Normal"
                      Color="{StaticResource MahApps.Colors.SliderTrack.Normal}"
-                     options:Freeze="True" />
+                     options:Freeze="True" />-->
 
     <SolidColorBrush x:Key="MahApps.Brushes.Flyout.Background"
                      Color="{StaticResource MahApps.Colors.Flyout}"
@@ -279,7 +279,7 @@
                      Color="#FFC4C4C5"
                      options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background"
+    <!--<SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background"
                      Color="#D5D5D5"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground"
@@ -289,11 +289,11 @@
                      Color="#A9A9A9"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background.Pressed"
-                     Color="{StaticResource MahApps.Colors.Button.Flat.Background.Pressed}"
+                     Color="{StaticResource MahApps.Colors.Button.Flat.Background}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground.Pressed"
-                     Color="{StaticResource MahApps.Colors.Button.Flat.Foreground.Pressed}"
-                     options:Freeze="True" />
+                     Color="{StaticResource MahApps.Colors.Button.Flat.Foreground}"
+                     options:Freeze="True" />-->
 
     <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver"
                      Color="#EB2F2F"
@@ -384,16 +384,17 @@
                      options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border"
-                     Color="{StaticResource MahApps.Colors.ContextMenu.Border}"
+                     Color="{StaticResource MahApps.Colors.Accent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border"
-                     Color="{StaticResource MahApps.Colors.SubMenu.Border}"
+                     Color="{StaticResource MahApps.Colors.SystemAltMediumHigh}"
                      options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionFill"
-                     Color="{StaticResource MahApps.Colors.MenuItem.SelectionFill}"
+                     Color="{StaticResource MahApps.Colors.AccentBase}"
                      options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionStroke"
+
+    <!--<SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionStroke"
                      Color="{StaticResource MahApps.Colors.MenuItem.SelectionStroke}"
                      options:Freeze="True" />
 
@@ -405,11 +406,11 @@
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.SelectionStroke"
                      Color="{StaticResource MahApps.Colors.TopMenuItem.SelectionStroke}"
-                     options:Freeze="True" />
-
+                     options:Freeze="True" />-->
+    
     <!--  original #FF9A9A9A"  -->
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.Foreground.Disabled"
-                     Color="{StaticResource MahApps.Colors.MenuItem.DisabledForeground}"
+                     Color="#FF9A9A9A"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.GlyphPanel.Disabled"
                      Color="#848589"
@@ -494,7 +495,7 @@
                      Color="{StaticResource MahApps.Colors.Gray2}"
                      options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background"
+    <!--<SolidColorBrush x:Key="MahApps.Brushes.Badged.Background"
                      Color="{StaticResource MahApps.Colors.AccentBase}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background.Disabled"
@@ -505,7 +506,7 @@
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Badged.Foreground.Disabled"
                      Color="{StaticResource MahApps.Colors.Badged.Foreground.Disabled}"
-                     options:Freeze="True" />
+                     options:Freeze="True" />-->
 
     <!--  HamburgerMenu  -->
 
@@ -549,7 +550,7 @@
     <Color x:Key="MahApps.Colors.SystemListLow">#19FFFFFF</Color>
     <Color x:Key="MahApps.Colors.SystemListMedium">#33FFFFFF</Color>
     <Color x:Key="MahApps.Colors.SystemErrorText">#FFFFF000</Color>
-
+	
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlBackgroundAccent"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
@@ -733,16 +734,17 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightAltChromeWhite"
                      Color="{StaticResource MahApps.Colors.SystemChromeWhite}"
                      options:Freeze="True" />
+	<!-- here -->
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightAltListAccentHigh"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity}"
+                     Opacity=".8"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightAltListAccentLow"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity}"
+                     Opacity=".4"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightAltListAccentMedium"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity}"
+                     Opacity=".6"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightAltTransparent"
@@ -773,15 +775,15 @@
                      Color="{StaticResource MahApps.Colors.SystemChromeWhite}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentHigh"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity}"
+                     Opacity=".8"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentLow"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity}"
+                     Opacity=".4"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentMedium"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity}"
+                     Opacity=".6"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListLow"
@@ -844,10 +846,6 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlRevealFocusVisual"
                      Color="{StaticResource MahApps.Colors.SystemAccent}"
                      options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SystemControlTransientBorder"
-                     Opacity="{StaticResource MahApps.Brushes.SystemControlTransientBorder.Opacity}"
-                     Color="#000000"
-                     options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlTransparent"
                      Color="Transparent"
                      options:Freeze="True" />
@@ -855,342 +853,7 @@
     <markup:StaticResource x:Key="MahApps.Brushes.SystemControlDescriptionTextForeground"
                            ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
 
-    <!--  Resources for MahApps.Styles.Button.Win10  -->
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.Background"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.Foreground"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrush"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
-
-    <!--  Resources for MahApps.Styles.Button.Accent.Win10  -->
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackground"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForeground"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrush"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
-
-    <!--  Resources for MahApps.Styles.CheckBox.Win10  -->
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BackgroundIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlBackgroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUnchecked"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundChecked"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminate"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminateMouseOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminatePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminateDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-
-    <!--  Resources for MahApps.Styles.RadioButton.Win10  -->
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.Foreground"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.Background"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrush"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStroke"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokePointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokeDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFill"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStroke"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokeDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFill"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFill"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStroke"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokePointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokePressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokeDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-
-    <!--  Resources for MahApps.Styles.ToggleSwitch  -->
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContentForeground"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.HeaderForeground"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.HeaderForegroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContainerBackground"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContainerBackgroundPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContainerBackgroundPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContainerBackgroundDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOff"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOffPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOffPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOffDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOff"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOffPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOffDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOn"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOnPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltListAccentHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOnPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOnDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOn"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOnPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOnPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOnDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOff"
-                           ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOffPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOffPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOffDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOn"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPressed"
-                           ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled"
-                           ResourceKey="MahApps.Brushes.SystemControlPageBackgroundBaseLow" />
+	
+    
 
 </ResourceDictionary>

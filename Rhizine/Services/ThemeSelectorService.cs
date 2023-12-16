@@ -2,7 +2,9 @@
 using MahApps.Metro.Theming;
 using Rhizine.Models;
 using Rhizine.Services.Interfaces;
+using Serilog.Core;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Rhizine.Services;
 
@@ -10,16 +12,15 @@ public class ThemeSelectorService : IThemeSelectorService
 {
     private const string HcDarkTheme = "pack://application:,,,/Styles/Themes/HC.Dark.Teal.xaml";
     private const string HcLightTheme = "pack://application:,,,/Styles/Themes/HC.Light.Teal.xaml";
+    private const string HcDarkGrayTheme = "pack://application:,,,/Styles/Themes/Dark.Gray.xaml";
+    private readonly Dictionary<AppTheme, Theme> _customThemes = new();
 
-    public ThemeSelectorService()
-    {
-    }
+    public ThemeSelectorService() { }
 
     public void InitializeTheme()
     {
         // https://mahapps.com/docs/themes/thememanager#creating-custom-themes
-        ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcDarkTheme), MahAppsLibraryThemeProvider.DefaultInstance));
-        ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcLightTheme), MahAppsLibraryThemeProvider.DefaultInstance));
+        _customThemes.Add(AppTheme.Dark, ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcDarkGrayTheme), MahAppsLibraryThemeProvider.DefaultInstance)));
 
         var theme = GetCurrentTheme();
         SetTheme(theme);
@@ -27,16 +28,20 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public void SetTheme(AppTheme theme)
     {
-        if (theme == AppTheme.Default)
+        if (_customThemes.TryGetValue(theme, out Theme customTheme))
         {
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncAll;
-            ThemeManager.Current.SyncTheme();
+            if (customTheme.IsHighContrast)
+            {
+                ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
+                ThemeManager.Current.SyncTheme();
+            }
+            ThemeManager.Current.ChangeTheme(Application.Current, customTheme.Name, customTheme.IsHighContrast);
         }
         else
         {
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
-            ThemeManager.Current.SyncTheme();
-            ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Teal", SystemParameters.HighContrast);
+            string brightness = theme == AppTheme.Light ? "Light" : "Dark";
+            string themeName = $"{brightness}.Teal";
+            ThemeManager.Current.ChangeTheme(Application.Current, themeName);
         }
 
         Application.Current.Properties["Theme"] = theme.ToString();
