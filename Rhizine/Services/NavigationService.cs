@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.VisualStudio.Shell;
-using Rhizine.Displays.Interfaces;
-using Rhizine.Messages;
+﻿using Rhizine.Displays.Interfaces;
 using Rhizine.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,12 +23,19 @@ public class NavigationService : INavigationService
         _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
     }
 
+    /// <summary>
+    /// Initializes the navigation service with the specified frame.
+    /// </summary>
+    /// <param name="shellFrame">The frame to be used for navigation.</param>
     public void Initialize(Frame shellFrame)
     {
         _frame = shellFrame ?? throw new ArgumentNullException(nameof(shellFrame));
         _frame.Navigated += OnNavigated;
     }
 
+    /// <summary>
+    /// Unsubscribes from the Navigated event and clears the navigation history.
+    /// </summary>
     public void UnsubscribeNavigation()
     {
         _frame.Navigated -= OnNavigated;
@@ -39,8 +43,12 @@ public class NavigationService : INavigationService
         _frame = null;
     }
 
+    /// <summary>
+    /// Navigates to the previous page in the navigation history, if available.
+    /// </summary>
     public void GoBack()
     {
+        _loggingService.LogDebug("Navigating back");
         if (!CanGoBack) return;
 
         var vmBeforeNavigation = _frame.GetDataContext();
@@ -48,10 +56,17 @@ public class NavigationService : INavigationService
 
         if (vmBeforeNavigation is INavigationAware navigationAware)
         {
-            navigationAware.OnNavigatedFrom();
+            _ = navigationAware.OnNavigatedFrom();
         }
     }
 
+    /// <summary>
+    /// Navigates to a specified page.
+    /// </summary>
+    /// <param name="pageKey">The key of the page to navigate to.</param>
+    /// <param name="parameter">The parameter to pass to the new page.</param>
+    /// <param name="clearNavigation">Indicates whether to clear the navigation history.</param>
+    /// <returns>True if navigation is successful, false otherwise.</returns>
     public bool NavigateTo(string pageKey, object parameter = null, bool clearNavigation = false)
     {
         if (string.IsNullOrWhiteSpace(pageKey))
@@ -62,7 +77,7 @@ public class NavigationService : INavigationService
 
         if (!ShouldNavigateTo(page.GetType(), parameter)) return false;
 
-        _frame.SetCurrentValue(System.Windows.FrameworkElement.TagProperty, clearNavigation);
+        _frame.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
 
         try
         {
@@ -71,11 +86,19 @@ public class NavigationService : INavigationService
             HandleNavigationAware(page, parameter);
             return true;
         }
-        catch (Exception ex)
+        catch
         {
             return false;
         }
     }
+
+    /// <summary>
+    /// Asynchronously navigates to a specified page.
+    /// </summary>
+    /// <param name="pageKey">The key of the page to navigate to.</param>
+    /// <param name="parameter">The parameter to pass to the new page.</param>
+    /// <param name="clearNavigation">Indicates whether to clear the navigation history.</param>
+    /// <returns>True if navigation is successful, false otherwise.</returns>
     public async Task<bool> NavigateToAsync(string pageKey, object parameter = null, bool clearNavigation = false)
     {
         if (string.IsNullOrWhiteSpace(pageKey))
@@ -86,12 +109,12 @@ public class NavigationService : INavigationService
 
         if (!ShouldNavigateTo(page.GetType(), parameter)) return false;
 
-        _frame.SetCurrentValue(System.Windows.FrameworkElement.TagProperty, clearNavigation);
+        _frame.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
 
         try
         {
             var navigateResult = await Application.Current.Dispatcher.InvokeAsync(() => _frame.Navigate(page, parameter));
-          
+
             if (!navigateResult) return false;
 
             HandleNavigationAware(page, parameter);
@@ -99,24 +122,32 @@ public class NavigationService : INavigationService
         }
         catch (Exception ex)
         {
-            _loggingService.LogError(ex);
+            await _loggingService.LogErrorAsync(ex);
             return false;
         }
     }
+
     private void HandleNavigationAware(object page, object parameter)
     {
         if (page is INavigationAware navigationAware)
         {
             _lastParameterUsed = parameter;
-            navigationAware.OnNavigatedTo(parameter);
+            _ = navigationAware.OnNavigatedTo(parameter);
         }
     }
-    private bool ShouldNavigateTo(Type pageType, object parameter) =>
-        _frame.Content?.GetType() != pageType || !object.Equals(parameter, _lastParameterUsed);
 
+    private bool ShouldNavigateTo(Type pageType, object parameter) =>
+        _frame.Content?.GetType() != pageType || !Equals(parameter, _lastParameterUsed);
+
+    /// <summary>
+    /// Event handler for the Navigated event. It clears the navigation history if required and
+    /// notifies the navigated-to page about the navigation.
+    /// </summary>
+    /// <param name="sender">The frame that has navigated.</param>
+    /// <param name="e">Event arguments containing information about the navigation.</param>
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
-        if (sender is Frame frame && frame.Tag is bool clearNavigation)
+        if (sender is Frame { Tag: bool clearNavigation } frame)
         {
             if (clearNavigation)
             {
@@ -127,11 +158,12 @@ public class NavigationService : INavigationService
 
             if (frame.GetDataContext() is INavigationAware navigationAware)
             {
-                navigationAware.OnNavigatedTo(e.ExtraData);
+                _ = navigationAware.OnNavigatedTo(e.ExtraData);
             }
         }
     }
 }
+
 /* TODO
 public bool NavigateTo<T>(object parameter = null, bool clearNavigation = false) where T : Page
 {

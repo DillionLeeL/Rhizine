@@ -10,7 +10,6 @@ public class PersistAndRestoreService : IPersistAndRestoreService
 {
     private readonly IFileService _fileService;
     private readonly ILoggingService _loggingService;
-    private readonly AppConfig _appConfig;
 
     private const string _defaultAppPropertiesFileName = "AppProperties.json";
     private readonly string _folderPath;
@@ -20,24 +19,24 @@ public class PersistAndRestoreService : IPersistAndRestoreService
     {
         _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
-        _appConfig = appConfigOptions?.Value ?? new AppConfig()
+        var appConfig = appConfigOptions?.Value ?? new AppConfig()
         {
             ConfigurationsFolder = Directory.GetCurrentDirectory(),
             AppPropertiesFileName = _defaultAppPropertiesFileName,
             PrivacyStatement = ""
         };
-        _folderPath = _appConfig.SingleFilePublish
+        _folderPath = appConfig.SingleFilePublish
             ? Directory.GetCurrentDirectory()
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), _appConfig.ConfigurationsFolder);
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), appConfig.ConfigurationsFolder);
 
-        _fileName = _appConfig.AppPropertiesFileName ?? _defaultAppPropertiesFileName;
+        _fileName = appConfig.AppPropertiesFileName ?? _defaultAppPropertiesFileName;
     }
 
     public void PersistData()
     {
         try
         {
-            var properties = App.Current?.Properties;
+            var properties = System.Windows.Application.Current?.Properties;
             if (properties != null)
             {
                 _fileService.Save(_folderPath, _fileName, properties);
@@ -59,7 +58,7 @@ public class PersistAndRestoreService : IPersistAndRestoreService
             {
                 foreach (DictionaryEntry property in properties)
                 {
-                    App.Current.Properties[property.Key] = property.Value;
+                    System.Windows.Application.Current.Properties[property.Key] = property.Value;
                 }
             }
         }
