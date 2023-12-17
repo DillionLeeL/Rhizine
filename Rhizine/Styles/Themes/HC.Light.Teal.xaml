@@ -3,10 +3,11 @@
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:markup="clr-namespace:MahApps.Metro.Markup;assembly=MahApps.Metro"
                     mc:Ignorable="options">
 
     <!--  Metadata  -->
-    <system:String x:Key="Theme.Name">Light.Teal</system:String>
+    <system:String x:Key="Theme.Name">Custom.Light.Teal</system:String>
     <system:String x:Key="Theme.Origin">Rhizine</system:String>
     <system:String x:Key="Theme.DisplayName">Teal (Light)</system:String>
     <system:String x:Key="Theme.BaseColorScheme">Light</system:String>
@@ -17,15 +18,19 @@
                      Color="#FF00ABA9"
                      options:Freeze="True" />
 
-    <!--
-    We've defined the most basic colors and brushes.
-    Please add other colors and brushes you use in your application. You should have a look at
-    https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro/Styles/Themes/Theme.Template.xaml
-    for a complete reference of all available theme resources.
-    -->
-
     <!--  *************COLORS START*************  -->
-
+    <!--  ACCENT COLORS  -->
+    <Color x:Key="MahApps.Colors.Highlight"></Color>
+    <Color x:Key="MahApps.Colors.AccentBase">#FF00ABA9</Color>
+    <!--  80%  -->
+    <Color x:Key="MahApps.Colors.Accent">#CC00ABA9</Color>
+    <!--  60%  -->
+    <Color x:Key="MahApps.Colors.Accent2">#9900ABA9</Color>
+    <!--  40%  -->
+    <Color x:Key="MahApps.Colors.Accent3">#6600ABA9</Color>
+    <!--  20%  -->
+    <Color x:Key="MahApps.Colors.Accent4">#3300ABA9</Color>
+    
     <Color x:Key="MahApps.Colors.ThemeForeground">#FF000000</Color>
     <Color x:Key="MahApps.Colors.ThemeBackground">#FFFFFFFF</Color>
     <Color x:Key="MahApps.Colors.IdealForeground">#FF000000</Color>
