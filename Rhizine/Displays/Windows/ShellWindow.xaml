@@ -115,7 +115,10 @@
                                 SelectedOptionsItem="{Binding SelectedOptionsMenuItem}"
                                 OptionsItemCommand="{Binding OptionsMenuItemInvokedCommand}"
                                 OptionsItemTemplateSelector="{StaticResource MenuItemTemplateSelector}"
-                                ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}">
+                                ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+                                PaneBackground="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                PaneForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                TextElement.Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}">
             <controls:HamburgerMenu.Content>
                 <Frame x:Name="shellFrame"
                        Grid.Row="1"

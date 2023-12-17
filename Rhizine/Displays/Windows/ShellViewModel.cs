@@ -26,7 +26,7 @@ public partial class ShellViewModel : BaseViewModel
     private HamburgerMenuItem _selectedOptionsMenuItem;
 
     // TODO: Change the icons and titles for all HamburgerMenuItems here
-    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new()
     {
         new HamburgerMenuGlyphItem() { Label = Resources.ShellLandingPage, Glyph = "\uE8A5", TargetPageType = typeof(LandingViewModel) },
         new HamburgerMenuGlyphItem() { Label = Resources.ShellWebViewPage, Glyph = "\uE8A5", TargetPageType = typeof(WebViewViewModel) },
@@ -35,7 +35,7 @@ public partial class ShellViewModel : BaseViewModel
         new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
     };
 
-    public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+    public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new()
     {
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     };
@@ -46,11 +46,14 @@ public partial class ShellViewModel : BaseViewModel
 
         FlyoutService = flyoutService;
         _loggingService = loggingService;
-        _flyoutService.OnFlyoutOpened += FlyoutOpened;
-        _flyoutService.OnFlyoutClosed += FlyoutClosed;
+        if (_flyoutService != null)
+        {
+            _flyoutService.OnFlyoutOpened += FlyoutOpened;
+            _flyoutService.OnFlyoutClosed += FlyoutClosed;
+        }
     }
 
-    private bool CanGoBack() => _navigationService.CanGoBack;
+    private bool CanGoBack => _navigationService.CanGoBack;
 
     [RelayCommand]
     private void OnLoaded()
@@ -64,7 +67,7 @@ public partial class ShellViewModel : BaseViewModel
         _navigationService.Navigated -= OnNavigated;
     }
 
-    [RelayCommand(CanExecute = nameof(CanGoBack))]
+    [RelayCommand] // (CanExecute = nameof(CanGoBack))
     private void GoBack() => _navigationService.GoBack();
 
     [RelayCommand]
