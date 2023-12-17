@@ -17,7 +17,7 @@ public partial class WaitPopup : Window
     public WaitPopup(PopupBaseViewModel viewModel)
     {
         InitializeComponent();
-        this.DataContext = viewModel;
+        DataContext = viewModel;
     }
 
 }

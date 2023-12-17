@@ -36,7 +36,7 @@ public partial class LandingViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _loggingService.Log(ex);
+            await _loggingService.LogAsync(ex);
         }
     }
 

@@ -17,7 +17,7 @@ public class ListDetailsViewModel : BaseViewModel
         set { SetProperty(ref _selected, value); }
     }
 
-    public ObservableCollection<SampleOrder> SampleItems { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> SampleItems { get; } = new();
 
     public ListDetailsViewModel(ISampleDataService sampleDataService, ILoggingService loggingService)
     {
@@ -27,7 +27,7 @@ public class ListDetailsViewModel : BaseViewModel
 
     public override async Task OnNavigatedTo(object parameter)
     {
-        _loggingService.LogInformation("Navigated to List Details");
+        await _loggingService.LogInformationAsync("Navigated to List Details");
         SampleItems.Clear();
 
         var data = await _sampleDataService.GetListDetailsDataAsync();

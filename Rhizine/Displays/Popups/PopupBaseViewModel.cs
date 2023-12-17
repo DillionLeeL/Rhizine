@@ -8,8 +8,7 @@ namespace Rhizine.Displays.Popups;
 
 public abstract partial class PopupBaseViewModel : ObservableRecipient, IDisposable
 {
-    
-    public PopupBaseViewModel()
+    protected PopupBaseViewModel()
     {
         IsActive = true;
         WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (r, m) =>
@@ -30,16 +29,16 @@ public abstract partial class PopupBaseViewModel : ObservableRecipient, IDisposa
     [RelayCommand]
     public virtual void Hide()
     {
-        if (this.IsClosed)
+        if (IsClosed)
             return;
     }
 
     public virtual void Close()
     {
-        if (this.IsClosed)
+        if (IsClosed)
             return;
 
-        this.IsClosed = true;
+        IsClosed = true;
         OnClosing();
         Dispose();
     }

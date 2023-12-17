@@ -42,10 +42,10 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
     {
         try
         {
-            if (this.IsClosed)
+            if (IsClosed)
                 return;
 
-            this.IsClosed = true;
+            IsClosed = true;
             OnClosing();
             Dispose();
         }

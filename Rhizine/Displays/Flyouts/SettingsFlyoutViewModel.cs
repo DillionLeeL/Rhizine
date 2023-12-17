@@ -10,15 +10,15 @@ namespace Rhizine.Displays.Flyouts
 
         public SettingsFlyoutViewModel()
         {
-            this.Header = "settings";
-            this.Position = Position.Left;
+            Header = "settings";
+            Position = Position.Left;
         }
 
         public SettingsFlyoutViewModel(ILoggingService loggingService)
         {
             _loggingService = loggingService;
-            this.Header = "settings";
-            this.Position = Position.Left;
+            Header = "settings";
+            Position = Position.Left;
             SettingsText = "test";
         }
 

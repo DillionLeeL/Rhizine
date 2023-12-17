@@ -15,15 +15,15 @@ namespace Rhizine.Displays.Flyouts
         public SimpleFrameFlyoutViewModel(Uri source)
         {
             CurrentUri = source;
-            this.Header = "frame";
-            this.Position = Position.Left;
+            Header = "frame";
+            Position = Position.Left;
         }
 
         public SimpleFrameFlyoutViewModel(Uri source, ILoggingService loggingService)
         {
             CurrentUri = source;
-            this.Header = "frame";
-            this.Position = Position.Left;
+            Header = "frame";
+            Position = Position.Left;
             _loggingService = loggingService;
             _loggingService.LogDebug($"SimpleFrameFlyoutViewModel constructor with {source}");
         }
@@ -31,8 +31,8 @@ namespace Rhizine.Displays.Flyouts
         public SimpleFrameFlyoutViewModel(Page page, ILoggingService loggingService)
         {
             CurrentPage = page;
-            this.Header = "frame";
-            this.Position = Position.Left;
+            Header = "frame";
+            Position = Position.Left;
             _loggingService = loggingService;
             _loggingService.LogInformation($"SimpleFrameFlyoutViewModel constructor with {page}");
         }

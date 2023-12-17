@@ -21,7 +21,7 @@ public partial class ContentGridDetailViewModel : BaseViewModel
 
     public override async Task OnNavigatedTo(object parameter)
     {
-        _loggingService.LogDebug($"ContentGridDetailViewModel.OnNavigatedTo({parameter})");
+        await _loggingService.LogDebugAsync($"ContentGridDetailViewModel.OnNavigatedTo({parameter})");
         if (parameter is long orderID)
         {
             var data = await _sampleDataService.GetContentGridDataAsync();
