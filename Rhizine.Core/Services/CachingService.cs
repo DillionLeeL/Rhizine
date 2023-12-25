@@ -3,124 +3,123 @@ using Microsoft.Extensions.Caching.Memory;
 using Rhizine.Core.Services.Interfaces;
 using System.Text.Json;
 
-namespace Rhizine.Core.Services
+namespace Rhizine.Core.Services;
+
+public class CachingService : ICachingService
 {
-    public class CachingService : ICachingService
+    private readonly IMemoryCache _memoryCache;
+    private readonly ILoggingService _loggingService;
+    private readonly IDistributedCache _distributedCache;
+    private readonly bool _useDistributedCacheFallback;
+
+    public CachingService(ILoggingService loggingService, IMemoryCache cache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false)
     {
-        private readonly IMemoryCache _memoryCache;
-        private readonly ILoggingService _loggingService;
-        private readonly IDistributedCache _distributedCache;
-        private readonly bool _useDistributedCacheFallback;
+        _loggingService = loggingService;
+        _memoryCache = cache;
+        _distributedCache = distributedCache;
+        _useDistributedCacheFallback = useDistributedCacheFallback;
+    }
 
-        public CachingService(ILoggingService loggingService, IMemoryCache cache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false)
+
+    public async Task<T> GetAsync<T>(string key)
+    {
+        try
         {
-            _loggingService = loggingService;
-            _memoryCache = cache;
-            _distributedCache = distributedCache;
-            _useDistributedCacheFallback = useDistributedCacheFallback;
-        }
-
-
-        public async Task<T> GetAsync<T>(string key)
-        {
-            try
+            if (_memoryCache.TryGetValue(key, out T value))
             {
-                if (_memoryCache.TryGetValue(key, out T value))
-                {
-                    return value;
-                }
-
-                if (_useDistributedCacheFallback)
-                {
-                    var serializedValue = await _distributedCache.GetStringAsync(key);
-                    if (!string.IsNullOrEmpty(serializedValue))
-                    {
-                        return Deserialize<T>(serializedValue);
-                    }
-                }
-
-                return default;
+                return value;
             }
-            catch (Exception ex)
-            {
-                await _loggingService.LogErrorAsync(ex, $"Error retrieving item from cache for key {key}.");
-                return default;
-            }
-        }
 
-        public async Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions memoryOptions = null, DistributedCacheEntryOptions distributedOptions = null)
-        {
-            try
+            if (_useDistributedCacheFallback)
             {
-                _memoryCache.Set(key, value, memoryOptions ?? new MemoryCacheEntryOptions());
-
-                if (_useDistributedCacheFallback)
+                var serializedValue = await _distributedCache.GetStringAsync(key);
+                if (!string.IsNullOrEmpty(serializedValue))
                 {
-                    var serializedValue = Serialize(value);
-                    await _distributedCache.SetStringAsync(key, serializedValue, distributedOptions ?? new DistributedCacheEntryOptions());
+                    return Deserialize<T>(serializedValue);
                 }
             }
-            catch (Exception ex)
-            {
-                await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
-            }
 
+            return default;
         }
-
-        public async Task<bool> ExistsAsync(string key)
+        catch (Exception ex)
         {
-            try
-            {
-                if (_memoryCache.TryGetValue(key, out _))
-                {
-                    return true;
-                }
+            await _loggingService.LogErrorAsync(ex, $"Error retrieving item from cache for key {key}.");
+            return default;
+        }
+    }
 
-                if (_useDistributedCacheFallback)
-                {
-                    var value = await _distributedCache.GetStringAsync(key);
-                    return !string.IsNullOrEmpty(value);
-                }
+    public async Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions memoryOptions = null, DistributedCacheEntryOptions distributedOptions = null)
+    {
+        try
+        {
+            _memoryCache.Set(key, value, memoryOptions ?? new MemoryCacheEntryOptions());
 
-                return false;
-            }
-            catch (Exception ex)
+            if (_useDistributedCacheFallback)
             {
-                await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
-                return false;
+                var serializedValue = Serialize(value);
+                await _distributedCache.SetStringAsync(key, serializedValue, distributedOptions ?? new DistributedCacheEntryOptions());
             }
         }
-
-        public async Task RemoveAsync(string key)
+        catch (Exception ex)
         {
-            try
+            await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
+        }
+
+    }
+
+    public async Task<bool> ExistsAsync(string key)
+    {
+        try
+        {
+            if (_memoryCache.TryGetValue(key, out _))
             {
-                _memoryCache.Remove(key);
-
-                if (_useDistributedCacheFallback)
-                {
-                    await _distributedCache.RemoveAsync(key);
-                }
+                return true;
             }
-            catch (Exception ex)
+
+            if (_useDistributedCacheFallback)
             {
-                await _loggingService.LogErrorAsync(ex, $"Error removing item from cache for key {key}.");
+                var value = await _distributedCache.GetStringAsync(key);
+                return !string.IsNullOrEmpty(value);
+            }
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
+            return false;
+        }
+    }
+
+    public async Task RemoveAsync(string key)
+    {
+        try
+        {
+            _memoryCache.Remove(key);
+
+            if (_useDistributedCacheFallback)
+            {
+                await _distributedCache.RemoveAsync(key);
             }
         }
-
-        public async Task InvalidateCacheAsync()
+        catch (Exception ex)
         {
-            // custom implementation based on application-specific cache key management.
+            await _loggingService.LogErrorAsync(ex, $"Error removing item from cache for key {key}.");
         }
+    }
 
-        private string Serialize<T>(T value)
-        {
-            return JsonSerializer.Serialize(value);
-        }
+    public async Task InvalidateCacheAsync()
+    {
+        // custom implementation based on application-specific cache key management.
+    }
 
-        private T Deserialize<T>(string serializedValue)
-        {
-            return JsonSerializer.Deserialize<T>(serializedValue);
-        }
+    private string Serialize<T>(T value)
+    {
+        return JsonSerializer.Serialize(value);
+    }
+
+    private T Deserialize<T>(string serializedValue)
+    {
+        return JsonSerializer.Deserialize<T>(serializedValue);
     }
 }
