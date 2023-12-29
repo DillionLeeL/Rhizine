@@ -1,15 +1,10 @@
-﻿using System.Reflection;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
-using Microsoft.UI.Xaml;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.Core.Models;
 using Rhizine.WinUI.Helpers;
-
+using System.Reflection;
 using Windows.ApplicationModel;
+using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
 
 namespace Rhizine.WinUI.ViewModels;
 
@@ -18,32 +13,24 @@ public partial class SettingsViewModel : ObservableRecipient
     private readonly IThemeSelectorService _themeSelectorService;
 
     [ObservableProperty]
-    private ElementTheme _elementTheme;
+    private AppTheme _appTheme;
 
     [ObservableProperty]
     private string _versionDescription;
 
-    public ICommand SwitchThemeCommand
-    {
-        get;
-    }
-
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
         _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
+        _appTheme = _themeSelectorService.GetCurrentTheme();
         _versionDescription = GetVersionDescription();
-
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
     }
+
+    [RelayCommand]
+    public void SwitchTheme(AppTheme theme)
+    {
+        _themeSelectorService.SetThemeAsync(theme);
+    }
+
 
     private static string GetVersionDescription()
     {
