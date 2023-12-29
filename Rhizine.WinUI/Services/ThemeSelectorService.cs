@@ -1,7 +1,10 @@
 ﻿using Microsoft.UI.Xaml;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.Core.Models;
+using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
+using Rhizine.WinUI.Services.Interfaces;
+using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
+//using IThemeSelectorService = Rhizine.WinUI.Services.Interfaces.IThemeSelectorService;
 
 namespace Rhizine.WinUI.Services;
 
@@ -9,7 +12,7 @@ public class ThemeSelectorService : IThemeSelectorService
 {
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
-    public ElementTheme Theme { get; set; } = ElementTheme.Default;
+    public AppTheme Theme { get; set; } = AppTheme.Default;
 
     private readonly ILocalSettingsService _localSettingsService;
 
@@ -21,10 +24,10 @@ public class ThemeSelectorService : IThemeSelectorService
     public async Task InitializeAsync()
     {
         Theme = await LoadThemeFromSettingsAsync();
-        await Task.CompletedTask;
+        await SetRequestedThemeAsync();
     }
 
-    public async Task SetThemeAsync(ElementTheme theme)
+    public async Task SetThemeAsync(AppTheme theme)
     {
         Theme = theme;
 
@@ -36,27 +39,32 @@ public class ThemeSelectorService : IThemeSelectorService
     {
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
-            rootElement.RequestedTheme = Theme;
+            rootElement.RequestedTheme = (ElementTheme)Theme;
 
-            TitleBarHelper.UpdateTitleBar(Theme);
+            TitleBarHelper.UpdateTitleBar((ElementTheme)Theme);
         }
 
         await Task.CompletedTask;
     }
 
-    private async Task<ElementTheme> LoadThemeFromSettingsAsync()
+    public AppTheme GetCurrentTheme()
+    {
+        return Theme;
+    }
+
+    private async Task<AppTheme> LoadThemeFromSettingsAsync()
     {
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
-        if (Enum.TryParse(themeName, out ElementTheme cacheTheme))
+        if (Enum.TryParse(themeName, out AppTheme cacheTheme))
         {
             return cacheTheme;
         }
 
-        return ElementTheme.Default;
+        return AppTheme.Default;
     }
 
-    private async Task SaveThemeInSettingsAsync(ElementTheme theme)
+    private async Task SaveThemeInSettingsAsync(AppTheme theme)
     {
         await _localSettingsService.SaveSettingAsync(SettingsKey, theme.ToString());
     }
