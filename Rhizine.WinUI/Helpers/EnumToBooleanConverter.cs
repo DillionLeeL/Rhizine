@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
+using Rhizine.Core.Models;
 
 namespace Rhizine.WinUI.Helpers;
 
@@ -13,12 +14,12 @@ public class EnumToBooleanConverter : IValueConverter
     {
         if (parameter is string enumString)
         {
-            if (!Enum.IsDefined(typeof(ElementTheme), value))
+            if (!Enum.IsDefined(typeof(AppTheme), value))
             {
                 throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum");
             }
 
-            var enumValue = Enum.Parse(typeof(ElementTheme), enumString);
+            var enumValue = Enum.Parse(typeof(AppTheme), enumString);
 
             return enumValue.Equals(value);
         }
@@ -30,7 +31,7 @@ public class EnumToBooleanConverter : IValueConverter
     {
         if (parameter is string enumString)
         {
-            return Enum.Parse(typeof(ElementTheme), enumString);
+            return Enum.Parse(typeof(AppTheme), enumString);
         }
 
         throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");

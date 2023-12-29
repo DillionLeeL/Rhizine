@@ -1,23 +1,24 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
-using Rhizine.WinUI.Activation;
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.Core.Services.Interfaces;
+using Rhizine.Core.Models;
 using Rhizine.Core.Services;
+using Rhizine.Core.Services.Interfaces;
+using Rhizine.WinUI.Activation;
 using Rhizine.WinUI.Helpers;
-using Rhizine.WinUI.Models;
 using Rhizine.WinUI.Notifications;
 using Rhizine.WinUI.Services;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 using Rhizine.WinUI.Views;
-using LocalSettingsService = Rhizine.WinUI.Services.LocalSettingsService;
-using ILocalSettingsService = Rhizine.WinUI.Contracts.Services.ILocalSettingsService;
+using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
+using PageService = Rhizine.Core.Services.PageService<Microsoft.UI.Xaml.Controls.Page>;
+using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
 
 namespace Rhizine.WinUI;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
+// https://docs.microsoft.com/windows/apps/winui/winui3/
+// https://docs.microsoft.com/windows/apps/windows-app-sdk/deploy-unpackaged-apps
 public partial class App : Application
 {
     // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
@@ -62,8 +63,8 @@ public partial class App : Application
 
             // Services
             services.AddSingleton<IAppNotificationService, AppNotificationService>();
-            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-            services.AddSingleton<Contracts.Services.IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<ILocalSettingsService, Services.LocalSettingsService>();
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddTransient<IWebViewService, WebViewService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
 

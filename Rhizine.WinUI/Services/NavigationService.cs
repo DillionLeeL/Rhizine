@@ -1,18 +1,16 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using CommunityToolkit.WinUI.UI.Animations;
-
+﻿using CommunityToolkit.WinUI.UI.Animations;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.WinUI.Contracts.ViewModels;
+using Rhizine.Core.Models.Interfaces;
 using Rhizine.WinUI.Helpers;
+using Rhizine.WinUI.Services.Interfaces;
+using System.Diagnostics.CodeAnalysis;
+using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
 
+// TODO
 namespace Rhizine.WinUI.Services;
 
-// For more information on navigation between pages see
-// https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
 public class NavigationService : INavigationService
 {
     private readonly IPageService _pageService;
@@ -85,7 +83,9 @@ public class NavigationService : INavigationService
 
     public bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false)
     {
-        var pageType = _pageService.GetPageType(pageKey);
+        var page = _pageService.GetPage(pageKey);
+        if (page == null) return false;
+        var pageType = page.GetType();
 
         if (_frame != null && (_frame.Content?.GetType() != pageType || (parameter != null && !parameter.Equals(_lastParameterUsed))))
         {
@@ -106,7 +106,7 @@ public class NavigationService : INavigationService
 
         return false;
     }
-
+   
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
         if (sender is Frame frame)

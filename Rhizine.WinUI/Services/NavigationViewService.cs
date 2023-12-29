@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.UI.Xaml.Controls;
-
-using Rhizine.WinUI.Contracts.Services;
 using Rhizine.WinUI.Helpers;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
+using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
 
 namespace Rhizine.WinUI.Services;
 
@@ -95,7 +95,7 @@ public class NavigationViewService : INavigationViewService
     {
         if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
         {
-            return _pageService.GetPageType(pageKey) == sourcePageType;
+            return _pageService.GetPage(pageKey).GetType() == sourcePageType;
         }
 
         return false;
