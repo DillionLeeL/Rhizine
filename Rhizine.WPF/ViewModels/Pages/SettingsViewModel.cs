@@ -8,13 +8,12 @@ using Rhizine.Core.ViewModels;
 using Rhizine.WPF.Models;
 using Rhizine.WPF.Properties;
 
-namespace Rhizine.Displays.Pages;
+namespace Rhizine.WPF.ViewModels.Pages;
 
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly AppConfig _appConfig;
     private readonly IThemeSelectorService _themeSelectorService;
-    private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
     private readonly ILoggingService _loggingService;
 
@@ -30,17 +29,16 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private Flyout _testFlyout;
 
-    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService,
+    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService,
                              IApplicationInfoService applicationInfoService, ILoggingService loggingService)
     {
         _appConfig = appConfig?.Value ?? new AppConfig();
         _themeSelectorService = themeSelectorService;
-        _systemService = systemService;
         _applicationInfoService = applicationInfoService;
         _loggingService = loggingService;
     }
 
-    public override async Task OnNavigatedTo(object parameter)
+    public override void OnNavigatedTo(object parameter)
     {
         VersionDescription = $"{Resources.AppDisplayName} - {_applicationInfoService.GetVersion()}";
         Theme = _themeSelectorService.GetCurrentTheme();

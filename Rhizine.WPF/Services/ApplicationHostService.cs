@@ -9,10 +9,20 @@ using Rhizine.WPF.Views.Interfaces;
 using System.Windows.Navigation;
 using Microsoft.Extensions.Options;
 using Rhizine.WPF.Models;
+using PageService = Rhizine.Core.Services.PageService<System.Windows.Controls.Page>;
+using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
+using Rhizine.WPF.Views.Pages;
+using Rhizine.WPF.ViewModels.Pages;
 
 namespace Rhizine.WPF.Services;
 
-// TODO
+/// <summary>
+/// The ApplicationHostService class is responsible for the lifecycle management of the application,
+/// including initialization, start-up processes, and graceful shutdown. It integrates various services
+/// such as navigation, theme selection, data persistence, flyout management, toast notifications, and
+/// identity services. This class implements the IHostedService interface, allowing it to be managed
+/// by the host during application start-up and shutdown.
+/// </summary>
 public class ApplicationHostService : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
@@ -21,15 +31,28 @@ public class ApplicationHostService : IHostedService
     private readonly IPersistAndRestoreService _persistAndRestoreService;
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
-    private readonly IIdentityService _identityService;
+    private readonly IIdentityService _identityService; // TODO
     private readonly IToastNotificationsService _toastNotificationsService;
+    private readonly IPageService _pageService;
     private readonly AppConfig _appConfig;
     private IShellWindow _shellWindow;
     private bool _isInitialized;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationHostService"/> class with required services.
+    /// </summary>
+    /// <param name="serviceProvider">Service provider for dependency injection.</param>
+    /// <param name="activationHandlers">Collection of activation handlers for handling different types of app activations.</param>
+    /// <param name="navigationService">Service for managing navigation within the application.</param>
+    /// <param name="themeSelectorService">Service for selecting and applying application themes.</param>
+    /// <param name="persistAndRestoreService">Service for persisting and restoring application data.</param>
+    /// <param name="flyoutService">Service for managing flyout UI components.</param>
+    /// <param name="toastNotificationsService">Service for showing toast notifications.</param>
+    /// <param name="identityService">Service for managing user identity and authentication.</param>
+    /// <param name="config">Configuration settings for the application.</param>
     public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService<NavigationEventArgs> navigationService,
         IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService, IFlyoutService flyoutService,
-        IToastNotificationsService toastNotificationsService, IIdentityService identityService, IOptions<AppConfig> config) // IUserDataService userDataService
+        IToastNotificationsService toastNotificationsService, IPageService PageService, IOptions<AppConfig> config) // IUserDataService userDataService
     {
         _serviceProvider = serviceProvider;
         _activationHandlers = activationHandlers;
@@ -38,13 +61,23 @@ public class ApplicationHostService : IHostedService
         _persistAndRestoreService = persistAndRestoreService;
         _flyoutService = flyoutService;
         _toastNotificationsService = toastNotificationsService;
-        _identityService = identityService;
+        _pageService = PageService;
         _appConfig = config.Value;
     }
 
+    /// <summary>
+    /// Starts the application's services asynchronously. This includes initializing the identity service,
+    /// handling activation logic, and performing startup routines.
+    /// </summary>
+    /// <param name="cancellationToken">Token for handling task cancellation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await InitializeAsync();
+        if (!_isInitialized)
+        {
+            Initialize();
+            _isInitialized = true;
+        }
 
         if (_identityService is not null)
         {
@@ -53,38 +86,42 @@ public class ApplicationHostService : IHostedService
         }
 
         await HandleActivationAsync(cancellationToken);
-        await StartupAsync();
-        _isInitialized = true;
+        Startup();
     }
 
-    private async Task InitializeAsync()
+    private void Initialize()
     {
-        if (!_isInitialized)
-        {
-            _persistAndRestoreService.RestoreData();
-            _themeSelectorService.InitializeTheme();
-            await Task.CompletedTask;
-        }
+        _persistAndRestoreService.RestoreData();
+        _themeSelectorService.Initialize();
+        _pageService.Register<LandingViewModel, LandingPage>();
+        _pageService.Register<WebViewViewModel, WebViewPage>();
+        _pageService.Register<DataGridViewModel, DataGridPage>();
+        _pageService.Register<ContentGridViewModel, ContentGridPage>();
+        _pageService.Register<ContentGridDetailViewModel, ContentGridDetailPage>();
+        _pageService.Register<ListDetailsViewModel, ListDetailsPage>();
+        _pageService.Register<SettingsViewModel, SettingsPage>();
+
     }
 
-    private async Task StartupAsync()
+    private void Startup()
     {
-        if (!_isInitialized)
-        {
-            _toastNotificationsService.ShowToastNotificationSample();
-            await Task.CompletedTask;
-        }
+        _toastNotificationsService.ShowToastNotificationSample();
     }
 
-    public async Task StopAsync(CancellationToken cancellationToken)
+    /// <summary>
+    /// Stops the application's services asynchronously. This includes persisting application data.
+    /// </summary>
+    /// <param name="cancellationToken">Token for handling task cancellation.</param>
+    /// <returns>A task representing the completion of the operation.</returns>
+    public Task StopAsync(CancellationToken cancellationToken)
     {
         _persistAndRestoreService.PersistData();
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     private async Task HandleActivationAsync(CancellationToken cancellationToken)
     {
-        var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(null));
+        var activationHandler = _activationHandlers.FirstOrDefault(h => h?.CanHandle(null) == true);
         if (activationHandler != null)
         {
             await activationHandler.HandleAsync(null);
@@ -92,7 +129,7 @@ public class ApplicationHostService : IHostedService
 
         if (!System.Windows.Application.Current.Windows.OfType<IShellWindow>().Any())
         {
-            _shellWindow = _serviceProvider.GetService(typeof(IShellWindow)) as IShellWindow;
+            _shellWindow = _serviceProvider.GetRequiredService<IShellWindow>();
             _navigationService.Initialize(_shellWindow.GetNavigationFrame());
             _flyoutService.Initialize();
             _shellWindow.ShowWindow();
