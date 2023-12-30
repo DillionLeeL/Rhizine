@@ -17,6 +17,8 @@ All rights reserved.
 Copyright (c) .NET Foundation, Jan Karger, 
 Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
 
+# .NET MAUI Project and Item Templates - MIT License (MIT)
+Copyright (c) 2021 Vijay Anand E G
 
 ## MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy

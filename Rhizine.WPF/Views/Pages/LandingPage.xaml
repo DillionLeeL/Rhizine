@@ -1,0 +1,31 @@
+﻿<Page x:Class="Rhizine.WPF.Views.Pages.LandingPage"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:properties="clr-namespace:Rhizine.WPF.Properties"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800">
+    <VirtualizingStackPanel>
+
+        <TextBlock Style="{StaticResource PageTitleStyle}"
+                   Margin="{StaticResource MediumLeftMargin}"
+                   Text="{x:Static properties:Resources.LandingPageTitle}" />
+        <Button Width="110"
+                Height="50"
+                Content="Settingsflyout"
+                Margin="5,60"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding FlyoutService.OpenFlyoutCommand}"
+                CommandParameter="SettingsFlyout" />
+        <Button Width="110"
+                Height="50"
+                Margin="5"
+                Content="Open popup"
+                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                Command="{Binding ShowPopupCommand}"
+                        />
+    </VirtualizingStackPanel>
+</Page>
