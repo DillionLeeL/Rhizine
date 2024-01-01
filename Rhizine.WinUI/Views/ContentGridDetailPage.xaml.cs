@@ -2,8 +2,8 @@
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.Core.Services.Interfaces;
+//using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 
 namespace Rhizine.WinUI.Views;
@@ -17,7 +17,7 @@ public sealed partial class ContentGridDetailPage : Page
 
     public ContentGridDetailPage()
     {
-        ViewModel = App.GetService<ContentGridDetailViewModel>();
+        ViewModel = App.GetService<ContentGridDetailViewModel>() ?? throw new ArgumentNullException(nameof(ViewModel));
         InitializeComponent();
     }
 
@@ -32,11 +32,11 @@ public sealed partial class ContentGridDetailPage : Page
         base.OnNavigatingFrom(e);
         if (e.NavigationMode == NavigationMode.Back)
         {
-            var navigationService = App.GetService<INavigationService>();
+            //var navigationService = App.GetService<INavigationService>();
 
             if (ViewModel.Item != null)
             {
-                navigationService.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
+                ViewModel.NavigationService.NavigationSource.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
             }
         }
     }
