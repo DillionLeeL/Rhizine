@@ -13,6 +13,7 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private bool _canExecuteAsync;
 
+    // TODO
     public IAsyncRelayCommand LoadCommand { get; set; }
 
     public BaseViewModel()
@@ -49,11 +50,11 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
         return Task.CompletedTask;
     }
 
-    public virtual async Task OnNavigatedTo(object parameter)
+    public virtual void OnNavigatedTo(object parameter)
     {
     }
 
-    public virtual async Task OnNavigatedFrom()
+    public virtual void OnNavigatedFrom()
     {
     }
 }

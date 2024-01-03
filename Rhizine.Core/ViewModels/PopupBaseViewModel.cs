@@ -18,8 +18,10 @@ public abstract partial class PopupBaseViewModel : ObservableRecipient, IDisposa
             }
         });
     }
+
     [ObservableProperty]
     private bool _isClosed;
+
     // Method to show the popup. Must be implemented by derived classes.
     [RelayCommand]
     public abstract void Show();
@@ -41,8 +43,10 @@ public abstract partial class PopupBaseViewModel : ObservableRecipient, IDisposa
         OnClosing();
         Dispose();
     }
+
     // Event to signal when the popup is closing.
     public event EventHandler Closing;
+
     // Method called when the popup is closing. Can be overridden in derived classes.
     protected virtual void OnClosing()
     {
