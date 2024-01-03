@@ -138,7 +138,7 @@ public class FileService : IFileService
     /// <param name="path">The relative path to the embedded resource.</param>
     /// <param name="assemblyType">The type from which to infer the assembly.</param>
     /// <returns>A Stream of the opened file.</returns>
-    public static async Task<Stream> OpenForReadAsync(string path, Type assemblyType)
+    public async Task<Stream> OpenForReadAsync(string path, Type assemblyType)
     {
         return await GetEmbeddedFileStreamAsync(assemblyType, path);
     }
@@ -161,7 +161,7 @@ public class FileService : IFileService
     /// <param name="path">The relative path to the embedded resource.</param>
     /// <param name="assemblyType">The type from which to infer the assembly.</param>
     /// <returns>A string containing all text from the file.</returns>
-    public static async Task<string> ReadAllTextAsync(string path, Type assemblyType)
+    public async Task<string> ReadAllTextAsync(string path, Type assemblyType)
     {
         await using var stream = await OpenForReadAsync(path, assemblyType);
         using var reader = new StreamReader(stream);
@@ -187,7 +187,7 @@ public class FileService : IFileService
     /// <param name="path">The relative path to the embedded resource.</param>
     /// <param name="assemblyType">The type from which to infer the assembly.</param>
     /// <returns>A byte array containing the file's contents.</returns>
-    public static async Task<byte[]> ReadAllBytesAsync(string path, Type assemblyType)
+    public async Task<byte[]> ReadAllBytesAsync(string path, Type assemblyType)
     {
         await using var stream = await OpenForReadAsync(path, assemblyType);
         await using var reader = new MemoryStream();
@@ -294,7 +294,7 @@ public class FileService : IFileService
     /// <param name="assemblyType">The type from which to infer the assembly.</param>
     /// <param name="fileName">The name of the file to retrieve.</param>
     /// <returns>A Stream of the embedded resource file.</returns>
-    private static async Task<Stream> GetEmbeddedFileStreamAsync(Type assemblyType, string fileName)
+    public async Task<Stream?> GetEmbeddedFileStreamAsync(Type assemblyType, string fileName)
     {
         await Task.Yield();
 
