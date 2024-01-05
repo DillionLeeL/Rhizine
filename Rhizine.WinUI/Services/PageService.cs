@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Controls;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 using Rhizine.WinUI.Views;
 
@@ -13,7 +12,7 @@ public class PageService : IPageService
     private readonly Dictionary<string, Type> _pages = new();
 
     public PageService()
-    {
+    {    
         Configure<MainViewModel, MainPage>();
         Configure<WebViewViewModel, WebViewPage>();
         Configure<DataGridViewModel, DataGridPage>();
