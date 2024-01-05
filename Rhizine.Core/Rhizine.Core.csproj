@@ -8,15 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Flyouts\**" />
+    <Compile Remove="ViewModels\Pages\**" />
+    <EmbeddedResource Remove="ViewModels\Flyouts\**" />
+    <EmbeddedResource Remove="ViewModels\Pages\**" />
+    <None Remove="ViewModels\Flyouts\**" />
+    <None Remove="ViewModels\Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Helpers\ToastNotificationActivationHandler.cs" />
-    <Compile Remove="Services\Interfaces\IPageService.cs" />
+    <Compile Remove="Services\IdentityService.cs" />
     <Compile Remove="Services\Interfaces\IPopupService.cs" />
     <Compile Remove="Services\Interfaces\ISystemService.cs" />
     <Compile Remove="Services\NavigationService.cs" />
-    <Compile Remove="Services\PageService.cs" />
     <Compile Remove="Services\PersistAndRestoreService.cs" />
     <Compile Remove="Services\PopupService.cs" />
     <Compile Remove="Services\SystemService.cs" />
+    <Compile Remove="ViewModels\ShellDialogViewModel.cs" />
+    <Compile Remove="ViewModels\ShellViewModel.cs" />
+    <Compile Remove="ViewModels\WaitPopupViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
