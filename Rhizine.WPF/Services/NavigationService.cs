@@ -1,24 +1,22 @@
 ﻿using Rhizine.Core.Models.Interfaces;
 using Rhizine.Core.Services.Interfaces;
-using Rhizine.WPF.Helpers;
-using Rhizine.WPF.Services.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
 
 namespace Rhizine.WPF.Services;
 
-public class NavigationService : INavigationService<NavigationEventArgs>
+public class NavigationService : INavigationService
 {
     private readonly IPageService _pageService;
     private readonly ILoggingService _loggingService;
-    private Frame _frame;
-    private object _lastParameterUsed;
 
     public event EventHandler<NavigationEventArgs> Navigated;
+    private Frame _frame;
+    public Frame NavigationSource => _frame;
+    private object _lastParameterUsed;
 
-    public bool CanGoBack => _frame?.CanGoBack ?? false;
     /// <summary>
     /// Initializes a new instance of the NavigationService class.
     /// </summary>
@@ -30,17 +28,16 @@ public class NavigationService : INavigationService<NavigationEventArgs>
         _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
     }
 
+    [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
+    public bool CanGoBack => _frame?.CanGoBack ?? false;
+
     /// <summary>
     /// Initializes the navigation service with the specified frame.
     /// </summary>
-    /// <param name="parameter">The frame to be used for navigation.</param>
-    public void Initialize(object parameter)
+    /// <param name="source">The frame to be used for navigation.</param>
+    public void Initialize(Frame source)
     {
-        if (parameter is not Frame shellFrame)
-        {
-            throw new ArgumentException($"The parameter for the {nameof(Initialize)} method must be a {nameof(Frame)}.");
-        }
-        _frame = shellFrame;
+        _frame = source;
         _frame.Navigated += OnNavigated;
     }
 
@@ -49,13 +46,33 @@ public class NavigationService : INavigationService<NavigationEventArgs>
     /// </summary>
     public void UnsubscribeNavigation()
     {
+        if (_frame == null) return;
+
         _frame.Navigated -= OnNavigated;
-        _frame?.ClearNavigation();
+        _frame.ClearNavigation();
         _frame = null;
     }
 
     /// <summary>
-    /// Navigates to the previous page in the navigation history, if available.
+    /// Navigates to the previous page in the navigation history, if available, and notifies involved view models about the navigation change.
+    /// </summary>
+    /// <returns><c>true</c> if navigation was successful; otherwise, <c>false</c>.</returns>
+    public bool GoBack()
+    {
+        if (!CanGoBack) return false;
+
+        var vmBeforeNavigation = _frame.GetDataContext();
+        _frame.GoBack();
+        if (vmBeforeNavigation is INavigationAware navigationAware)
+        {
+            navigationAware.OnNavigatedFrom();
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Navigates to the previous page in the navigation history, if available, and notifies involved view models about the navigation change.
     /// </summary>
     public async Task GoBackAsync()
     {
@@ -151,7 +168,7 @@ public class NavigationService : INavigationService<NavigationEventArgs>
     }
 
     private bool ShouldNavigateTo(Type pageType, object parameter) =>
-        _frame.Content?.GetType() != pageType || !Equals(parameter, _lastParameterUsed);
+        _frame.Content?.GetType() != pageType || (parameter?.Equals(_lastParameterUsed) == false);
 
     /// <summary>
     /// Event handler for the Navigated event. It clears the navigation history if required and
@@ -176,25 +193,4 @@ public class NavigationService : INavigationService<NavigationEventArgs>
             }
         }
     }
-
 }
-
-/* TODO
-public bool NavigateTo<T>(object parameter = null, bool clearNavigation = false) where T : Page
-{
-    var pageKey = typeof(T).Name;
-    if (_frame.Content?.GetType() != typeof(T) || (parameter != null && !parameter.Equals(_lastParameterUsed)))
-    {
-        _frame.SetCurrentValue(System.Windows.FrameworkElement.TagProperty, clearNavigation);
-        var page = _pageService.GetPage<T>();
-        var navigated = _frame.Navigate(page, parameter);
-        if (navigated)
-        {
-            _lastParameterUsed = parameter;
-            ((INavigationAware)_frame.Content)?.OnLeavingFromPage(_lastParameterUsed?.GetType());
-        }
-        return navigated;
-    }
-    return false;
-}
-*/
