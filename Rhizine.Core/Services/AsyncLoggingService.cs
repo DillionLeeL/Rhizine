@@ -3,6 +3,8 @@ using Rhizine.Core.Models;
 using Rhizine.Core.Services.Interfaces;
 using System.Diagnostics;
 
+// Just an example, async logging through providers like serilog
+// are much more efficient and should be used instead.
 namespace Rhizine.Core.Services
 {
     public class AsyncLoggingService : ILoggingService

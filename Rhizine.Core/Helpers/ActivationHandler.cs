@@ -1,4 +1,4 @@
-﻿namespace Rhizine.WinUI.Activation;
+﻿namespace Rhizine.Core.Helpers;
 
 // Extend this class to implement new ActivationHandlers. See DefaultActivationHandler for an example.
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/activation.md

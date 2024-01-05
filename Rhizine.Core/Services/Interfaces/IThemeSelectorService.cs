@@ -4,9 +4,16 @@ namespace Rhizine.Core.Services.Interfaces;
 
 public interface IThemeSelectorService
 {
-    void InitializeTheme();
+    void Initialize() => InitializeAsync().ConfigureAwait(false);
 
-    void SetTheme(AppTheme theme);
+    Task InitializeAsync();
+
+    void SetTheme(AppTheme theme) => SetThemeAsync(theme).ConfigureAwait(false);
+
+    Task SetThemeAsync(AppTheme theme);
 
     AppTheme GetCurrentTheme();
+
+    //Task<AppTheme> LoadThemeFromSettingsAsync();
+    //Task SaveThemeInSettingsAsync(AppTheme theme);
 }
