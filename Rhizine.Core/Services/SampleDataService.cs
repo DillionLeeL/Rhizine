@@ -3,9 +3,10 @@ using Rhizine.Core.Services.Interfaces;
 
 namespace Rhizine.Core.Services;
 
+// From Template Studio
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO: The following classes have been created to display sample data. Delete these files once your app is using real data.
-// 1. Contracts/Services/ISampleDataService.cs
+// 1. Services/ISampleDataService.cs
 // 2. Services/SampleDataService.cs
 // 3. Models/SampleCompany.cs
 // 4. Models/SampleOrder.cs
@@ -53,6 +54,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 814.50,
                         Status = "Shipped",
                         SymbolCode = 57643,
+                        SymbolName = "Globe",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -107,6 +109,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 845.80,
                         Status = "Closed",
                         SymbolCode = 57737,
+                        SymbolName = "Audio",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -149,6 +152,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 471.20,
                         Status = "Closed",
                         SymbolCode = 57699,
+                        SymbolName = "Calendar",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -207,6 +211,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 469.75,
                         Status = "Shipped",
                         SymbolCode = 57620,
+                        SymbolName = "Camera",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -261,6 +266,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 507.20,
                         Status = "Shipped",
                         SymbolCode = 57633,
+                        SymbolName = "Clock",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -343,6 +349,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 978.50,
                         Status = "Closed",
                         SymbolCode = 57661,
+                        SymbolName = "Contact",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -385,6 +392,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 2082.00,
                         Status = "Closed",
                         SymbolCode = 57619,
+                        SymbolName = "Favorite",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
@@ -439,6 +447,7 @@ public class SampleDataService : ISampleDataService
                         OrderTotal = 375.50,
                         Status = "Closed",
                         SymbolCode = 57615,
+                        SymbolName = "Home",
                         Details = new List<SampleOrderDetail>()
                         {
                             new()
