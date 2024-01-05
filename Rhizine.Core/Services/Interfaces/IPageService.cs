@@ -1,8 +1,12 @@
-﻿using System.Windows.Controls;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Rhizine.Core.Services.Interfaces;
 
-public interface IPageService
+public interface IPageService<TPage>
 {
-    Page GetPage(string key);
+    TPage GetPage(string key);
+
+    public void Register<VM, V>()
+        where VM : ObservableObject
+        where V : TPage;
 }

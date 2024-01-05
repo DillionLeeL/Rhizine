@@ -1,15 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Rhizine.Core.Displays.Pages;
 using Rhizine.Core.Services.Interfaces;
-using Rhizine.Core.Views;
 using System.Collections.Concurrent;
-using System.Windows.Controls;
 
 namespace Rhizine.Core.Services;
 
-public class PageService : IPageService
+// Example WPF usage: using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
+
+public class PageService<TPage> : IPageService<TPage>
 {
-    private readonly ConcurrentDictionary<string, Lazy<Page>> _pagesCache = new();
+    private readonly ConcurrentDictionary<string, Lazy<TPage>> _pagesCache = new();
     private readonly ConcurrentDictionary<string, Type> _pageTypes = new();
     private readonly IServiceProvider _serviceProvider;
 
@@ -21,21 +20,6 @@ public class PageService : IPageService
     public PageService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        Initialize();
-    }
-
-    /// <summary>
-    /// Initializes the page service by registering known ViewModel-Page mappings.
-    /// </summary>
-    private void Initialize()
-    {
-        Register<LandingViewModel, LandingPage>();
-        Register<WebViewViewModel, WebViewPage>();
-        Register<DataGridViewModel, DataGridPage>();
-        Register<ContentGridViewModel, ContentGridPage>();
-        Register<ContentGridDetailViewModel, ContentGridDetailPage>();
-        Register<ListDetailsViewModel, ListDetailsPage>();
-        Register<SettingsViewModel, SettingsPage>();
     }
 
     /// <summary>
@@ -45,7 +29,7 @@ public class PageService : IPageService
     /// <returns>A Page instance associated with the given key.</returns>
     /// <exception cref="ArgumentException">Thrown if the key is not found in the page mappings.</exception>
     /// <exception cref="InvalidOperationException">Thrown if the resolved service is not a Page.</exception>
-    public Page GetPage(string key)
+    public TPage GetPage(string key)
     {
         if (!_pagesCache.TryGetValue(key, out var lazyPage))
         {
@@ -54,9 +38,9 @@ public class PageService : IPageService
                 throw new ArgumentException($"Page not found for key {key}. Ensure it is configured properly in PageService.");
             }
 
-            lazyPage = new Lazy<Page>(() =>
+            lazyPage = new Lazy<TPage>(() =>
             {
-                if (_serviceProvider.GetService(pageType) is Page page)
+                if (_serviceProvider.GetService(pageType) is TPage page)
                 {
                     return page;
                 }
@@ -76,9 +60,9 @@ public class PageService : IPageService
     /// <typeparam name="VM">The type of the ViewModel.</typeparam>
     /// <typeparam name="V">The type of the Page.</typeparam>
     /// <exception cref="ArgumentException">Thrown if the ViewModel type is already registered.</exception>
-    private void Register<VM, V>()
+    public void Register<VM, V>()
             where VM : ObservableObject
-            where V : Page
+            where V : TPage
     {
         var key = typeof(VM).FullName;
         var type = typeof(V);
