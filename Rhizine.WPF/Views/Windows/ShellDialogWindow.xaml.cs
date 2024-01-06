@@ -1,8 +1,7 @@
-﻿using System.Windows.Controls;
-
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using Rhizine.WPF.ViewModels;
 using Rhizine.WPF.Views.Interfaces;
+using System.Windows.Controls;
 
 namespace Rhizine.WPF.Views.Windows;
 

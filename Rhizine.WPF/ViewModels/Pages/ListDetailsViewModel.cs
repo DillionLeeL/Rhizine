@@ -42,7 +42,5 @@ public partial class ListDetailsViewModel : BaseViewModel
         {
             await _loggingService.LogErrorAsync(ex, "Error while navigating to List Details");
         }
-
     }
-
 }

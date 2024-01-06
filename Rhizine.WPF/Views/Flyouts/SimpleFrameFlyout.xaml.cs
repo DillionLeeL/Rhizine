@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 
 namespace Rhizine.WPF.Views.Flyouts;
+
 public partial class SimpleFrameFlyout : UserControl
 {
     public SimpleFrameFlyout()

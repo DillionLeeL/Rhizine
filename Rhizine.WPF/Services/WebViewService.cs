@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using Rhizine.WPF.Services.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rhizine.WPF.Services;
 
@@ -27,7 +27,7 @@ public class WebViewService : IWebViewService
     public void Initialize(WebView2 webView)
     {
         _webView = webView;
-         _webView.NavigationCompleted += OnWebViewNavigationCompleted;
+        _webView.NavigationCompleted += OnWebViewNavigationCompleted;
     }
 
     public void GoBack() => _webView?.GoBack();

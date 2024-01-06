@@ -9,13 +9,14 @@ using Rhizine.WPF.Properties;
 using Rhizine.WPF.Services.Interfaces;
 using Rhizine.WPF.ViewModels.Pages;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace Rhizine.Displays.Windows;
 
 public partial class ShellViewModel : BaseViewModel
 {
-    private readonly INavigationService<NavigationEventArgs> _navigationService;
+    private readonly INavigationService _navigationService;
     private readonly ILoggingService _loggingService;
 
     [ObservableProperty]
@@ -42,7 +43,7 @@ public partial class ShellViewModel : BaseViewModel
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     };
 
-    public ShellViewModel(INavigationService<NavigationEventArgs> navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
+    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
     {
         _navigationService = navigationService;
 

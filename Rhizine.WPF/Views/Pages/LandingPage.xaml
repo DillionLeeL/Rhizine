@@ -25,7 +25,6 @@
                 Margin="5"
                 Content="Open popup"
                 Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
-                Command="{Binding ShowPopupCommand}"
-                        />
+                Command="{Binding ShowPopupCommand}" />
     </VirtualizingStackPanel>
 </Page>

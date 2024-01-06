@@ -21,12 +21,6 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-using PageService = Rhizine.Core.Services.PageService<System.Windows.Controls.Page>;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
-
-
-// You can also make custom event args
-using NavigationEventArgs = System.Windows.Navigation.NavigationEventArgs;
 
 namespace Rhizine;
 
@@ -106,7 +100,7 @@ public partial class App : Application
         services.AddSingleton<ISampleDataService, SampleDataService>();
         //services.AddSingleton<ISystemService, SystemService>();
         services.AddSingleton<IPageService, PageService>();
-        services.AddSingleton<INavigationService<NavigationEventArgs>, NavigationService>();
+        services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFlyoutService, FlyoutService>();
         services.AddSingleton<IPopupService, PopupService>();
         services.AddSingleton<IWebViewService, WebViewService>();

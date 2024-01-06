@@ -1,8 +1,7 @@
-﻿using System.Windows;
-
-using MahApps.Metro.Controls;
-
+﻿using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
+using System.Windows;
+
 // TODO
 namespace Rhizine.WPF.Behaviors;
 

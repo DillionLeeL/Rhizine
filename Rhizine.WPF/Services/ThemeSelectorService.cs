@@ -3,7 +3,6 @@ using MahApps.Metro.Theming;
 using Rhizine.Core.Models;
 using Rhizine.Core.Services.Interfaces;
 using System.Windows;
-using Windows.System;
 
 namespace Rhizine.WPF.Services;
 
@@ -66,7 +65,7 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public async Task SetThemeAsync(AppTheme theme)
     {
-       await Task.Run(() => SetTheme(theme)).ConfigureAwait(true);
+        await Task.Run(() => SetTheme(theme)).ConfigureAwait(true);
     }
 
     // TODO: loading themes from settings

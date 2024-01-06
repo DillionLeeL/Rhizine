@@ -2,22 +2,21 @@
 using Rhizine.Core.Models;
 using Rhizine.Core.Services.Interfaces;
 using Rhizine.Core.ViewModels;
-using Rhizine.Displays.Pages;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace Rhizine.WPF.ViewModels.Pages;
 
 public partial class ContentGridViewModel : BaseViewModel
 {
-    private readonly INavigationService<NavigationEventArgs> _navigationService;
+    private readonly INavigationService _navigationService;
     private readonly ISampleDataService _sampleDataService;
     private readonly ILoggingService _loggingService;
 
     public ObservableCollection<SampleOrder> Source { get; } = [];
 
-    public ContentGridViewModel(ISampleDataService sampleDataService, INavigationService<NavigationEventArgs> navigationService, ILoggingService loggingService)
+    public ContentGridViewModel(ISampleDataService sampleDataService, INavigationService navigationService, ILoggingService loggingService)
     {
         _sampleDataService = sampleDataService;
         _navigationService = navigationService;
@@ -41,8 +40,8 @@ public partial class ContentGridViewModel : BaseViewModel
         {
             await _loggingService.LogErrorAsync(ex, "Error while navigating to Content Grid");
         }
-
     }
+
     [RelayCommand]
     private void NavigateToDetail(SampleOrder order)
     {

@@ -44,7 +44,6 @@ public partial class SettingsViewModel : BaseViewModel
         Theme = _themeSelectorService.GetCurrentTheme();
     }
 
-
     [RelayCommand]
     private void SetTheme(string themeName)
     {
