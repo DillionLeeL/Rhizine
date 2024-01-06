@@ -1,11 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Navigation;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Rhizine.Core.Helpers;
 using Rhizine.Core.Services.Interfaces;
-using Rhizine.WPF.Services;
-using Rhizine.WPF.Services.Interfaces;
 using Rhizine.WPF.Views.Interfaces;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 // TODO
 // https://docs.microsoft.com/windows/apps/design/shell/tiles-and-notifications/send-local-toast?tabs=desktop
@@ -18,9 +17,9 @@ public class ToastNotificationActivationHandler : IActivationHandler
 
     private readonly IConfiguration _config;
     private readonly IServiceProvider _serviceProvider;
-    private readonly INavigationService<NavigationEventArgs> _navigationService;
+    private readonly INavigationService<Frame, NavigationEventArgs> _navigationService;
 
-    public ToastNotificationActivationHandler(IConfiguration config, IServiceProvider serviceProvider, INavigationService<NavigationEventArgs> navigationService)
+    public ToastNotificationActivationHandler(IConfiguration config, IServiceProvider serviceProvider, INavigationService<Frame, NavigationEventArgs> navigationService)
     {
         _config = config;
         _serviceProvider = serviceProvider;
