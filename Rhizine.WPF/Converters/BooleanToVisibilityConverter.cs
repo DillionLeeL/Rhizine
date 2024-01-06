@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace Rhizine.WPF.Converters;
 
 /// <summary>
-/// Converts a boolean value to and from Visibility. 
+/// Converts a boolean value to and from Visibility.
 /// Can be reversed with the Reverse property or a parameter.
 /// </summary>
 [ValueConversion(typeof(bool), typeof(Visibility))]

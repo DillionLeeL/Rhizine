@@ -1,18 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Rhizine.Core.Helpers;
 using Rhizine.Core.Services.Interfaces;
 using Rhizine.Displays.Pages;
-using Rhizine.Core.Services;
-using Rhizine.WPF.Services.Interfaces;
-using Rhizine.WPF.Views.Interfaces;
-using System.Windows.Navigation;
-using Microsoft.Extensions.Options;
 using Rhizine.WPF.Models;
-using PageService = Rhizine.Core.Services.PageService<System.Windows.Controls.Page>;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
-using Rhizine.WPF.Views.Pages;
+using Rhizine.WPF.Services.Interfaces;
 using Rhizine.WPF.ViewModels.Pages;
+using Rhizine.WPF.Views.Interfaces;
+using Rhizine.WPF.Views.Pages;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Rhizine.WPF.Services;
 
@@ -26,7 +24,7 @@ namespace Rhizine.WPF.Services;
 public class ApplicationHostService : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly INavigationService<NavigationEventArgs> _navigationService;
+    private readonly INavigationService _navigationService;
     private readonly IFlyoutService _flyoutService;
     private readonly IPersistAndRestoreService _persistAndRestoreService;
     private readonly IThemeSelectorService _themeSelectorService;
@@ -50,7 +48,7 @@ public class ApplicationHostService : IHostedService
     /// <param name="toastNotificationsService">Service for showing toast notifications.</param>
     /// <param name="identityService">Service for managing user identity and authentication.</param>
     /// <param name="config">Configuration settings for the application.</param>
-    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService<NavigationEventArgs> navigationService,
+    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService<Frame, NavigationEventArgs> navigationService,
         IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService, IFlyoutService flyoutService,
         IToastNotificationsService toastNotificationsService, IPageService PageService, IOptions<AppConfig> config) // IUserDataService userDataService
     {
@@ -100,7 +98,6 @@ public class ApplicationHostService : IHostedService
         _pageService.Register<ContentGridDetailViewModel, ContentGridDetailPage>();
         _pageService.Register<ListDetailsViewModel, ListDetailsPage>();
         _pageService.Register<SettingsViewModel, SettingsPage>();
-
     }
 
     private void Startup()
@@ -136,6 +133,7 @@ public class ApplicationHostService : IHostedService
             await _navigationService.NavigateToAsync(typeof(LandingViewModel).FullName);
         }
     }
+
     /// <summary>
     /// Gets the service object of the specified type.
     /// </summary>

@@ -5,7 +5,6 @@ using Rhizine.Core.ViewModels;
 using Rhizine.Displays.Popups;
 using Rhizine.WPF.Services.Interfaces;
 using Rhizine.WPF.Views.Windows;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
 
 namespace Rhizine.Displays.Pages;
 

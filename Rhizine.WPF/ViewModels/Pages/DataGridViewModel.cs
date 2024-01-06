@@ -37,6 +37,4 @@ public class DataGridViewModel : BaseViewModel
             await _loggingService.LogErrorAsync(ex, "Error while navigating to Data Grid");
         }
     }
-
-
 }

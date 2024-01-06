@@ -32,6 +32,7 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
     public override void Show()
     {
     }
+
     [RelayCommand]
     public override void Close()
     {
@@ -49,6 +50,7 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
             _loggingService?.Log(ex);
         }
     }
+
     public void AddWaitingState(string state)
     {
         WaitingStates.Add(state);

@@ -1,5 +1,4 @@
-﻿using Rhizine.Displays.Flyouts;
-using Rhizine.WPF.ViewModels.Flyouts;
+﻿using Rhizine.WPF.ViewModels.Flyouts;
 using System.Windows;
 using System.Windows.Controls;
 

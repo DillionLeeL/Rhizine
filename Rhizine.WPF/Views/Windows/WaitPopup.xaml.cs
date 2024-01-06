@@ -2,6 +2,7 @@
 using System.Windows;
 
 namespace Rhizine.WPF.Views.Windows;
+
 /// <summary>
 /// Interaction logic for WaitPopup.xaml
 /// </summary>
@@ -12,10 +13,10 @@ public partial class WaitPopup : Window
     {
         InitializeComponent();
     }
+
     public WaitPopup(PopupBaseViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
     }
-
 }

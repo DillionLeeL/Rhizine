@@ -2,11 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
-using Rhizine.Core.Services.Interfaces;
 using Rhizine.Core.ViewModels;
 using Rhizine.WPF.Services.Interfaces;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Rhizine.WPF.ViewModels.Pages;
 

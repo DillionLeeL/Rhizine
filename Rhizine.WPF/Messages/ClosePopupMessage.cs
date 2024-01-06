@@ -6,6 +6,7 @@ namespace Rhizine.WPF.Messages;
 public class ClosePopupMessage : ValueChangedMessage<PopupBaseViewModel>
 {
     public PopupBaseViewModel ViewModel { get; }
+
     public ClosePopupMessage(PopupBaseViewModel viewModel) : base(viewModel)
     {
         ViewModel = viewModel;

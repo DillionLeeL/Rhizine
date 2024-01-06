@@ -4,6 +4,7 @@ using Rhizine.Core.Services.Interfaces;
 using Rhizine.Core.ViewModels;
 
 namespace Rhizine.WPF.ViewModels.Pages;
+
 public partial class ContentGridDetailViewModel : BaseViewModel
 {
     private readonly ISampleDataService _sampleDataService;
@@ -33,5 +34,4 @@ public partial class ContentGridDetailViewModel : BaseViewModel
             await _loggingService.LogErrorAsync(ex, "Error while navigating to Content Grid Detail");
         }
     }
-
 }
