@@ -14,6 +14,7 @@ public partial class ToastNotificationsService : IToastNotificationsService
     {
         ToastNotificationManagerCompat.CreateToastNotifier().Show(toastNotification);
     }
+
     /*
     public void ShowToastNotificationSample()
     {
