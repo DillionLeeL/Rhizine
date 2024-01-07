@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-    x:Class="Rhizine.MAUI.Views.SettingsPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Rhizine.MAUI"
-    xmlns:vm="clr-namespace:Rhizine.MAUI.ViewModels"
-    Title="{x:Bind Title}"
-    x:DataType="vm:SettingsViewModel"
-    mc:Ignorable="d">
-    <ContentPage.Content>
-        <Label
-            HorizontalOptions="Center"
-            Text="Settings"
-            VerticalOptions="Center" />
-    </ContentPage.Content>
+<ContentPage x:Class="Rhizine.MAUI.Views.SettingsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Rhizine.MAUI"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Rhizine.MAUI.ViewModels"
+             xmlns:core="clr-namespace:Rhizine.Core.Models;assembly=Rhizine.Core"
+             xmlns:am="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+             Title="{x:Bind Title}"
+             x:DataType="vm:SettingsViewModel"
+             mc:Ignorable="d">
+
+    <StackLayout Padding="20">
+        <Picker Title="Theme"
+                SelectedItem="{Binding ThemeSelection, Mode=TwoWay}"
+                ItemsSource="{Binding AppThemes}">
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                          Command="{Binding ChangeThemeCommand}"
+                                                CommandParameter="{Binding ThemeSelection}" />
+            </Picker.Behaviors>
+        </Picker>
+
+        <Label Text="App Version:"
+               FontAttributes="Bold" />
+        <Label Text="{Binding AppVersion}" />
+    </StackLayout>
+
 </ContentPage>

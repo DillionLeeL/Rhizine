@@ -31,8 +31,10 @@ namespace Rhizine.MAUI
                    });
 
             builder.Services.AddSingleton<IDialogService, DialogService>();
-            builder.Services.AddSingleton<INavigationService<ShellNavigatedEventArgs>, NavigationService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<ILoggingService, LoggingService>();
+            builder.Services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+
             builder.Services.AddSingleton<EventsViewModel>();
             builder.Services.AddSingleton<EventsPage>();
             builder.Services.AddSingleton<SearchViewModel>();
