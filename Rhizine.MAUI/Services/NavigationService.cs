@@ -5,9 +5,15 @@ using System.Text.Json;
 namespace Rhizine.MAUI.Services;
 
 // TODO: non-shell navigation
-public partial class NavigationService : INavigationService<ShellNavigatedEventArgs>
+public partial class NavigationService : INavigationService
 {
     private readonly ILoggingService _loggingService;
+
+    public Shell NavigationSource => Shell.Current;
+
+    //TODO
+    public bool CanGoBack => throw new NotImplementedException();
+
     public event EventHandler<ShellNavigatedEventArgs> Navigated;
 
     public NavigationService(ILoggingService loggingService)
@@ -51,9 +57,24 @@ public partial class NavigationService : INavigationService<ShellNavigatedEventA
         return Shell.Current.GoToAsync("..");
     }
 
-
     protected virtual void OnNavigated(ShellNavigatedEventArgs args)
     {
         Navigated?.Invoke(this, args);
+    }
+
+    //TODO
+    public void Initialize(Shell source)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool GoBack()
+    {
+        throw new NotImplementedException();
     }
 }
