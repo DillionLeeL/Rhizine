@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using Rhizine.WinUI.Helpers;
 using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rhizine.WinUI.Services;
 
@@ -22,8 +20,8 @@ public class NavigationViewService : INavigationViewService
 
     public NavigationViewService(INavigationService navigationService, IPageService pageService)
     {
-        _navigationService = navigationService;
-        _pageService = pageService;
+        _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+        _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
     }
 
     [MemberNotNull(nameof(_navigationView))]
@@ -59,7 +57,7 @@ public class NavigationViewService : INavigationViewService
     {
         if (args.IsSettingsInvoked)
         {
-            _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
+            _navigationService.NavigateToAsync(typeof(SettingsViewModel).FullName!);
         }
         else
         {
@@ -67,7 +65,7 @@ public class NavigationViewService : INavigationViewService
 
             if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
             {
-                _navigationService.NavigateTo(pageKey);
+                _navigationService.NavigateToAsync(pageKey);
             }
         }
     }

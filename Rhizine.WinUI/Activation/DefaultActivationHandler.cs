@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 
 namespace Rhizine.WinUI.Activation;
@@ -17,13 +16,11 @@ public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventAr
     protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
     {
         // None of the ActivationHandlers has handled the activation.
-        return _navigationService.Frame?.Content == null;
+        return _navigationService.NavigationSource?.Content == null;
     }
 
-    protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
+    protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        _navigationService.NavigateTo(typeof(MainViewModel).FullName!, args.Arguments);
-
-        await Task.CompletedTask;
+        await _navigationService.NavigateToAsync(typeof(MainViewModel).FullName!, args.Arguments);
     }
 }

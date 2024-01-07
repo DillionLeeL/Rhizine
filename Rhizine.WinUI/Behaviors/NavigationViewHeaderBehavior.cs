@@ -2,8 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Xaml.Interactivity;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.WinUI.Services.Interfaces;
 
 namespace Rhizine.WinUI.Behaviors;
 

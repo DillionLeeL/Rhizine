@@ -1,19 +1,14 @@
-﻿using CommunityToolkit.WinUI.UI.Animations;
+﻿using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using Rhizine.Core.Models.Interfaces;
 using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
-using Rhizine.WinUI.Services.Interfaces;
-using System;
 using System.Diagnostics.CodeAnalysis;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
 
 // INavigationService alias is defined in Rhizine.WinUI/Usings.cs
-// Very similar to Rhizine.WPF/Services/NavigationService.cs
+// Similar to Rhizine.WPF/Services/NavigationService.cs
 namespace Rhizine.WinUI.Services;
-
 
 /// <summary>
 /// Provides navigation services for the application, managing navigation between pages and handling navigation-related events.
@@ -24,7 +19,6 @@ public class NavigationService : INavigationService
     private readonly ILoggingService _loggingService;
     private object? _lastParameterUsed;
     private Frame? _frame;
-    //public Frame NavigationSource => _frame;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NavigationService"/> class.
@@ -41,11 +35,11 @@ public class NavigationService : INavigationService
     /// <summary>
     /// Occurs when a navigation has been completed.
     /// </summary>
-    public event EventHandler<NavigationEventArgs> Navigated;
+    public event EventHandler<NavigationEventArgs>? Navigated;
     /// <summary>
     /// Gets or sets the Frame used for navigation. Ensures navigation events are registered and unregistered appropriately.
     /// </summary>
-    public Frame? NavigationSource
+    public Frame NavigationSource
     {
         get
         {
@@ -55,7 +49,7 @@ public class NavigationService : INavigationService
                 RegisterFrameEvents();
             }
 
-            return _frame;
+            return _frame!;
         }
         set
         {
@@ -85,10 +79,9 @@ public class NavigationService : INavigationService
 
     private void RegisterFrameEvents()
     {
-        if (_frame != null)
-        {
-            _frame.Navigated += OnNavigated;
-        }
+        if (_frame == null) return;
+
+        _frame.Navigated += OnNavigated;
     }
 
     private void UnregisterFrameEvents()
@@ -106,14 +99,22 @@ public class NavigationService : INavigationService
     {
         if (!CanGoBack) return false;
 
-        var vmBeforeNavigation = _frame.GetPageViewModel();
-        _frame.GoBack();
-        if (vmBeforeNavigation is INavigationAware navigationAware)
-        {
-            navigationAware.OnNavigatedFrom();
-        }
+        var vmBeforeNavigation = NavigationSource.GetPageViewModel();
+        NavigationSource.GoBack();
+        (vmBeforeNavigation as INavigationAware)?.OnNavigatedFrom();
 
         return true;
+    }
+    /// <summary>
+    /// Navigates back asyncronously using the dispatcher if possible, and notifies involved view models about the navigation change.
+    /// </summary>
+    /// <returns><c>true</c> if navigation was successful; otherwise, <c>false</c>.</returns>
+    public async Task GoBackAsync()
+    {
+        await NavigationSource.DispatcherQueue.EnqueueAsync(() =>
+        {
+            GoBack();
+        });
     }
 
     /// <summary>
@@ -128,13 +129,14 @@ public class NavigationService : INavigationService
     {
         if (string.IsNullOrWhiteSpace(pageKey))
             throw new ArgumentException("Page key cannot be null or whitespace.", nameof(pageKey));
+
         _loggingService.Log($"Navigating to {pageKey}");
 
         var page = _pageService.GetPage(pageKey);
 
         if (page == null)
         {
-            _loggingService.Log($"Navigation to {pageKey} failed");
+            _loggingService.Log($"Navigation to {pageKey} failed. Page not found.");
             return false;
         }
 
@@ -145,18 +147,14 @@ public class NavigationService : INavigationService
             return false;
         }
 
-        _frame!.Tag = clearNavigation;
-        var vmBeforeNavigation = _frame.GetPageViewModel();
-        // TODO: failing on navigation to grid details
-        var navigated = _frame.Navigate(pageType, parameter);
+        var vmBeforeNavigation = NavigationSource.GetPageViewModel();
+        var navigated = NavigationSource.Navigate(pageType, parameter);
+
         if (navigated)
         {
             _lastParameterUsed = parameter;
-            if (vmBeforeNavigation is INavigationAware navigationAware)
-            {
-                navigationAware.OnNavigatedFrom();
-            }
-            
+            NavigationSource.Tag = clearNavigation;
+            (vmBeforeNavigation as INavigationAware)?.OnNavigatedFrom();
         }
         else
         {
@@ -165,14 +163,57 @@ public class NavigationService : INavigationService
 
         return navigated;
     }
-    private void HandleNavigationAware(object page, object parameter)
+
+    /// <summary>
+    /// Navigates to the specified page asyncronously using the dispatcher and passes a parameter if provided.
+    /// </summary>
+    /// <param name="pageKey">The key identifying the page to navigate to.</param>
+    /// <param name="parameter">The parameter to pass to the target page.</param>
+    /// <param name="clearNavigation">Indicates whether to clear the navigation history.</param>
+    /// <returns><c>true</c> if navigation was successful; otherwise, <c>false</c>.</returns>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="pageKey"/> is null or whitespace.</exception>
+    public async Task NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
     {
-        if (page is INavigationAware navigationAware)
+
+        if (string.IsNullOrWhiteSpace(pageKey))
+            throw new ArgumentException("Page key cannot be null or whitespace.", nameof(pageKey));
+
+        await _loggingService.LogAsync($"Navigating to {pageKey}");
+
+        var page = _pageService.GetPage(pageKey);
+
+        if (page == null)
         {
-            _lastParameterUsed = parameter;
-            navigationAware.OnNavigatedTo(parameter);
+            await _loggingService.LogAsync($"Navigation to {pageKey} failed. Page not found.");
+            return;
         }
+
+        var pageType = page.GetType();
+        if (!ShouldNavigateTo(pageType, parameter!))
+        {
+            await _loggingService.LogAsync($"Navigation to {page.Name} cancelled");
+            return;
+        }
+
+        var vmBeforeNavigation = NavigationSource.GetPageViewModel();
+
+        // navigate asyncronously using the dispatcher
+        await NavigationSource.DispatcherQueue.EnqueueAsync(async () =>
+        {
+            var navigated = NavigationSource.Navigate(pageType, parameter);
+            if (navigated)
+            {
+                _lastParameterUsed = parameter;
+                NavigationSource.Tag = clearNavigation;
+                (vmBeforeNavigation as INavigationAware)?.OnNavigatedFrom();
+            }
+            else
+            {
+                await _loggingService.LogAsync($"Navigation to {page.Name} failed");
+            }
+        });
     }
+
     /// <summary>
     /// Determines whether navigation to a specified page should occur based on the current page and the parameters.
     /// </summary>
@@ -191,41 +232,14 @@ public class NavigationService : INavigationService
     {
         if (sender is Frame frame)
         {
-            var clearNavigation = (bool)frame.Tag;
+            var clearNavigation = (bool?)frame.Tag ?? false;
             if (clearNavigation)
             {
                 frame.BackStack.Clear();
             }
 
-            if (frame.GetPageViewModel() is INavigationAware navigationAware)
-            {
-                navigationAware.OnNavigatedTo(e.Parameter);
-            }
-
+            (frame.GetPageViewModel() as INavigationAware)?.OnNavigatedTo(e.Parameter);
             Navigated?.Invoke(sender, e);
         }
     }
-    /// <summary>
-    /// Not Implemented.
-    /// </summary>
-    public Task NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
-    {
-        throw new NotImplementedException();
-    }
-    /// <summary>
-    /// Not Implemented.
-    /// </summary>
-    public Task GoBackAsync()
-    {
-        throw new NotImplementedException();
-    }
-    /*
-/// <summary>
-/// Sets the list data item for the next connected animation in the Frame.
-/// </summary>
-/// <param name="item">The data item to use for the next connected animation.</param>
-public void SetListDataItemForNextConnectedAnimation(object item)
-{
-   Frame.SetListDataItemForNextConnectedAnimation(item); }
-*/
 }

@@ -2,9 +2,6 @@
 using Rhizine.Core.Models;
 using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
-using Rhizine.WinUI.Services.Interfaces;
-using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
-//using IThemeSelectorService = Rhizine.WinUI.Services.Interfaces.IThemeSelectorService;
 
 namespace Rhizine.WinUI.Services;
 

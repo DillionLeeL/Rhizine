@@ -1,13 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.WinUI.Contracts.ViewModels;
-using Rhizine.Core.Services.Interfaces;
+using CommunityToolkit.WinUI.UI.Animations;
 using Rhizine.Core.Models;
+using Rhizine.Core.Models.Interfaces;
+using Rhizine.Core.Services.Interfaces;
+using Rhizine.Core.ViewModels;
+using Rhizine.WinUI.Services.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace Rhizine.WinUI.ViewModels;
 
@@ -43,10 +42,17 @@ public partial class ContentGridViewModel : ObservableRecipient, INavigationAwar
     [RelayCommand]
     private void OnItemClick(SampleOrder? clickedItem)
     {
-        if (clickedItem != null)
+        try
         {
-            _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-            _navigationService.NavigateTo(typeof(ContentGridDetailViewModel).FullName!, clickedItem.OrderID);
+            if (clickedItem != null)
+            {
+                _navigationService.NavigationSource.SetListDataItemForNextConnectedAnimation(clickedItem);
+                _navigationService.NavigateToAsync(typeof(ContentGridDetailViewModel).FullName!, clickedItem.OrderID);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
         }
     }
 }
