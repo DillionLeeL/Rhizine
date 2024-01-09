@@ -1,10 +1,8 @@
-﻿using System.Collections.Specialized;
+﻿using Microsoft.Windows.AppNotifications;
+using Rhizine.WinUI.Services.Interfaces;
+using System.Collections.Specialized;
 using System.Web;
 
-using Microsoft.Windows.AppNotifications;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.WinUI.ViewModels;
 
 namespace Rhizine.WinUI.Notifications;
 

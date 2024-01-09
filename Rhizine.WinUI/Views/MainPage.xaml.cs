@@ -6,14 +6,11 @@ namespace Rhizine.WinUI.Views;
 
 public sealed partial class MainPage : Page
 {
-    public MainViewModel ViewModel
-    {
-        get;
-    }
+    public MainViewModel ViewModel { get; }
 
     public MainPage()
     {
-        ViewModel = App.GetService<MainViewModel>();
+        ViewModel = App.GetService<MainViewModel>() ?? throw new ArgumentNullException(nameof(ViewModel));
         InitializeComponent();
     }
 }

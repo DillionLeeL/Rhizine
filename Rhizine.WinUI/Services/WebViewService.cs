@@ -1,9 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.WinUI.Services.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rhizine.WinUI.Services;
 
@@ -20,10 +18,6 @@ public class WebViewService : IWebViewService
     public bool CanGoForward => _webView != null && _webView.CanGoForward;
 
     public event EventHandler<CoreWebView2WebErrorStatus>? NavigationCompleted;
-
-    public WebViewService()
-    {
-    }
 
     [MemberNotNull(nameof(_webView))]
     public void Initialize(WebView2 webView)

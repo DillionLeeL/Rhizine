@@ -1,10 +1,10 @@
 ﻿{
-    "profiles": {
-      "Rhizine.WinUI (Package)": {
-        "commandName": "MsixPackage"
-      },
-      "Rhizine.WinUI (Unpackaged)": {
-        "commandName": "Project"
-      }
+  "profiles": {
+    "Rhizine.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Rhizine.WinUI (Unpackaged)": {
+      "commandName": "Project"
     }
+  }
 }

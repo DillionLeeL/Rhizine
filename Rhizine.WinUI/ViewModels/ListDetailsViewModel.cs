@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
-
-using CommunityToolkit.Mvvm.ComponentModel;
-
-using Rhizine.WinUI.Contracts.ViewModels;
-using Rhizine.Core.Services.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Rhizine.Core.Models;
+using Rhizine.Core.Models.Interfaces;
+using Rhizine.Core.Services.Interfaces;
+using Rhizine.Core.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace Rhizine.WinUI.ViewModels;
 

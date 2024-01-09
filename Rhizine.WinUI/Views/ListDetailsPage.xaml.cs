@@ -8,14 +8,11 @@ namespace Rhizine.WinUI.Views;
 
 public sealed partial class ListDetailsPage : Page
 {
-    public ListDetailsViewModel ViewModel
-    {
-        get;
-    }
+    public ListDetailsViewModel ViewModel { get; }
 
     public ListDetailsPage()
     {
-        ViewModel = App.GetService<ListDetailsViewModel>();
+        ViewModel = App.GetService<ListDetailsViewModel>() ?? throw new ArgumentNullException(nameof(ViewModel));
         InitializeComponent();
     }
 

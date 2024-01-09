@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Rhizine.Core.Models;
+using Rhizine.Core.Models.Interfaces;
 using Rhizine.WinUI.Helpers;
 using System.Reflection;
 using Windows.ApplicationModel;
-using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
 
 namespace Rhizine.WinUI.ViewModels;
 
@@ -30,7 +30,6 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         _themeSelectorService.SetThemeAsync(theme);
     }
-
 
     private static string GetVersionDescription()
     {

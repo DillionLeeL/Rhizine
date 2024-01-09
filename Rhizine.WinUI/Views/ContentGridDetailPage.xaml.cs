@@ -1,19 +1,13 @@
 ﻿using CommunityToolkit.WinUI.UI.Animations;
-
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using Rhizine.Core.Services.Interfaces;
-//using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 
 namespace Rhizine.WinUI.Views;
 
 public sealed partial class ContentGridDetailPage : Page
 {
-    public ContentGridDetailViewModel ViewModel
-    {
-        get;
-    }
+    public ContentGridDetailViewModel ViewModel { get; }
 
     public ContentGridDetailPage()
     {
@@ -30,14 +24,9 @@ public sealed partial class ContentGridDetailPage : Page
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
     {
         base.OnNavigatingFrom(e);
-        if (e.NavigationMode == NavigationMode.Back)
+        if (e.NavigationMode == NavigationMode.Back && ViewModel.Item != null)
         {
-            //var navigationService = App.GetService<INavigationService>();
-
-            if (ViewModel.Item != null)
-            {
-                ViewModel.NavigationService.NavigationSource.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
-            }
+            ViewModel.NavigationService.NavigationSource.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
         }
     }
 }

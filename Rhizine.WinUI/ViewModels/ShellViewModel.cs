@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Navigation;
-
-using Rhizine.WinUI.Contracts.Services;
+using Rhizine.Core.Models.Interfaces;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.Views;
 
 namespace Rhizine.WinUI.ViewModels;

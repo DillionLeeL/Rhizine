@@ -1,10 +1,7 @@
 ﻿using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-using Microsoft.Windows.AppNotifications;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.WinUI.ViewModels;
+using Rhizine.WinUI.Services.Interfaces;
 
 namespace Rhizine.WinUI.Activation;
 
@@ -24,7 +21,7 @@ public class AppNotificationActivationHandler : ActivationHandler<LaunchActivate
         return AppInstance.GetCurrent().GetActivatedEventArgs()?.Kind == ExtendedActivationKind.AppNotification;
     }
 
-    protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
+    protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
         // TODO: Handle notification activations.
 

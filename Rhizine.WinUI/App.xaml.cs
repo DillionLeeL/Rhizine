@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Rhizine.Core.Models;
 using Rhizine.Core.Services;
 using Rhizine.Core.Services.Interfaces;
@@ -11,9 +15,6 @@ using Rhizine.WinUI.Services;
 using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 using Rhizine.WinUI.Views;
-using IThemeSelectorService = Rhizine.Core.Services.Interfaces.IThemeSelectorService;
-using PageService = Rhizine.Core.Services.PageService<Microsoft.UI.Xaml.Controls.Page>;
-using IPageService = Rhizine.Core.Services.Interfaces.IPageService<Microsoft.UI.Xaml.Controls.Page>;
 
 namespace Rhizine.WinUI;
 
@@ -52,6 +53,7 @@ public partial class App : Application
 
         Host = Microsoft.Extensions.Hosting.Host.
         CreateDefaultBuilder().
+
         UseContentRoot(AppContext.BaseDirectory).
         ConfigureServices((context, services) =>
         {
@@ -62,6 +64,9 @@ public partial class App : Application
             services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
 
             // Services
+            //services.AddSingleton<ILoggingService, LoggingService>();
+            services.AddSingleton<ILoggingService>(
+                    container => new LoggingService(container.GetRequiredService<ILogger<LoggingService>>()));
             services.AddSingleton<IAppNotificationService, AppNotificationService>();
             services.AddSingleton<ILocalSettingsService, Services.LocalSettingsService>();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
@@ -75,7 +80,6 @@ public partial class App : Application
             // Core Services
             services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<ILoggingService, LoggingService>();
 
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
@@ -95,10 +99,12 @@ public partial class App : Application
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
 
+            // Pages are registered for navigation in ActivationService.cs
+
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-        }).
-        Build();
+        })
+        .Build();
 
         App.GetService<IAppNotificationService>().Initialize();
 
@@ -111,7 +117,7 @@ public partial class App : Application
         e.Handled = true;
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
 

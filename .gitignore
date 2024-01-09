@@ -390,3 +390,11 @@ FodyWeavers.xsd
 /Rhizine.WinUI/Services/Interfaces/IThemeSelectorService.cs
 /Rhizine.WinUI/Services/PageService.cs
 /Rhizine.MAUI/Services/IDialogService.cs
+/Rhizine.WPF/GlobalSuppressions.cs
+/Rhizine.WPF/Usings.cs
+/Rhizine.Core/Services/PopupService.cs
+/Rhizine.Core/Services/PersistAndRestoreService.cs
+/Rhizine.Core/Services/IdentityService.cs
+/Rhizine.Core/Services/NavigationService.cs
+/Rhizine.Core/Services/SystemService.cs
+/Rhizine.WinUI/GlobalSuppressions.cs

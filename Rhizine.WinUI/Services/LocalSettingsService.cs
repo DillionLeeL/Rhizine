@@ -1,14 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.Core.Services.Interfaces;
 using Rhizine.Core.Helpers;
+using Rhizine.Core.Models;
+using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
-using Rhizine.WinUI.Models;
-
-using Windows.ApplicationModel;
 using Windows.Storage;
-using ILocalSettingsService = Rhizine.WinUI.Contracts.Services.ILocalSettingsService;
 
 namespace Rhizine.WinUI.Services;
 
@@ -64,6 +59,10 @@ public class LocalSettingsService : ILocalSettingsService
 
             if (_settings != null && _settings.TryGetValue(key, out var obj))
             {
+                if (obj is not string sObj || string.IsNullOrEmpty(sObj))
+                {
+                    return default;
+                }
                 return await Json.ToObjectAsync<T>((string)obj);
             }
         }

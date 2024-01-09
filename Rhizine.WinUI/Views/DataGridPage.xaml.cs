@@ -8,14 +8,11 @@ namespace Rhizine.WinUI.Views;
 // For more details, see the documentation at https://docs.microsoft.com/windows/communitytoolkit/controls/datagrid.
 public sealed partial class DataGridPage : Page
 {
-    public DataGridViewModel ViewModel
-    {
-        get;
-    }
+    public DataGridViewModel ViewModel { get; }
 
     public DataGridPage()
     {
-        ViewModel = App.GetService<DataGridViewModel>();
+        ViewModel = App.GetService<DataGridViewModel>() ?? throw new ArgumentNullException(nameof(ViewModel));
         InitializeComponent();
     }
 }

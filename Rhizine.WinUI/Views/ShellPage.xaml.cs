@@ -1,10 +1,10 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-
-using Rhizine.WinUI.Contracts.Services;
+using Microsoft.UI.Xaml.Navigation;
+using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
+using Rhizine.WinUI.Services.Interfaces;
 using Rhizine.WinUI.ViewModels;
 
 using Windows.System;
@@ -14,17 +14,14 @@ namespace Rhizine.WinUI.Views;
 // TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page
 {
-    public ShellViewModel ViewModel
-    {
-        get;
-    }
+    public ShellViewModel ViewModel { get; }
 
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
         InitializeComponent();
 
-        ViewModel.NavigationService.Frame = NavigationFrame;
+        ViewModel.NavigationService.Initialize(NavigationFrame);
         ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
         // TODO: Set the title bar icon by updating /Assets/WindowIcon.ico.
@@ -76,7 +73,7 @@ public sealed partial class ShellPage : Page
 
     private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
     {
-        var navigationService = App.GetService<INavigationService>();
+        var navigationService = App.GetService<INavigationService<Frame, NavigationEventArgs>>();
 
         var result = navigationService.GoBack();
 

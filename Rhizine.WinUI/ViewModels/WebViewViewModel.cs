@@ -2,9 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.Web.WebView2.Core;
-
-using Rhizine.WinUI.Contracts.Services;
-using Rhizine.WinUI.Contracts.ViewModels;
+using Rhizine.Core.Models.Interfaces;
+using Rhizine.Core.Services.Interfaces;
+using Rhizine.Core.ViewModels;
+using Rhizine.WinUI.Services.Interfaces;
 
 namespace Rhizine.WinUI.ViewModels;
 
@@ -28,10 +29,12 @@ public partial class WebViewViewModel : ObservableRecipient, INavigationAware
     {
         get;
     }
+    private readonly ILoggingService _loggingService;
 
-    public WebViewViewModel(IWebViewService webViewService)
+    public WebViewViewModel(IWebViewService webViewService, ILoggingService loggingService)
     {
         WebViewService = webViewService;
+        _loggingService = loggingService;
     }
 
     [RelayCommand]
@@ -79,6 +82,7 @@ public partial class WebViewViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedTo(object parameter)
     {
+        _loggingService.Log("Navigated to WebViewViewModel.");
         WebViewService.NavigationCompleted += OnNavigationCompleted;
     }
 
