@@ -11,8 +11,8 @@ public partial class NavigationService : INavigationService
 
     public Shell NavigationSource => Shell.Current;
 
-    //TODO
-    public bool CanGoBack => throw new NotImplementedException();
+
+    public bool CanGoBack => NavigationSource.Navigation?.NavigationStack?.Count > 1;
 
     public event EventHandler<ShellNavigatedEventArgs> Navigated;
 
@@ -52,9 +52,9 @@ public partial class NavigationService : INavigationService
         }
     }
 
-    public Task GoBackAsync()
+    public async Task GoBackAsync()
     {
-        return Shell.Current.GoToAsync("..");
+        await NavigationSource.GoToAsync("..");
     }
 
     protected virtual void OnNavigated(ShellNavigatedEventArgs args)
@@ -75,6 +75,11 @@ public partial class NavigationService : INavigationService
 
     public bool GoBack()
     {
-        throw new NotImplementedException();
+        if (CanGoBack)
+        {
+            _ = GoBackAsync();
+            return true;
+        }
+        return false;
     }
 }

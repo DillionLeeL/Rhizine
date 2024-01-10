@@ -2,7 +2,7 @@
 
 namespace Rhizine.MAUI.ViewModels
 {
-    public partial class EventsViewModel(IDialogService dialogService, INavigationService<ShellNavigatedEventArgs> navigationService) : BaseViewModel(dialogService, navigationService)
+    public partial class EventsViewModel(IDialogService dialogService, INavigationService navigationService) : BaseViewModel(dialogService, navigationService)
     {
         [RelayCommand]
         private Task AddEventAsync() => NavigationService.NavigateToAsync("newevent");
