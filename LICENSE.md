@@ -5,6 +5,8 @@ All rights reserved.
 This software is licensed under one or more agreements.
 It is licensed to you under the MIT license.
 
+# .NET Community Toolkit - MIT License (MIT)
+# .NET Maui Community Toolkit - MIT License (MIT)
 # Windows Community Toolkit - MIT License (MIT)
 Copyright (c) .NET Foundation and Contributors
 All rights reserved. 
