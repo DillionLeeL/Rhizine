@@ -49,7 +49,7 @@ public class NavigationService : INavigationService
         if (_frame == null) return;
 
         _frame.Navigated -= OnNavigated;
-        _frame.ClearNavigation();
+        NavigationSource.ClearNavigation();
         _frame = null;
     }
 
@@ -61,8 +61,8 @@ public class NavigationService : INavigationService
     {
         if (!CanGoBack) return false;
 
-        var vmBeforeNavigation = _frame.GetDataContext();
-        _frame.GoBack();
+        var vmBeforeNavigation = NavigationSource.GetDataContext();
+        NavigationSource.GoBack();
         if (vmBeforeNavigation is INavigationAware navigationAware)
         {
             navigationAware.OnNavigatedFrom();
@@ -79,8 +79,8 @@ public class NavigationService : INavigationService
         await _loggingService.LogDebugAsync("Navigating back");
         if (!CanGoBack) return;
 
-        var vmBeforeNavigation = _frame.GetDataContext();
-        _frame.GoBack();
+        var vmBeforeNavigation = NavigationSource.GetDataContext();
+        NavigationSource.GoBack();
 
         if (vmBeforeNavigation is INavigationAware navigationAware)
         {
@@ -107,11 +107,11 @@ public class NavigationService : INavigationService
 
         if (!ShouldNavigateTo(page.GetType(), parameter)) return false;
 
-        _frame.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
+        NavigationSource.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
 
         try
         {
-            if (!_frame.Navigate(page, parameter)) return false;
+            if (!NavigationSource.Navigate(page, parameter)) return false;
 
             HandleNavigationAware(page, parameter);
             return true;
@@ -142,11 +142,11 @@ public class NavigationService : INavigationService
 
         if (!ShouldNavigateTo(page.GetType(), parameter)) return;
 
-        _frame.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
+        NavigationSource.SetCurrentValue(FrameworkElement.TagProperty, clearNavigation);
 
         try
         {
-            var navigateResult = await Application.Current.Dispatcher.InvokeAsync(() => _frame.Navigate(page, parameter));
+            var navigateResult = await Application.Current.Dispatcher.InvokeAsync(() => NavigationSource.Navigate(page, parameter));
 
             if (!navigateResult) return;
 
