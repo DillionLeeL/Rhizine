@@ -121,4 +121,10 @@
     <ItemGroup>
       <ProjectReference Include="..\Rhizine.Core\Rhizine.Core.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="Views\WebViewPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+    </ItemGroup>
 </Project>

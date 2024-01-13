@@ -37,6 +37,8 @@ namespace Rhizine.MAUI
 
             builder.Services.AddSingleton<EventsViewModel>();
             builder.Services.AddSingleton<EventsPage>();
+            builder.Services.AddSingleton<WebViewViewModel>();
+            builder.Services.AddSingleton<WebViewPage>();
             builder.Services.AddSingleton<SearchViewModel>();
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<SettingsViewModel>();

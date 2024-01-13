@@ -22,6 +22,9 @@ Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
 # .NET MAUI Project and Item Templates - MIT License (MIT)
 Copyright (c) 2021 Vijay Anand E G
 
+# MAUI App Accelerator - MIT License (MIT)
+Copyright (c) 2022 Matt Lacey
+
 ## MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
