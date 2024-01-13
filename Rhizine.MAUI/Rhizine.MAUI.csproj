@@ -58,6 +58,7 @@
     <ItemGroup>
       <Compile Remove="Services\IDialogService.cs" />
       <Compile Remove="Services\INavigationService.cs" />
+      <Compile Remove="Services\PopupService.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -76,6 +77,10 @@
         <PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.*" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
         <PackageReference Include="CompiledBindings.MAUI" Version="1.*" />
+        <PackageReference Include="Serilog" Version="3.1.1" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' != 'net8.0'">

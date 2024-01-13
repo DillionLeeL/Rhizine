@@ -5,6 +5,8 @@ using Microsoft.Maui.Foldable;
 using Rhizine.Core.Services;
 using Rhizine.Core.Services.Interfaces;
 using Rhizine.MAUI.Services;
+using CommunityToolkit.Maui.Core;
+using Serilog;
 
 namespace Rhizine.MAUI
 {
@@ -16,6 +18,13 @@ namespace Rhizine.MAUI
             {
                 Console.WriteLine(e);
             };
+
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .CreateLogger();
+
+
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()
                    // .UseFoldable()
@@ -34,6 +43,8 @@ namespace Rhizine.MAUI
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<ILoggingService, LoggingService>();
             builder.Services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            // CommunityToolkit.Maui PopupService
+            builder.Services.AddSingleton<IPopupService, PopupService>();
 
             builder.Services.AddSingleton<EventsViewModel>();
             builder.Services.AddSingleton<EventsPage>();
@@ -51,7 +62,7 @@ namespace Rhizine.MAUI
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
+            builder.Logging.AddSerilog();
             return builder.Build();
         }
     }
