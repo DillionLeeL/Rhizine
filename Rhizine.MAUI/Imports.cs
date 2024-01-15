@@ -20,3 +20,10 @@ global using INavigationService = Rhizine.Core.Services.Interfaces.INavigationSe
 // Static
 global using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 global using static Microsoft.Maui.Graphics.Colors;
+global using System.Collections.ObjectModel;
+global using System.ComponentModel;
+global using System.Diagnostics;
+global using System.Globalization;
+global using System.Runtime.CompilerServices;
+global using System.Text.Json;
+global using System.Threading.Tasks;

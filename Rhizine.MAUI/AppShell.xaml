@@ -41,10 +41,14 @@
             ContentTemplate="{DataTemplate vw:SettingsPage}"
             Route="settings" />
     </FlyoutItem>
+    <FlyoutItem Title="ListDetails">
+        <ShellContent ContentTemplate="{DataTemplate vw:ListDetailsPage}"
+                      Route="listDetails" />
+    </FlyoutItem>
     <FlyoutItem Title="WebView">
         <ShellContent Shell.NavBarIsVisible="true"
                       ContentTemplate="{DataTemplate vw:WebViewPage}"
-                      Route="WebViewPage" />
+                      Route="webView" />
     </FlyoutItem>
     <!--
         When the Flyout is visible this will be a menu item you can tie a click behavior to

@@ -43,6 +43,7 @@ namespace Rhizine.MAUI
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<ILoggingService, LoggingService>();
             builder.Services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            builder.Services.AddSingleton<ISampleDataService, SampleDataService>();
             // CommunityToolkit.Maui PopupService
             builder.Services.AddSingleton<IPopupService, PopupService>();
 
@@ -50,6 +51,8 @@ namespace Rhizine.MAUI
             builder.Services.AddSingleton<EventsPage>();
             builder.Services.AddSingleton<WebViewViewModel>();
             builder.Services.AddSingleton<WebViewPage>();
+            builder.Services.AddSingleton<ListDetailsViewModel>();
+            builder.Services.AddSingleton<ListDetailsPage>();
             builder.Services.AddSingleton<SearchViewModel>();
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<SettingsViewModel>();

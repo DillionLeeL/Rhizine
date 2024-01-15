@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Rhizine.MAUI.Views.ListDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Rhizine.MAUI.ViewModels"
+    xmlns:m="clr-namespace:Rhizine.Core.Models;assembly=Rhizine.Core"
+    xmlns:local="clr-namespace:Rhizine.MAUI.Views"
+    mc:Ignorable="d"
+    x:DataType="vm:ListDetailsViewModel">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                           Text="{Binding Symbol}"
+                           Style="{StaticResource MediumIconStyle}"
+                           Margin="{StaticResource XSmallLeftMargin}"
+                           AutomationProperties.Name="List item icon" />
+                <StackLayout Grid.Column="1"
+                            Margin="{StaticResource SmallLeftMargin}"
+                            VerticalOptions="Center">
+                    <Label Style="{StaticResource ListTitleStyle}"
+                               Text="{Binding Company}" />
+                    <Label Style="{StaticResource ListSubTitleStyle}"
+                               Text="{Binding Status}" />
+                </StackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DetailTemplate">
+            <ScrollView
+                          HorizontalOptions="Fill">
+                <StackLayout HorizontalOptions="Start"
+                            Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+                    <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="Fill">
+                        <Label Text="{Binding Symbol}"
+                                   Style="{StaticResource BigIconStyle}"
+                                   AutomationProperties.Name="Detail icon" />
+                        <Label Margin="{StaticResource SmallLeftMargin}"
+                                   VerticalOptions="Center"
+                                   Text="{Binding Company, Mode=OneWay}"
+                                   Style="{StaticResource PageTitleStyle}" />
+                    </StackLayout>
+                    <StackLayout Margin="{StaticResource SmallTopMargin}">
+                        <Label Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Status" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="{Binding Status, Mode=OneWay}" />
+                        <Label Margin="{StaticResource SmallTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Order date" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="{Binding OrderDate, Mode=OneWay}" />
+                        <Label Margin="{StaticResource SmallTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Company" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="{Binding Company, Mode=OneWay}" />
+                        <Label Margin="{StaticResource SmallTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Ship to" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="{Binding ShipTo, Mode=OneWay}" />
+                        <Label Margin="{StaticResource SmallTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Order total" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="{Binding OrderTotal, Mode=OneWay}" />
+
+                        <Label Margin="{StaticResource MediumTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Note 1" />
+                        <Label Style="{StaticResource BodyTextStyle}"
+                                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;"
+                                   AutomationProperties.Name="Detail note 1"
+                                   AutomationProperties.HelpText="{Binding Text, Source={RelativeSource Self}}" />
+
+                        <Label Margin="{StaticResource SmallTopMargin}"
+                                   Style="{StaticResource SubtitleTextStyle}"
+                                   Text="Note 2" />
+                        <Label Margin="{StaticResource MediumBottomMargin}"
+                                   Style="{StaticResource BodyTextStyle}"
+                                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;"
+                                   AutomationProperties.Name="Detail note 2"
+                                   AutomationProperties.HelpText="{Binding Text, Source={RelativeSource Self}}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="0"
+                  ItemsSource="{Binding SampleItems}"
+                  SelectedItem="{Binding Selected}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m:SampleOrder">
+                    <TextCell Text="{Binding OrderID}"
+                              Detail="{Binding ShortDescription}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackLayout Grid.Column="1"
+                     Padding="10">
+            <Label Text="{Binding Selected.OrderID}" />
+            <Label Text="{Binding Selected.OrderDate}" />
+            <Label Text="{Binding Selected.RequiredDate}" />
+            <!-- TODO -->
+        </StackLayout>
+    </Grid>
+</ContentPage>
