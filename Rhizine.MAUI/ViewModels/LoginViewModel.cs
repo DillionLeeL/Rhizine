@@ -2,8 +2,11 @@
 
 namespace Rhizine.MAUI.ViewModels
 {
-    public partial class LoginViewModel(IDialogService dialogService, INavigationService navigationService) : BaseViewModel(dialogService, navigationService)
+    public partial class LoginViewModel(IDialogService dialogService, INavigationService navigationService) : BaseViewModel
     {
+        public IDialogService DialogService => dialogService;
+
+        public INavigationService NavigationService => navigationService;
         [RelayCommand]
         private Task LoginAsync() => NavigationService.NavigateToAsync("//home");
     }

@@ -2,7 +2,7 @@
 
 namespace Rhizine.MAUI.ViewModels;
 
-public partial class WebViewViewModel(ILoggingService loggingService, INavigationService navigationService, IDialogService dialogService) : BaseViewModel(dialogService, navigationService)
+public partial class WebViewViewModel(ILoggingService loggingService) : BaseViewModel
 {
     [ObservableProperty]
     private Uri source = new("https://docs.microsoft.com/windows/apps/");

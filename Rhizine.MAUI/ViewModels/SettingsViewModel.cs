@@ -20,8 +20,7 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private AppTheme themeSelection;
 
-    public SettingsViewModel(IThemeSelectorService themeService, IDialogService dialogService, INavigationService navigationService)
-            : base(dialogService, navigationService)
+    public SettingsViewModel(IThemeSelectorService themeService)
     {
         _themeSelectorService = themeService;
         AppVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";

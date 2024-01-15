@@ -2,8 +2,11 @@
 
 namespace Rhizine.MAUI.ViewModels
 {
-    public partial class NewEventViewModel(IDialogService dialogService, INavigationService navigationService) : BaseViewModel(dialogService, navigationService)
+    public partial class NewEventViewModel(IDialogService dialogService, INavigationService navigationService) : BaseViewModel
     {
+        public IDialogService DialogService => dialogService;
+
+        public INavigationService NavigationService => navigationService;
         [ObservableProperty]
         private Event _event = new();
 
