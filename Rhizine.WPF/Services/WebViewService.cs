@@ -1,27 +1,23 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
-using Rhizine.WPF.Services.Interfaces;
+using Rhizine.Core.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Rhizine.WPF.Services;
 
-public class WebViewService : IWebViewService
+public class WebViewService : IWebViewService<Microsoft.Web.WebView2.Wpf.WebView2, Microsoft.Web.WebView2.Core.CoreWebView2WebErrorStatus>
 {
     private WebView2? _webView;
 
     public Uri? Source => _webView?.Source;
 
     [MemberNotNullWhen(true, nameof(_webView))]
-    public bool CanGoBack => _webView != null && _webView.CanGoBack;
+    public bool CanGoBack => _webView?.CanGoBack == true;
 
     [MemberNotNullWhen(true, nameof(_webView))]
-    public bool CanGoForward => _webView != null && _webView.CanGoForward;
+    public bool CanGoForward => _webView?.CanGoForward == true;
 
     public event EventHandler<CoreWebView2WebErrorStatus>? NavigationCompleted;
-
-    public WebViewService()
-    {
-    }
 
     [MemberNotNull(nameof(_webView))]
     public void Initialize(WebView2 webView)

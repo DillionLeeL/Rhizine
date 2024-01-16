@@ -12,18 +12,13 @@ namespace Rhizine.Core.Services;
 // TODO: aggregation -> ELK (Elasticsearch, Logstash, Kibana
 // TODO: Correlation IDs
 
-public class LoggingService : ILoggingService
+/// <summary>
+/// Initializes a new instance of the LoggingService class.
+/// </summary>
+/// <param name="logger">The logger instance used for logging operations.</param>
+public class LoggingService(ILogger<LoggingService> logger) : ILoggingService
 {
-    private readonly ILogger<LoggingService> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of the LoggingService class.
-    /// </summary>
-    /// <param name="logger">The logger instance used for logging operations.</param>
-    public LoggingService(ILogger<LoggingService> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<LoggingService> _logger = logger;
 
     /// <summary>
     /// Logs a debug message.

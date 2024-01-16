@@ -8,24 +8,15 @@ using Rhizine.WinUI.Views;
 
 namespace Rhizine.WinUI.Services;
 
-public class ActivationService : IActivationService
+public class ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers,
+    IThemeSelectorService themeSelectorService, IPageService pageService, ILoggingService loggingService) : IActivationService
 {
-    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
-    private readonly IEnumerable<IActivationHandler> _activationHandlers;
-    private readonly IThemeSelectorService _themeSelectorService;
-    private readonly IPageService _pageService;
-    private readonly ILoggingService _loggingService;
+    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler = defaultHandler;
+    private readonly IEnumerable<IActivationHandler> _activationHandlers = activationHandlers;
+    private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
+    private readonly IPageService _pageService = pageService;
+    private readonly ILoggingService _loggingService = loggingService;
     private UIElement? _shell = null;
-
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers,
-        IThemeSelectorService themeSelectorService, IPageService pageService, ILoggingService loggingService)
-    {
-        _defaultHandler = defaultHandler;
-        _activationHandlers = activationHandlers;
-        _themeSelectorService = themeSelectorService;
-        _pageService = pageService;
-        _loggingService = loggingService;
-    }
 
     public async Task ActivateAsync(object activationArgs)
     {

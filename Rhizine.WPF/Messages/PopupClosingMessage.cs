@@ -3,9 +3,6 @@ using Rhizine.Core.ViewModels;
 
 namespace Rhizine.WPF.Messages;
 
-public class PopupClosingMessage : ValueChangedMessage<PopupBaseViewModel>
+public class PopupClosingMessage(PopupBaseViewModel viewModel) : ValueChangedMessage<PopupBaseViewModel>(viewModel)
 {
-    public PopupClosingMessage(PopupBaseViewModel viewModel) : base(viewModel)
-    {
-    }
 }

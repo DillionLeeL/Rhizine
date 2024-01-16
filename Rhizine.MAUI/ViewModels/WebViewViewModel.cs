@@ -15,7 +15,6 @@ public partial class WebViewViewModel(ILoggingService loggingService) : BaseView
 
     private readonly ILoggingService _loggingService = loggingService;
 
-
     [RelayCommand]
     private async Task OpenInBrowser()
     {

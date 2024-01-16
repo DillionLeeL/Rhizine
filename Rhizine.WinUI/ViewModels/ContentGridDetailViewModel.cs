@@ -6,18 +6,12 @@ using Rhizine.Core.ViewModels;
 
 namespace Rhizine.WinUI.ViewModels;
 
-public partial class ContentGridDetailViewModel : ObservableRecipient, INavigationAware
+public partial class ContentGridDetailViewModel(ISampleDataService sampleDataService, INavigationService<Microsoft.UI.Xaml.Controls.Frame, Microsoft.UI.Xaml.Navigation.NavigationEventArgs> navigationService) : ObservableRecipient, INavigationAware
 {
-    private readonly ISampleDataService _sampleDataService;
-    public readonly INavigationService NavigationService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
+    public readonly INavigationService NavigationService = navigationService;
     [ObservableProperty]
     private SampleOrder? item;
-
-    public ContentGridDetailViewModel(ISampleDataService sampleDataService, INavigationService<Microsoft.UI.Xaml.Controls.Frame, Microsoft.UI.Xaml.Navigation.NavigationEventArgs> navigationService)
-    {
-        _sampleDataService = sampleDataService;
-        NavigationService = navigationService;
-    }
 
     public async void OnNavigatedTo(object parameter)
     {

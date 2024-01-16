@@ -3,12 +3,7 @@ using Rhizine.Core.ViewModels;
 
 namespace Rhizine.WPF.Messages;
 
-public class ClosePopupMessage : ValueChangedMessage<PopupBaseViewModel>
+public class ClosePopupMessage(PopupBaseViewModel viewModel) : ValueChangedMessage<PopupBaseViewModel>(viewModel)
 {
-    public PopupBaseViewModel ViewModel { get; }
-
-    public ClosePopupMessage(PopupBaseViewModel viewModel) : base(viewModel)
-    {
-        ViewModel = viewModel;
-    }
+    public PopupBaseViewModel ViewModel { get; } = viewModel;
 }

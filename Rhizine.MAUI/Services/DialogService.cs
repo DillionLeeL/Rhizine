@@ -8,7 +8,7 @@ public partial class DialogService : IDialogService
     {
         if (Shell.Current is null)
         {
-            throw new NotSupportedException($"This method is currently supported only with a Shell-enabled application.");
+            throw new NotSupportedException("This method is currently supported only with a Shell-enabled application.");
         }
 
         return Shell.Current.DisplayAlert(title, message, cancel);
@@ -18,7 +18,7 @@ public partial class DialogService : IDialogService
     {
         if (Shell.Current is null)
         {
-            throw new NotSupportedException($"This method is currently supported only with a Shell-enabled application.");
+            throw new NotSupportedException("This method is currently supported only with a Shell-enabled application.");
         }
 
         return Shell.Current.DisplayAlert(title, message, accept, cancel);

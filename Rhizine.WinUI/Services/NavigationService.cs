@@ -6,31 +6,23 @@ using Rhizine.Core.Services.Interfaces;
 using Rhizine.WinUI.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
-// INavigationService alias is defined in Rhizine.WinUI/Usings.cs
-// Similar to Rhizine.WPF/Services/NavigationService.cs
 namespace Rhizine.WinUI.Services;
 
 /// <summary>
 /// Provides navigation services for the application, managing navigation between pages and handling navigation-related events.
 /// </summary>
-public class NavigationService : INavigationService
+/// <remarks>
+/// Initializes a new instance of the <see cref="NavigationService"/> class.
+/// </remarks>
+/// <param name="pageService">Service responsible for retrieving page instances.</param>
+/// <param name="loggingService">Service used for logging.</param>
+/// <exception cref="ArgumentNullException">Thrown if <paramref name="pageService"/> or <paramref name="loggingService"/> is null.</exception>
+public class NavigationService(IPageService pageService, ILoggingService loggingService) : INavigationService
 {
-    private readonly IPageService _pageService;
-    private readonly ILoggingService _loggingService;
+    private readonly IPageService _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
+    private readonly ILoggingService _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
     private object? _lastParameterUsed;
     private Frame? _frame;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NavigationService"/> class.
-    /// </summary>
-    /// <param name="pageService">Service responsible for retrieving page instances.</param>
-    /// <param name="loggingService">Service used for logging.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="pageService"/> or <paramref name="loggingService"/> is null.</exception>
-    public NavigationService(IPageService pageService, ILoggingService loggingService)
-    {
-        _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
-        _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
-    }
 
     /// <summary>
     /// Occurs when a navigation has been completed.
@@ -174,7 +166,6 @@ public class NavigationService : INavigationService
     /// <exception cref="ArgumentException">Thrown if <paramref name="pageKey"/> is null or whitespace.</exception>
     public async Task NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
     {
-
         if (string.IsNullOrWhiteSpace(pageKey))
             throw new ArgumentException("Page key cannot be null or whitespace.", nameof(pageKey));
 

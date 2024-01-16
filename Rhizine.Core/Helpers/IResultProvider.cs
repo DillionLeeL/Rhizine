@@ -13,16 +13,9 @@ public interface IResultProvider<TResult>
     Task SetResultAsync(TResult result, CancellationToken cancellationToken);
 }
 
-public class OperationCompletedEventArgs<TResult> : EventArgs
+public class OperationCompletedEventArgs<TResult>(TResult result, bool isCancelled, Exception error) : EventArgs
 {
-    public OperationCompletedEventArgs(TResult result, bool isCancelled, Exception error)
-    {
-        Result = result;
-        IsCancelled = isCancelled;
-        Error = error;
-    }
-
-    public Exception Error { get; }
-    public bool IsCancelled { get; }
-    public TResult Result { get; }
+    public Exception Error { get; } = error;
+    public bool IsCancelled { get; } = isCancelled;
+    public TResult Result { get; } = result;
 }

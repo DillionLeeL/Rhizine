@@ -6,24 +6,19 @@ using System.Text.Json;
 
 namespace Rhizine.Core.Services;
 
-public partial class DataService : IDataService
+/// <summary>
+/// Initializes a new instance of the DataService class.
+/// </summary>
+/// <param name="httpClient">The HttpClient instance for making HTTP requests.</param>
+/// <exception cref="ArgumentNullException">Thrown when httpClient is null.</exception>
+public partial class DataService(HttpClient httpClient) : IDataService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
     // Ideally, this key should come from a secure source such as Azure Key Vault or Windows Certificate Store
     private readonly byte[] _encryptionKey = Encoding.UTF8.GetBytes("your-32-length-secure-key-here!");
 
     private readonly JsonSerializerOptions _options = new() { PropertyNameCaseInsensitive = true };
-
-    /// <summary>
-    /// Initializes a new instance of the DataService class.
-    /// </summary>
-    /// <param name="httpClient">The HttpClient instance for making HTTP requests.</param>
-    /// <exception cref="ArgumentNullException">Thrown when httpClient is null.</exception>
-    public DataService(HttpClient httpClient)
-    {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    }
 
     /// <summary>
     /// Asynchronously sends a GET request to the specified URL and returns the deserialized response.

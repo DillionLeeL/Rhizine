@@ -10,20 +10,12 @@ namespace Rhizine.Core.Services;
 /// This service offers methods for retrieving, setting, checking existence, and removing cached items.
 /// It can optionally use a distributed cache as a fallback when the in-memory cache is unavailable.
 /// </summary>
-public class CachingService : ICachingService
+public class CachingService(ILoggingService loggingService, IMemoryCache memoryCache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false) : ICachingService
 {
-    private readonly IMemoryCache _memoryCache;
-    private readonly ILoggingService _loggingService;
-    private readonly IDistributedCache _distributedCache;
-    private readonly bool _useDistributedCacheFallback;
-
-    public CachingService(ILoggingService loggingService, IMemoryCache memoryCache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false)
-    {
-        _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
-        _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
-        _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
-        _useDistributedCacheFallback = useDistributedCacheFallback;
-    }
+    private readonly IMemoryCache _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
+    private readonly ILoggingService _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
+    private readonly IDistributedCache _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
+    private readonly bool _useDistributedCacheFallback = useDistributedCacheFallback;
 
     /// <summary>
     /// Asynchronously retrieves a cached item by its key. If the item is not found in the memory cache,

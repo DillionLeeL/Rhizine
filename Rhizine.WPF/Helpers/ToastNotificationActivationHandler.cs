@@ -11,20 +11,13 @@ using System.Windows.Navigation;
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WPF/features/toast-notifications.md
 namespace Rhizine.WPF.Helpers;
 
-public class ToastNotificationActivationHandler : IActivationHandler
+public class ToastNotificationActivationHandler(IConfiguration config, IServiceProvider serviceProvider, INavigationService<Frame, NavigationEventArgs> navigationService) : IActivationHandler
 {
     public const string ActivationArguments = "ToastNotificationActivationArguments";
 
-    private readonly IConfiguration _config;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly INavigationService<Frame, NavigationEventArgs> _navigationService;
-
-    public ToastNotificationActivationHandler(IConfiguration config, IServiceProvider serviceProvider, INavigationService<Frame, NavigationEventArgs> navigationService)
-    {
-        _config = config;
-        _serviceProvider = serviceProvider;
-        _navigationService = navigationService;
-    }
+    private readonly IConfiguration _config = config;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly INavigationService<Frame, NavigationEventArgs> _navigationService = navigationService;
 
     public bool CanHandle(object args = null)
     {
@@ -33,7 +26,7 @@ public class ToastNotificationActivationHandler : IActivationHandler
 
     public async Task HandleAsync(object args = null)
     {
-        if (Application.Current.Windows.OfType<IShellWindow>().Count() == 0)
+        if (!Application.Current.Windows.OfType<IShellWindow>().Any())
         {
             // Here you can get an instance of the ShellWindow and choose navigate
             // to a specific page depending on the toast notification arguments
@@ -43,7 +36,7 @@ public class ToastNotificationActivationHandler : IActivationHandler
             Application.Current.MainWindow.Activate();
             if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
             {
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.SetCurrentValue(Window.WindowStateProperty, WindowState.Normal);
             }
         }
 

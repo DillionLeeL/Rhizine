@@ -1,28 +1,34 @@
 ﻿MIT License
-Copyright (c) Dillion Lowry
+Copyright (c) 2023 Dillion Lowry
 All rights reserved.
 
 This software is licensed under one or more agreements.
 It is licensed to you under the MIT license.
 
-# .NET Community Toolkit - MIT License (MIT)
-# .NET Maui Community Toolkit - MIT License (MIT)
-# Windows Community Toolkit - MIT License (MIT)
+## .NET Community Toolkit - MIT License (MIT)
 Copyright (c) .NET Foundation and Contributors
 All rights reserved. 
 
-# Template Studio - MIT License (MIT)
+## .NET Maui Community Toolkit - MIT License (MIT)
+Copyright (c) .NET Foundation and Contributors
+All rights reserved. 
+
+## Windows Community Toolkit - MIT License (MIT)
+Copyright (c) .NET Foundation and Contributors
+All rights reserved. 
+
+## Template Studio - MIT License (MIT)
 Copyright (c) .NET Foundation and Contributors.
 All rights reserved.
 
-# MahApps.Metro - MIT License (MIT)
+## MahApps.Metro - MIT License (MIT)
 Copyright (c) .NET Foundation, Jan Karger, 
 Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
 
-# .NET MAUI Project and Item Templates - MIT License (MIT)
+## .NET MAUI Project and Item Templates - MIT License (MIT)
 Copyright (c) 2021 Vijay Anand E G
 
-# MAUI App Accelerator - MIT License (MIT)
+## MAUI App Accelerator - MIT License (MIT)
 Copyright (c) 2022 Matt Lacey
 
 ## MIT License

@@ -14,16 +14,12 @@ namespace Rhizine.MAUI
     {
         public static MauiApp CreateMauiApp()
         {
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-            {
-                Console.WriteLine(e);
-            };
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => Console.WriteLine(e);
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()
             .CreateLogger();
-
 
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()

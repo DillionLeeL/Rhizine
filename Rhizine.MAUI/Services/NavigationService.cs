@@ -11,7 +11,6 @@ public partial class NavigationService : INavigationService
 
     public Shell NavigationSource => Shell.Current;
 
-
     public bool CanGoBack => NavigationSource.Navigation?.NavigationStack?.Count > 1;
 
     public event EventHandler<ShellNavigatedEventArgs> Navigated;
@@ -26,7 +25,7 @@ public partial class NavigationService : INavigationService
     {
         if (Shell.Current is null)
         {
-            throw new NotSupportedException($"Navigation is currently supported only with a Shell-enabled application.");
+            throw new NotSupportedException("Navigation is currently supported only with a Shell-enabled application.");
         }
     }
 

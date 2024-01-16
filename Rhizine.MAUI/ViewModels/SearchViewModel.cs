@@ -4,6 +4,5 @@ namespace Rhizine.MAUI.ViewModels
 {
     public partial class SearchViewModel : BaseViewModel
     {
-
     }
 }

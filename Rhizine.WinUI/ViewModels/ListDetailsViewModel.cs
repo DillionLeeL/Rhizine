@@ -7,19 +7,14 @@ using System.Collections.ObjectModel;
 
 namespace Rhizine.WinUI.ViewModels;
 
-public partial class ListDetailsViewModel : ObservableRecipient, INavigationAware
+public partial class ListDetailsViewModel(ISampleDataService sampleDataService) : ObservableRecipient, INavigationAware
 {
-    private readonly ISampleDataService _sampleDataService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
 
     [ObservableProperty]
     private SampleOrder? selected;
 
     public ObservableCollection<SampleOrder> SampleItems { get; private set; } = new ObservableCollection<SampleOrder>();
-
-    public ListDetailsViewModel(ISampleDataService sampleDataService)
-    {
-        _sampleDataService = sampleDataService;
-    }
 
     public async void OnNavigatedTo(object parameter)
     {

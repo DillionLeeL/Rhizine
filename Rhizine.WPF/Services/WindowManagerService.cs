@@ -13,23 +13,17 @@ namespace Rhizine.WPF.Services;
 /// This service handles the creation and management of new windows and dialog windows,
 /// as well as navigation between different pages within these windows.
 /// </summary>
-public class WindowManagerService : IWindowManagerService
+/// <remarks>
+/// Initializes a new instance of the WindowManagerService class.
+/// </remarks>
+/// <param name="serviceProvider">The service provider for dependency injection.</param>
+/// <param name="pageService">The service for managing pages.</param>
+public class WindowManagerService(IServiceProvider serviceProvider, IPageService pageService) : IWindowManagerService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly IPageService _pageService;
+    private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+    private readonly IPageService _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
 
     public Window MainWindow => Application.Current.MainWindow;
-
-    /// <summary>
-    /// Initializes a new instance of the WindowManagerService class.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider for dependency injection.</param>
-    /// <param name="pageService">The service for managing pages.</param>
-    public WindowManagerService(IServiceProvider serviceProvider, IPageService pageService)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
-    }
 
     /// <summary>
     /// Opens a specified page in a new window or activates it if it's already open.

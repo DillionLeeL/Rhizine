@@ -28,7 +28,7 @@ public partial class DataGridViewModel : ObservableRecipient, INavigationAware
         // TODO: Replace with real data.
         var data = await _sampleDataService.GetGridDataAsync() ?? new List<SampleOrder>();
 
-        await _loggingService.LogAsync($"Loaded {data?.Count()} items.");
+        await _loggingService.LogAsync($"Loaded {data.Count()} items.");
         foreach (var item in data)
         {
             Source.Add(item);

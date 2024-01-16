@@ -7,26 +7,20 @@ using System.Windows.Navigation;
 
 namespace Rhizine.WPF.Services;
 
-public class NavigationService : INavigationService
+/// <summary>
+/// Initializes a new instance of the NavigationService class.
+/// </summary>
+/// <param name="pageService">The service for managing pages.</param>
+/// <param name="loggingService">The service for logging errors and information.</param>
+public class NavigationService(IPageService pageService, ILoggingService loggingService) : INavigationService
 {
-    private readonly IPageService _pageService;
-    private readonly ILoggingService _loggingService;
+    private readonly IPageService _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
+    private readonly ILoggingService _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
 
     public event EventHandler<NavigationEventArgs> Navigated;
     private Frame _frame;
     public Frame NavigationSource => _frame;
     private object _lastParameterUsed;
-
-    /// <summary>
-    /// Initializes a new instance of the NavigationService class.
-    /// </summary>
-    /// <param name="pageService">The service for managing pages.</param>
-    /// <param name="loggingService">The service for logging errors and information.</param>
-    public NavigationService(IPageService pageService, ILoggingService loggingService)
-    {
-        _pageService = pageService ?? throw new ArgumentNullException(nameof(pageService));
-        _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
-    }
 
     [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
     public bool CanGoBack => _frame?.CanGoBack ?? false;

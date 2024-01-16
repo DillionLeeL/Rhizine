@@ -7,14 +7,9 @@ using System.Diagnostics;
 // are much more efficient and should be used instead.
 namespace Rhizine.Core.Services
 {
-    public class AsyncLoggingService : ILoggingService
+    public class AsyncLoggingService(ILogger<AsyncLoggingService> logger) : ILoggingService
     {
-        private readonly ILogger<AsyncLoggingService> _loggingService;
-
-        public AsyncLoggingService(ILogger<AsyncLoggingService> logger)
-        {
-            _loggingService = logger;
-        }
+        private readonly ILogger<AsyncLoggingService> _loggingService = logger;
 
         public async Task LogDebugAsync(string message)
         {

@@ -5,23 +5,14 @@ using System.Linq.Expressions;
 
 namespace Rhizine.Core.Models;
 
-public class Repository<T> : IRepository<T> where T : class, IEntity
+public class Repository<T>(DbContext context, IMemoryCache cache) : IRepository<T> where T : class, IEntity
 {
-    private readonly DbContext _context;
-    private readonly DbSet<T> _dbSet;
-    private readonly IMemoryCache _cache;
-    private readonly MemoryCacheEntryOptions _cacheOptions;
-
-    public Repository(DbContext context, IMemoryCache cache)
-    {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
-        _dbSet = context.Set<T>();
-        _cache = cache ?? throw new ArgumentNullException(nameof(cache));
-
-        _cacheOptions = new MemoryCacheEntryOptions()
+    private readonly DbContext _context = context ?? throw new ArgumentNullException(nameof(context));
+    private readonly DbSet<T> _dbSet = context.Set<T>();
+    private readonly IMemoryCache _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+    private readonly MemoryCacheEntryOptions _cacheOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(5))
                 .SetAbsoluteExpiration(TimeSpan.FromHours(1));
-    }
 
     public async Task<T> GetByIdAsync(int id)
     {

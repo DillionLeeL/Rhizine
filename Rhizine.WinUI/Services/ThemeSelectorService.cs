@@ -5,18 +5,13 @@ using Rhizine.WinUI.Helpers;
 
 namespace Rhizine.WinUI.Services;
 
-public class ThemeSelectorService : IThemeSelectorService
+public class ThemeSelectorService(ILocalSettingsService localSettingsService) : IThemeSelectorService
 {
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
     public AppTheme Theme { get; set; } = AppTheme.Default;
 
-    private readonly ILocalSettingsService _localSettingsService;
-
-    public ThemeSelectorService(ILocalSettingsService localSettingsService)
-    {
-        _localSettingsService = localSettingsService;
-    }
+    private readonly ILocalSettingsService _localSettingsService = localSettingsService;
 
     public async Task InitializeAsync()
     {

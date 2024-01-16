@@ -6,21 +6,16 @@ namespace Rhizine.Core.Services;
 
 // Example WPF usage: using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
 
-public class PageService<TPage> : IPageService<TPage>
+/// <summary>
+/// Initializes a new instance of the PageService with a given service provider.
+/// </summary>
+/// <param name="serviceProvider">The service provider to resolve page instances.</param>
+/// <exception cref="ArgumentNullException">Thrown if serviceProvider is null.</exception>
+public class PageService<TPage>(IServiceProvider serviceProvider) : IPageService<TPage>
 {
     private readonly ConcurrentDictionary<string, Lazy<TPage>> _pagesCache = new();
     private readonly ConcurrentDictionary<string, Type> _pageTypes = new();
-    private readonly IServiceProvider _serviceProvider;
-
-    /// <summary>
-    /// Initializes a new instance of the PageService with a given service provider.
-    /// </summary>
-    /// <param name="serviceProvider">The service provider to resolve page instances.</param>
-    /// <exception cref="ArgumentNullException">Thrown if serviceProvider is null.</exception>
-    public PageService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-    }
+    private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
     /// <summary>
     /// Retrieves a Page instance associated with a given ViewModel key.

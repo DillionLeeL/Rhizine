@@ -21,47 +21,33 @@ namespace Rhizine.WPF.Services;
 /// identity services. This class implements the IHostedService interface, allowing it to be managed
 /// by the host during application start-up and shutdown.
 /// </summary>
-public class ApplicationHostService : IHostedService
+/// <remarks>
+/// Initializes a new instance of the <see cref="ApplicationHostService"/> class with required services.
+/// </remarks>
+/// <param name="serviceProvider">Service provider for dependency injection.</param>
+/// <param name="activationHandlers">Collection of activation handlers for handling different types of app activations.</param>
+/// <param name="navigationService">Service for managing navigation within the application.</param>
+/// <param name="themeSelectorService">Service for selecting and applying application themes.</param>
+/// <param name="persistAndRestoreService">Service for persisting and restoring application data.</param>
+/// <param name="flyoutService">Service for managing flyout UI components.</param>
+/// <param name="toastNotificationsService">Service for showing toast notifications.</param>
+/// <param name="config">Configuration settings for the application.</param>
+public class ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService<Frame, NavigationEventArgs> navigationService,
+    IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService, IFlyoutService flyoutService,
+    IToastNotificationsService toastNotificationsService, IPageService PageService, IOptions<AppConfig> config) : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly INavigationService _navigationService;
-    private readonly IFlyoutService _flyoutService;
-    private readonly IPersistAndRestoreService _persistAndRestoreService;
-    private readonly IThemeSelectorService _themeSelectorService;
-    private readonly IEnumerable<IActivationHandler> _activationHandlers;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly INavigationService _navigationService = navigationService;
+    private readonly IFlyoutService _flyoutService = flyoutService;
+    private readonly IPersistAndRestoreService _persistAndRestoreService = persistAndRestoreService;
+    private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
+    private readonly IEnumerable<IActivationHandler> _activationHandlers = activationHandlers;
     private readonly IIdentityService _identityService; // TODO
-    private readonly IToastNotificationsService _toastNotificationsService;
-    private readonly IPageService _pageService;
-    private readonly AppConfig _appConfig;
+    private readonly IToastNotificationsService _toastNotificationsService = toastNotificationsService;
+    private readonly IPageService _pageService = PageService;
+    private readonly AppConfig _appConfig = config.Value;
     private IShellWindow _shellWindow;
     private bool _isInitialized;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ApplicationHostService"/> class with required services.
-    /// </summary>
-    /// <param name="serviceProvider">Service provider for dependency injection.</param>
-    /// <param name="activationHandlers">Collection of activation handlers for handling different types of app activations.</param>
-    /// <param name="navigationService">Service for managing navigation within the application.</param>
-    /// <param name="themeSelectorService">Service for selecting and applying application themes.</param>
-    /// <param name="persistAndRestoreService">Service for persisting and restoring application data.</param>
-    /// <param name="flyoutService">Service for managing flyout UI components.</param>
-    /// <param name="toastNotificationsService">Service for showing toast notifications.</param>
-    /// <param name="identityService">Service for managing user identity and authentication.</param>
-    /// <param name="config">Configuration settings for the application.</param>
-    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService<Frame, NavigationEventArgs> navigationService,
-        IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService, IFlyoutService flyoutService,
-        IToastNotificationsService toastNotificationsService, IPageService PageService, IOptions<AppConfig> config) // IUserDataService userDataService
-    {
-        _serviceProvider = serviceProvider;
-        _activationHandlers = activationHandlers;
-        _navigationService = navigationService;
-        _themeSelectorService = themeSelectorService;
-        _persistAndRestoreService = persistAndRestoreService;
-        _flyoutService = flyoutService;
-        _toastNotificationsService = toastNotificationsService;
-        _pageService = PageService;
-        _appConfig = config.Value;
-    }
 
     /// <summary>
     /// Starts the application's services asynchronously. This includes initializing the identity service,

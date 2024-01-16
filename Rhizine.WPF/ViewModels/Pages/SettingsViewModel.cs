@@ -10,12 +10,13 @@ using Rhizine.WPF.Properties;
 
 namespace Rhizine.WPF.ViewModels.Pages;
 
-public partial class SettingsViewModel : BaseViewModel
+public partial class SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService,
+                         IApplicationInfoService applicationInfoService, ILoggingService loggingService) : BaseViewModel
 {
-    private readonly AppConfig _appConfig;
-    private readonly IThemeSelectorService _themeSelectorService;
-    private readonly IApplicationInfoService _applicationInfoService;
-    private readonly ILoggingService _loggingService;
+    private readonly AppConfig _appConfig = appConfig?.Value ?? new AppConfig();
+    private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
+    private readonly IApplicationInfoService _applicationInfoService = applicationInfoService;
+    private readonly ILoggingService _loggingService = loggingService;
 
     [ObservableProperty]
     private AppTheme _theme;
@@ -28,15 +29,6 @@ public partial class SettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     private Flyout _testFlyout;
-
-    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService,
-                             IApplicationInfoService applicationInfoService, ILoggingService loggingService)
-    {
-        _appConfig = appConfig?.Value ?? new AppConfig();
-        _themeSelectorService = themeSelectorService;
-        _applicationInfoService = applicationInfoService;
-        _loggingService = loggingService;
-    }
 
     public override void OnNavigatedTo(object parameter)
     {

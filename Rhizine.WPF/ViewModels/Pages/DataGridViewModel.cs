@@ -5,18 +5,12 @@ using System.Collections.ObjectModel;
 
 namespace Rhizine.WPF.ViewModels.Pages;
 
-public class DataGridViewModel : BaseViewModel
+public class DataGridViewModel(ISampleDataService sampleDataService, ILoggingService loggingService) : BaseViewModel
 {
-    private readonly ISampleDataService _sampleDataService;
-    private readonly ILoggingService _loggingService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
+    private readonly ILoggingService _loggingService = loggingService;
 
     public ObservableCollection<SampleOrder> Source { get; } = [];
-
-    public DataGridViewModel(ISampleDataService sampleDataService, ILoggingService loggingService)
-    {
-        _sampleDataService = sampleDataService;
-        _loggingService = loggingService;
-    }
 
     public override async void OnNavigatedTo(object parameter)
     {

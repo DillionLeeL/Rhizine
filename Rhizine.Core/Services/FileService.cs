@@ -5,15 +5,10 @@ using System.Text.Json;
 
 namespace Rhizine.Core.Services;
 
-public class FileService : IFileService
+public class FileService(ILoggingService loggingService) : IFileService
 {
-    private readonly ILoggingService _loggingService;
+    private readonly ILoggingService _loggingService = loggingService;
     private readonly JsonSerializerOptions _jsonSerializerOptions = new();
-
-    public FileService(ILoggingService loggingService)
-    {
-        _loggingService = loggingService;
-    }
 
     /// <summary>
     /// Synchronously reads and deserializes the JSON content from a file into an object of type T.

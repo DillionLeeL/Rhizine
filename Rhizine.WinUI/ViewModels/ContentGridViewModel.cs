@@ -10,18 +10,12 @@ using System.Collections.ObjectModel;
 
 namespace Rhizine.WinUI.ViewModels;
 
-public partial class ContentGridViewModel : ObservableRecipient, INavigationAware
+public partial class ContentGridViewModel(INavigationService navigationService, ISampleDataService sampleDataService) : ObservableRecipient, INavigationAware
 {
-    private readonly INavigationService _navigationService;
-    private readonly ISampleDataService _sampleDataService;
+    private readonly INavigationService _navigationService = navigationService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
 
     public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
-
-    public ContentGridViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
-    {
-        _navigationService = navigationService;
-        _sampleDataService = sampleDataService;
-    }
 
     public async void OnNavigatedTo(object parameter)
     {
