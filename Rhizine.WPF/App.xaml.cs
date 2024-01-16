@@ -86,7 +86,6 @@ public partial class App : Application
         // App Host
         services.AddHostedService<ApplicationHostService>();
         //services.AddLogging(configure => configure.AddConsole()); // default console
-        //services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
         // Activation Handlers
         services.AddSingleton<IActivationHandler, ToastNotificationActivationHandler>();
@@ -97,8 +96,7 @@ public partial class App : Application
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();
         services.AddSingleton<IPersistAndRestoreService, PersistAndRestoreService>();
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-        services.AddSingleton<ISampleDataService, SampleDataService>();
-        //services.AddSingleton<ISystemService, SystemService>();
+        services.AddSingleton<ISampleDataService, SampleDataService>();    
         services.AddSingleton<IPageService, PageService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFlyoutService, FlyoutService>();
@@ -106,7 +104,6 @@ public partial class App : Application
         services.AddSingleton<IWebViewService, WebViewService>();
 
         services.AddSingleton<IToastNotificationsService, ToastNotificationsService>();
-        //services.AddSingleton<IIdentityService, IdentityService>();
 
         // Views and ViewModels
         services.AddTransient<IShellWindow, ShellWindow>();

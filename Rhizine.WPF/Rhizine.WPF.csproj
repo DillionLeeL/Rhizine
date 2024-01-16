@@ -70,7 +70,6 @@
     <Compile Include="Services\Interfaces\IFlyoutService.cs" />
     <Compile Include="Services\Interfaces\IPopupService.cs" />
     <Compile Include="Services\Interfaces\IToastNotificationsService.cs" />
-    <Compile Include="Services\Interfaces\IWebViewService.cs" />
     <Compile Include="Services\Interfaces\IWindowManagerService.cs" />
   </ItemGroup>
   

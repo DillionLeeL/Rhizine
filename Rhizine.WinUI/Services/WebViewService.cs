@@ -2,9 +2,13 @@
 using Microsoft.Web.WebView2.Core;
 using Rhizine.WinUI.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
+using Rhizine.Core.Services.Interfaces;
 
 namespace Rhizine.WinUI.Services;
 
+// https://docs.microsoft.com/microsoft-edge/webview2/get-started/winui
+// https://docs.microsoft.com/microsoft-edge/webview2/concepts/developer-guide
+// https://docs.microsoft.com/microsoft-edge/webview2/concepts/distribution
 public class WebViewService : IWebViewService
 {
     private WebView2? _webView;
@@ -12,10 +16,10 @@ public class WebViewService : IWebViewService
     public Uri? Source => _webView?.Source;
 
     [MemberNotNullWhen(true, nameof(_webView))]
-    public bool CanGoBack => _webView != null && _webView.CanGoBack;
+    public bool CanGoBack => _webView?.CanGoBack == true;
 
     [MemberNotNullWhen(true, nameof(_webView))]
-    public bool CanGoForward => _webView != null && _webView.CanGoForward;
+    public bool CanGoForward => _webView?.CanGoForward == true;
 
     public event EventHandler<CoreWebView2WebErrorStatus>? NavigationCompleted;
 

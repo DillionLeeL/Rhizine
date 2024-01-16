@@ -22,6 +22,7 @@
     <Compile Remove="Services\Interfaces\INavigationService.cs" />
     <Compile Remove="Services\Interfaces\IPageService.cs" />
     <Compile Remove="Services\Interfaces\IThemeSelectorService.cs" />
+    <Compile Remove="Services\Interfaces\IWebViewService.cs" />
     <Compile Remove="Services\PageService.cs" />
   </ItemGroup>
 

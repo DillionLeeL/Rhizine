@@ -2,99 +2,66 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
+using Rhizine.Core.Services.Interfaces;
 using Rhizine.Core.ViewModels;
 using Rhizine.WPF.Services.Interfaces;
 using System.Windows;
 
 namespace Rhizine.WPF.ViewModels.Pages;
 
-public partial class WebViewViewModel : BaseViewModel
+public partial class WebViewViewModel(IWebViewService webViewService, ILoggingService loggingService) : BaseViewModel
 {
-    private readonly IWebViewService _webViewService;
-
-    private WebView2 _webView;
-
-    public WebViewViewModel(IWebViewService webViewService)
-    {
-        _webViewService = webViewService;
-    }
+    public IWebViewService WebViewService { get; } = webViewService;
+    private readonly ILoggingService _loggingService = loggingService;
 
     [ObservableProperty]
     private Uri _source = new("https://docs.microsoft.com/windows/apps/");
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FailedMesageVisibility))]
     private bool _isShowingFailedMessage;
 
     [ObservableProperty]
-    private bool _isLoading = true;
+    [NotifyPropertyChangedFor(nameof(IsLoadingVisibility))]
+    private bool _isLoading;
 
-    [ObservableProperty]
-    private Visibility _isLoadingVisibility = Visibility.Visible;
+    public Visibility IsLoadingVisibility => IsLoading ? Visibility.Visible : Visibility.Collapsed;
 
-    [ObservableProperty]
-    private Visibility _failedMesageVisibility = Visibility.Collapsed;
+    public Visibility FailedMesageVisibility => IsLoading ? Visibility.Visible : Visibility.Collapsed;
 
-    public void Initialize(WebView2 webView)
-    {
-        _webView = webView;
-    }
-
-    public void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-    {
-        IsLoading = false;
-        if (e?.IsSuccess == false)
-        {
-            // Use `e.WebErrorStatus` to vary the displayed message based on the error reason
-            IsShowingFailedMessage = true;
-        }
-
-        BrowserBackCommand.NotifyCanExecuteChanged();
-        BrowserForwardCommand.NotifyCanExecuteChanged();
-    }
+    private bool BrowserCanGoForward => WebViewService.CanGoForward;
+    private bool BrowserCanGoBack => WebViewService.CanGoBack;
 
     [RelayCommand]
     private void Reload()
     {
-        _webViewService.Reload();
+        IsShowingFailedMessage = false;
+        IsLoading = true;
+        WebViewService.Reload();
     }
 
     [RelayCommand(CanExecute = nameof(BrowserCanGoForward))]
     private void BrowserForward()
     {
-        if (_webViewService.CanGoForward)
-        {
-            _webViewService.GoForward();
-        }
-    }
-
-    private bool BrowserCanGoForward()
-    {
-        return _webViewService.CanGoForward;
+        WebViewService.GoForward();
     }
 
     [RelayCommand(CanExecute = nameof(BrowserCanGoBack))]
     private void BrowserBack()
     {
-        if (_webViewService.CanGoBack)
-        {
-            _webViewService.GoBack();
-        }
+        WebViewService.GoBack();
     }
 
-    private bool BrowserCanGoBack()
+    public override void OnNavigatedTo(object parameter)
     {
-        return _webViewService.CanGoBack;
+        _loggingService.Log("Navigated to WebViewViewModel.");
+        WebViewService.NavigationCompleted += OnNavigationCompleted;
     }
 
-    public void OnNavigatedTo(object parameter)
+    public override void OnNavigatedFrom()
     {
-        _webViewService.NavigationCompleted += OnNavigationCompleted;
-    }
-
-    public void OnNavigatedFrom()
-    {
-        _webViewService.UnregisterEvents();
-        _webViewService.NavigationCompleted -= OnNavigationCompleted;
+        WebViewService.UnregisterEvents();
+        WebViewService.NavigationCompleted -= OnNavigationCompleted;
     }
 
     private void OnNavigationCompleted(object? sender, CoreWebView2WebErrorStatus webErrorStatus)
@@ -112,9 +79,9 @@ public partial class WebViewViewModel : BaseViewModel
     [RelayCommand]
     private async Task OpenInBrowser()
     {
-        if (Source != null)
+        if (WebViewService.Source != null)
         {
-            await Windows.System.Launcher.LaunchUriAsync(Source);
+            await Windows.System.Launcher.LaunchUriAsync(WebViewService.Source);
         }
     }
 }

@@ -21,8 +21,7 @@
         </Grid.RowDefinitions>
         <wv2:WebView2
             x:Name="webView"
-            Source="{Binding Source}"
-            NavigationCompleted="OnNavigationCompleted" />
+            Source="{Binding Source}"/>
         <Grid
             VerticalAlignment="Bottom"
             Grid.Row="1"
@@ -75,8 +74,7 @@
                         Style="{StaticResource SmallIconStyle}"
                         Text="&#xE72C;" />
                 </Button>
-                <Button
-                    Command="{Binding OpenInBrowserCommand}"
+                <Button Command="{Binding OpenInBrowserCommand}"
                     Style="{StaticResource WebViewButtonStyle}"
                     ToolTip="{x:Static properties:Resources.WebViewPageOpenInBrowserButtonTooltip}"
                     AutomationProperties.Name="{x:Static properties:Resources.WebViewPageOpenInBrowserButtonTooltip}">

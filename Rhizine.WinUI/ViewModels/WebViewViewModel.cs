@@ -9,11 +9,7 @@ using Rhizine.WinUI.Services.Interfaces;
 
 namespace Rhizine.WinUI.ViewModels;
 
-// TODO: Review best practices and distribution guidelines for WebView2.
-// https://docs.microsoft.com/microsoft-edge/webview2/get-started/winui
-// https://docs.microsoft.com/microsoft-edge/webview2/concepts/developer-guide
-// https://docs.microsoft.com/microsoft-edge/webview2/concepts/distribution
-public partial class WebViewViewModel : ObservableRecipient, INavigationAware
+public partial class WebViewViewModel(IWebViewService webViewService, ILoggingService loggingService) : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
     [ObservableProperty]
@@ -25,17 +21,9 @@ public partial class WebViewViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty]
     private bool hasFailures;
 
-    public IWebViewService WebViewService
-    {
-        get;
-    }
-    private readonly ILoggingService _loggingService;
+    public IWebViewService WebViewService { get;} = webViewService;
 
-    public WebViewViewModel(IWebViewService webViewService, ILoggingService loggingService)
-    {
-        WebViewService = webViewService;
-        _loggingService = loggingService;
-    }
+    private readonly ILoggingService _loggingService = loggingService;
 
     [RelayCommand]
     private async Task OpenInBrowser()
