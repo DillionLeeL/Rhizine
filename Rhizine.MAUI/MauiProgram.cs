@@ -35,6 +35,8 @@ namespace Rhizine.MAUI
                        fonts.AddFont("OpenSans-SemiBold.ttf", "OpenSansSemiBold");
                        fonts.AddFont("Segoe Fluent Icons.ttf", "SegoeIcons");
                        fonts.AddFont("segoeui.ttf", "SegoeUI");
+                       //Segoe MDL2 Assets
+                       fonts.AddFont("segMDL2.ttf", "Segoe MDL2 Assets");
                    });
 
             builder.Services.AddSingleton<IDialogService, DialogService>();

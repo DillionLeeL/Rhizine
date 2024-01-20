@@ -21,10 +21,14 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="{Binding SymbolCode, Converter={StaticResource SymbolCodeToGlyphConverter}}"
-                       FontFamily="SegoeUI"
-                       FontSize="44" />
+                <!--Glyph loading in .Net Maui is broken, see: https://github.com/dotnet/maui/issues/15802 and https://github.com/dotnet/maui/issues/10186-->
+                <Image BackgroundColor="#D1D1D1">
+                    <Image.Source>
+                        <FontImageSource Glyph="{Binding Symbol, Converter={StaticResource SymbolCodeToGlyphConverter}}"
+                                         FontFamily="SegoeUI"
+                                         Size="44" />
+                    </Image.Source>
+                </Image>
 
                 <StackLayout Grid.Column="1"
                              VerticalOptions="Center">

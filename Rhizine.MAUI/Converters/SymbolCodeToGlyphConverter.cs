@@ -12,7 +12,7 @@ namespace Rhizine.MAUI.Converters
         {
             if (value is int symbolCode)
             {
-                return char.ConvertFromUtf32(symbolCode);
+                return string.Format("{0:x}", symbolCode);
             }
 
             return string.Empty;
