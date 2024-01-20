@@ -17,5 +17,7 @@ namespace Rhizine.MAUI.Views
 
             await ViewModel.LoadDataAsync();
         }
+
     }
+
 }

@@ -12,21 +12,21 @@
     x:DataType="vm:ListDetailsViewModel">
     <ContentPage.Resources>
         <DataTemplate x:Key="ItemTemplate">
-            <Grid>
+            <Grid Padding="10"
+                HeightRequest="80">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                           Text="{Binding Symbol}"
-                           Style="{StaticResource MediumIconStyle}"
-                           Margin="{StaticResource XSmallLeftMargin}"
-                           AutomationProperties.Name="List item icon" />
+                       Text="{Binding Symbol}"
+                       AutomationProperties.Name="Detail icon" />
                 <StackLayout Grid.Column="1"
                             Margin="{StaticResource SmallLeftMargin}"
                             VerticalOptions="Center">
                     <Label Style="{StaticResource ListTitleStyle}"
-                               Text="{Binding Company}" />
+                           Text="{Binding Company}"
+                           FontAttributes="Bold" />
                     <Label Style="{StaticResource ListSubTitleStyle}"
                                Text="{Binding Status}" />
                 </StackLayout>
@@ -95,26 +95,23 @@
             </ScrollView>
         </DataTemplate>
     </ContentPage.Resources>
-    <Grid>
+    <Grid Padding="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <ListView Grid.Column="0"
-                  ItemsSource="{Binding SampleItems}"
-                  SelectedItem="{Binding Selected}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="m:SampleOrder">
-                    <TextCell Text="{Binding OrderID}"
-                              Detail="{Binding ShortDescription}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <CollectionView  Grid.Column="0"
+                         ItemsSource="{Binding SampleItems}"
+                         SelectedItem="{Binding Selected}"
+                         ItemTemplate="{StaticResource ItemTemplate}">
+        </CollectionView>
 
         <StackLayout Grid.Column="1"
-                     Padding="10">
-            <Label Text="{Binding Selected.OrderID}" />
+                     Padding="10"
+                     BindingContext="{Binding Selected}">
+            <Label Text="{Binding Selected.OrderID}"
+                   FontSize="Large"/>
             <Label Text="{Binding Selected.OrderDate}" />
             <Label Text="{Binding Selected.RequiredDate}" />
             <!-- TODO -->
