@@ -7,17 +7,19 @@ namespace Rhizine.MAUI.Views
         ListDetailsViewModel ViewModel;
         public ListDetailsPage(ListDetailsViewModel viewModel)
         {
+
             InitializeComponent();
             viewModel.Title = "ListDetails";
             BindingContext = ViewModel = viewModel;
         }
+        /*
         protected override async void OnNavigatedTo(NavigatedToEventArgs args)
         {
             base.OnNavigatedTo(args);
 
             await ViewModel.LoadDataAsync();
         }
-
+        */
     }
 
 }
