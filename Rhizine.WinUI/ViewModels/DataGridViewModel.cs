@@ -12,7 +12,7 @@ public partial class DataGridViewModel : ObservableRecipient, INavigationAware
     private readonly ISampleDataService _sampleDataService;
     private readonly ILoggingService _loggingService;
 
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> Source { get; } = [];
 
     public DataGridViewModel(ISampleDataService sampleDataService, ILoggingService loggingService)
     {
@@ -26,7 +26,7 @@ public partial class DataGridViewModel : ObservableRecipient, INavigationAware
         Source.Clear();
 
         // TODO: Replace with real data.
-        var data = await _sampleDataService.GetGridDataAsync() ?? new List<SampleOrder>();
+        var data = await _sampleDataService.GetGridDataAsync() ?? [];
 
         await _loggingService.LogAsync($"Loaded {data.Count()} items.");
         foreach (var item in data)

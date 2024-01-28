@@ -15,7 +15,7 @@ public partial class ContentGridViewModel(INavigationService navigationService, 
     private readonly INavigationService _navigationService = navigationService;
     private readonly ISampleDataService _sampleDataService = sampleDataService;
 
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> Source { get; } = [];
 
     public async void OnNavigatedTo(object parameter)
     {

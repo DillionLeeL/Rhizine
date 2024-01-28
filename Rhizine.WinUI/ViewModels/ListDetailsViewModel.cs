@@ -14,7 +14,7 @@ public partial class ListDetailsViewModel(ISampleDataService sampleDataService) 
     [ObservableProperty]
     private SampleOrder? selected;
 
-    public ObservableCollection<SampleOrder> SampleItems { get; private set; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> SampleItems { get; private set; } = [];
 
     public async void OnNavigatedTo(object parameter)
     {

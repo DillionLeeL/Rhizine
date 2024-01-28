@@ -33,7 +33,6 @@
                              Command="{x:Bind ViewModel.ReloadCommand}"
                              HorizontalAlignment="Center" />
         </StackPanel>
-
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Button x:Uid="BrowserBackButton"

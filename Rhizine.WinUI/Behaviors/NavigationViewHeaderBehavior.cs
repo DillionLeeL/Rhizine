@@ -89,23 +89,9 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             else
             {
                 var headerFromPage = GetHeaderContext(_currentPage);
-                if (headerFromPage != null)
-                {
-                    AssociatedObject.Header = headerFromPage;
-                }
-                else
-                {
-                    AssociatedObject.Header = DefaultHeader;
-                }
+                AssociatedObject.Header = headerFromPage ?? DefaultHeader;
 
-                if (headerMode == NavigationViewHeaderMode.Always)
-                {
-                    AssociatedObject.AlwaysShowHeader = true;
-                }
-                else
-                {
-                    AssociatedObject.AlwaysShowHeader = false;
-                }
+                AssociatedObject.AlwaysShowHeader = headerMode == NavigationViewHeaderMode.Always;
             }
         }
     }
