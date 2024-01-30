@@ -13,7 +13,7 @@ public class ThemeSelectorService : IThemeSelectorService
     private const string HcDarkTheme = "pack://application:,,,/Styles/Themes/HC.Dark.Teal.xaml";
     private const string HcLightTheme = "pack://application:,,,/Styles/Themes/HC.Light.Teal.xaml";
     private const string HcDarkGrayTheme = "pack://application:,,,/Styles/Themes/Dark.Gray.xaml";
-    private readonly Dictionary<AppTheme, Theme> _customThemes = new();
+    private readonly Dictionary<AppTheme, Theme> _customThemes = [];
 
     public ThemeSelectorService() { }
 

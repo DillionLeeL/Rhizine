@@ -42,7 +42,7 @@ public class BooleanToVisibilityConverter : IValueConverter
     /// <returns>A boolean value.</returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is Visibility visibility))
+        if (value is not Visibility visibility)
             return DependencyProperty.UnsetValue;
 
         bool isReverse = Reverse ^ (parameter as bool? ?? false);

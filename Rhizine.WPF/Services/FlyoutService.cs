@@ -13,8 +13,8 @@ namespace Rhizine.WPF.Services;
 public partial class FlyoutService(ILoggingService loggingService) : IFlyoutService
 {
     private readonly ILoggingService _loggingService = loggingService;
-    private readonly Dictionary<string, Lazy<FlyoutBaseViewModel>> _flyouts = new();
-    public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; } = new ObservableCollection<FlyoutBaseViewModel>();
+    private readonly Dictionary<string, Lazy<FlyoutBaseViewModel>> _flyouts = [];
+    public ObservableCollection<FlyoutBaseViewModel> ActiveFlyouts { get; } = [];
 
     // Triggered when a flyout is opened/closed, providing the name of the flyout
     public event Action<string> OnFlyoutOpened;

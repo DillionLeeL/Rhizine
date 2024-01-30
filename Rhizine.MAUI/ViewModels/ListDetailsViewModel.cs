@@ -32,7 +32,7 @@ public partial class ListDetailsViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    public ObservableCollection<SampleOrder> _sampleItems = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<SampleOrder> _sampleItems = [];
 
     public async Task LoadDataAsync()
     {
