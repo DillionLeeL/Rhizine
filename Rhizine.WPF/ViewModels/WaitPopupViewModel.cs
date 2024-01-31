@@ -10,7 +10,7 @@ namespace Rhizine.Displays.Popups;
 public partial class WaitPopupViewModel : PopupBaseViewModel
 {
     private readonly ILoggingService _loggingService;
-    public ObservableCollection<string> WaitingStates { get; } = new();
+    public ObservableCollection<string> WaitingStates { get; } = [];
     public bool? DialogResult { get; private set; }
 
     public WaitPopupViewModel(ILoggingService loggingService)

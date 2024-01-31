@@ -29,19 +29,19 @@ public partial class ShellViewModel : BaseViewModel
     private HamburgerMenuItem _selectedOptionsMenuItem;
 
     // TODO: Change the icons and titles for all HamburgerMenuItems here
-    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new()
-    {
+    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } =
+    [
         new HamburgerMenuGlyphItem() { Label = Resources.ShellLandingPage, Glyph = "\uE8A5", TargetPageType = typeof(LandingViewModel) },
         new HamburgerMenuGlyphItem() { Label = Resources.ShellWebViewPage, Glyph = "\uE8A5", TargetPageType = typeof(WebViewViewModel) },
         new HamburgerMenuGlyphItem() { Label = Resources.ShellDataGridPage, Glyph = "\uE8A5", TargetPageType = typeof(DataGridViewModel) },
         new HamburgerMenuGlyphItem() { Label = Resources.ShellContentGridPage, Glyph = "\uE8A5", TargetPageType = typeof(ContentGridViewModel) },
         new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
-    };
+    ];
 
-    public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new()
-    {
+    public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } =
+    [
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
-    };
+    ];
 
     public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
     {
