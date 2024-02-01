@@ -52,11 +52,10 @@ public partial class BaseViewModel : ObservableObject, INavigationAware
 
     public virtual void OnNavigatedTo(object parameter)
     {
-        throw new NotImplementedException();
+
     }
 
     public virtual void OnNavigatedFrom()
     {
-        throw new NotImplementedException();
     }
 }
