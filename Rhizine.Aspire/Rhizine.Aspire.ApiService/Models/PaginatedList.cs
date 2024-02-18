@@ -13,7 +13,7 @@ namespace Rhizine.Aspire.ApiService.Models
 
         public bool HasPreviousPage => PageIndex > 1;
         public bool HasNextPage => PageIndex < TotalPages;
-        public bool IsEmpty => !Items.Any();
+        public bool IsEmpty => Items.Count == 0;
 
         private PaginatedList(IEnumerable<T> items, int count, int pageIndex, int pageSize)
         {
@@ -48,6 +48,81 @@ namespace Rhizine.Aspire.ApiService.Models
             }
 
             return Items[index];
+        }
+
+        public bool Contains(T item)
+        {
+            return Items.Contains(item);
+        }
+
+        public int IndexOf(T item)
+        {
+            return Items.IndexOf(item);
+        }
+
+        public void Sort(Comparison<T> comparison)
+        {
+            ((List<T>)Items).Sort(comparison);
+        }
+
+        public IEnumerable<T> Filter(Func<T, bool> predicate)
+        {
+            return Items.Where(predicate);
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index < 0 || index >= Items.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+            }
+
+            Items.RemoveAt(index);
+        }
+
+        public void Add(T item)
+        {
+            Items.Add(item);
+        }
+
+        public void Insert(int index, T item)
+        {
+            if (index < 0 || index > Items.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+            }
+
+            Items.Insert(index, item);
+        }
+
+        public bool Remove(T item)
+        {
+            return Items.Remove(item);
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            Items.CopyTo(array, arrayIndex);
+        }
+
+        public T[] ToArray()
+        {
+            return Items.ToArray();
+        }
+
+        public List<T> ToList()
+        {
+            return Items.ToList();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return Items.GetEnumerator();
         }
     }
 }
