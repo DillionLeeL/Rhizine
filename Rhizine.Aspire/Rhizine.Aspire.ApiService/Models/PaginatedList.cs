@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 using System.Threading;
-
+using System.Linq;
 namespace Rhizine.Aspire.ApiService.Models
 {
     public class PaginatedList<T>
@@ -23,7 +24,7 @@ namespace Rhizine.Aspire.ApiService.Models
             Items = items.ToList();
         }
 
-        public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken = default)
+        public static async Task<PaginatedList<T>> CreateAsync(IAsyncEnumerable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken = default)
         {
             if (pageIndex < 1)
             {
@@ -34,7 +35,6 @@ namespace Rhizine.Aspire.ApiService.Models
             {
                 throw new ArgumentException("PageSize must be greater than 0.", nameof(pageSize));
             }
-
             var count = await source.CountAsync(cancellationToken);
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
@@ -118,11 +118,6 @@ namespace Rhizine.Aspire.ApiService.Models
         public List<T> ToList()
         {
             return Items.ToList();
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Items.GetEnumerator();
         }
     }
 }
