@@ -86,6 +86,7 @@ public partial class FlyoutService(ILoggingService loggingService) : IFlyoutServ
                 _loggingService.LogInformation($"Adding {flyout} to active flyouts");
                 ActiveFlyouts.Add(flyout);
             }
+            OnFlyoutOpened?.Invoke(flyoutName); // Raise the OnFlyoutOpened event
         }
     }
 
@@ -103,7 +104,20 @@ public partial class FlyoutService(ILoggingService loggingService) : IFlyoutServ
             {
                 flyout.IsOpen = false;
                 ActiveFlyouts.Remove(flyout);
+                OnFlyoutClosed?.Invoke(flyoutName); // Raise the OnFlyoutClosed event
             }
         }
+    }
+
+    public bool TryGetFlyout(string flyoutName, out FlyoutBaseViewModel flyout)
+    {
+        if (_flyouts.TryGetValue(flyoutName, out var lazyFlyout))
+        {
+            flyout = lazyFlyout.Value;
+            return true;
+        }
+
+        flyout = null;
+        return false;
     }
 }
