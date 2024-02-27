@@ -88,7 +88,7 @@ public class ApplicationHostService(IServiceProvider serviceProvider, IEnumerabl
 
     private void Startup()
     {
-        _toastNotificationsService.ShowToastNotificationSample();
+        //_toastNotificationsService.ShowToastNotificationSample();
     }
 
     /// <summary>

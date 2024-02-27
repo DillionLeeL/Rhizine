@@ -40,6 +40,7 @@ public partial class App : Application
                 c.SetBasePath(appLocation);
             })
         */
+        /*
         // https://docs.microsoft.com/windows/apps/design/shell/tiles-and-notifications/send-local-toast?tabs=desktop
         ToastNotificationManagerCompat.OnActivated += (toastArgs) =>
         {
@@ -56,7 +57,7 @@ public partial class App : Application
         {
             { ToastNotificationActivationHandler.ActivationArguments, string.Empty }
         };
-
+        */
         // Configure Serilog
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(new ConfigurationBuilder()
@@ -70,13 +71,13 @@ public partial class App : Application
             .UseSerilog() // Use Serilog for logging
             .ConfigureServices(ConfigureServices)
             .Build();
-
+        /*
         if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated())
         {
             // ToastNotificationActivator code will run after this completes and will show a window if necessary.
             return;
         }
-
+        */
         await _host.StartAsync();
     }
 
@@ -84,6 +85,7 @@ public partial class App : Application
     private void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         // App Host
+        // see C:\Users\Main\source\repos\Rhizine\Rhizine.WPF\Services\ApplicationHostService.cs
         services.AddHostedService<ApplicationHostService>();
         //services.AddLogging(configure => configure.AddConsole()); // default console
 
