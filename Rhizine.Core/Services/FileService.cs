@@ -202,7 +202,6 @@ public class FileService(ILoggingService loggingService) : IFileService
             throw new ArgumentException("Path cannot be null or whitespace.", nameof(path));
         }
 
-        await Task.Yield();
         var directory = Path.GetDirectoryName(path);
 
         if (!Directory.Exists(directory))
@@ -291,8 +290,6 @@ public class FileService(ILoggingService loggingService) : IFileService
     /// <returns>A Stream of the embedded resource file.</returns>
     public async Task<Stream?> GetEmbeddedFileStreamAsync(Type assemblyType, string fileName)
     {
-        await Task.Yield();
-
         var manifestName = Array.Find(assemblyType.GetTypeInfo().Assembly
             .GetManifestResourceNames(), n => n.EndsWith(fileName.Replace(" ", "_").Replace("\\", ".").Replace("/", "."), StringComparison.OrdinalIgnoreCase));
 
