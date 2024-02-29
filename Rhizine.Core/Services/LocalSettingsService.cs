@@ -18,15 +18,18 @@ public class LocalSettingsService : ILocalSettingsService
 {
     // Constants for default file paths and names.
     private const string _defaultApplicationDataFolder = "Rhizine/ApplicationData";
+
     private const string _defaultLocalSettingsFile = "LocalSettings.json";
 
     // Dependencies for file operations and logging.
     private readonly IFileService _fileService;
+
     private readonly ILoggingService _loggingService;
     private readonly LocalSettingsOptions _options;
 
     // Paths for application data and settings file.
     private readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
     private readonly string _applicationDataFolder;
     private readonly string _localsettingsFile;
 
@@ -124,10 +127,18 @@ public class LocalSettingsService : ILocalSettingsService
     /// <param name="value">The setting value to save.</param>
     public async Task SaveSettingAsync<T>(string key, T value)
     {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
+        }
+        if (value is null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
         await InitializeAsync();
 
-        var json = JsonSerializer.Serialize(value, _jsonOptions);
-        _settings[key] = json;
+        _settings[key] = value;
 
         var serializedSettings = JsonSerializer.Serialize(_settings, _jsonOptions);
         await _fileService.SaveAsync(_applicationDataFolder, _localsettingsFile, serializedSettings);
