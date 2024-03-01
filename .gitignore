@@ -398,3 +398,5 @@ FodyWeavers.xsd
 /Rhizine.Core/Services/NavigationService.cs
 /Rhizine.Core/Services/SystemService.cs
 /Rhizine.WinUI/GlobalSuppressions.cs
+/Rhizine.Core/nuget.config
+/nuget.config

@@ -5,6 +5,13 @@
 	  <RootNamespace>Rhizine.Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Rhizine.Core</Title>
+    <Authors>Dillion Lowry</Authors>
+    <Copyright>MIT License Copyright (c) 2023 Dillion Lowry</Copyright>
+    <RepositoryUrl>https://github.com/DillionLowry/Rhizine</RepositoryUrl>
+    <Description>Contains core interfaces, models, and services for use by other Rhizine packages.</Description>
+    <PackageProjectUrl>https://github.com/DillionLowry/Rhizine</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
