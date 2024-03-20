@@ -1,19 +1,21 @@
-﻿<UserControl x:Class="Rhizine.WPF.Views.Flyouts.SimpleFrameFlyout"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:local="clr-namespace:Rhizine.Displays.Flyouts"
-            xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             d:DataContext="{d:DesignInstance Type=local:SimpleFrameFlyoutViewModel}"
-             mc:Ignorable="d"
-             d:DesignHeight="600"
-             d:DesignWidth="400">
+﻿<UserControl
+    x:Class="Rhizine.WPF.Views.Flyouts.SimpleFrameFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Rhizine.Displays.Flyouts"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:SimpleFrameFlyoutViewModel}"
+    d:DesignHeight="600"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
 
-    <Frame Source="{Binding Path=CurrentUri}"
-           Content="{Binding Path=CurrentPage}"
-           HorizontalAlignment="Stretch"
-           VerticalAlignment="Stretch"
-           NavigationUIVisibility="Hidden"
-           Focusable="False" />
+    <Frame
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Content="{Binding Path=CurrentPage}"
+        Focusable="False"
+        NavigationUIVisibility="Hidden"
+        Source="{Binding Path=CurrentUri}" />
 </UserControl>

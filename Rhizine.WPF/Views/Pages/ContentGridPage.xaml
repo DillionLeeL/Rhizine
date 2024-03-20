@@ -1,26 +1,31 @@
-﻿<Page x:Class="Rhizine.WPF.Views.Pages.ContentGridPage"
-    Style="{DynamicResource MahApps.Styles.Page}"
+﻿<Page
+    x:Class="Rhizine.WPF.Views.Pages.ContentGridPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="clr-namespace:Rhizine.WPF.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Rhizine.WPF.Properties"
-    xmlns:behaviors="clr-namespace:Rhizine.WPF.Behaviors"
-    mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Style="{DynamicResource MahApps.Styles.Page}"
+    mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="contentGridItemTemplate">
             <Grid
                 Width="160"
                 Height="160"
                 Background="{DynamicResource MahApps.Brushes.Gray10}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+                <StackPanel
+                    Margin="{StaticResource MediumLeftTopRightBottomMargin}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="24"
-                        Text="{Binding Symbol}"
                         HorizontalAlignment="Center"
-                        FontFamily="Segoe MDL2 Assets" />
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="24"
+                        Text="{Binding Symbol}" />
                     <TextBlock
                         Margin="{StaticResource XXSmallTopMargin}"
                         HorizontalAlignment="Center"
@@ -36,16 +41,15 @@
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource PageTitleStyle}"
-                   Margin="{StaticResource MediumLeftMargin}" />
+        <TextBlock Margin="{StaticResource MediumLeftMargin}" Style="{StaticResource PageTitleStyle}" />
 
         <ListView
             Grid.Row="1"
             Margin="{StaticResource SmallLeftMargin}"
-            SelectionMode="Single"
+            ItemTemplate="{StaticResource contentGridItemTemplate}"
             ItemsSource="{Binding Source}"
-            Style="{StaticResource ContentGridListViewStyle}"
-            ItemTemplate="{StaticResource contentGridItemTemplate}">
+            SelectionMode="Single"
+            Style="{StaticResource ContentGridListViewStyle}">
             <i:Interaction.Behaviors>
                 <behaviors:ListViewItemSelectionBehavior Command="{Binding NavigateToDetailCommand}" />
             </i:Interaction.Behaviors>
