@@ -59,8 +59,6 @@ public partial class ShellViewModel : BaseViewModel
     public Func<HamburgerMenuItem, bool> IsPageRestricted { get; } =
     (menuItem) => Attribute.IsDefined(menuItem.TargetPageType, typeof(Restricted));
 
-    //private bool CanGoBack => _navigationService.CanGoBack;
-
     [RelayCommand]
     private void OnLoaded()
     {
@@ -73,8 +71,11 @@ public partial class ShellViewModel : BaseViewModel
         _navigationService.Navigated -= OnNavigated;
     }
 
-    [RelayCommand] // (CanExecute = nameof(CanGoBack))
-    private void GoBack() => _navigationService.GoBackAsync();
+    [RelayCommand]
+    private void GoBack()
+    {
+        _ = _navigationService.GoBackAsync();
+    }
 
     [RelayCommand]
     private void OnMenuItemInvoked() => NavigateTo(SelectedMenuItem.TargetPageType);
@@ -86,7 +87,7 @@ public partial class ShellViewModel : BaseViewModel
     {
         if (targetViewModel != null)
         {
-            _navigationService.NavigateToAsync(targetViewModel.FullName);
+            _ = _navigationService.NavigateToAsync(targetViewModel.FullName);
         }
     }
 
@@ -101,7 +102,7 @@ public partial class ShellViewModel : BaseViewModel
             if (menuItem != null)
             {
                 SelectedMenuItem = menuItem;
-                SelectedOptionsMenuItem = OptionMenuItems.Contains(menuItem) ? menuItem as HamburgerMenuItem : null;
+                SelectedOptionsMenuItem = OptionMenuItems.Contains(menuItem) ? menuItem : null;
 
                 GoBackCommand.NotifyCanExecuteChanged();
             }

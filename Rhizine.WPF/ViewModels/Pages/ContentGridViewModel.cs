@@ -40,7 +40,7 @@ public partial class ContentGridViewModel(ISampleDataService sampleDataService, 
     {
         if (order != null)
         {
-            _navigationService.NavigateToAsync(typeof(ContentGridDetailViewModel).FullName, order.OrderID);
+            _ = _navigationService.NavigateToAsync(typeof(ContentGridDetailViewModel).FullName, order.OrderID);
         }
     }
 }
