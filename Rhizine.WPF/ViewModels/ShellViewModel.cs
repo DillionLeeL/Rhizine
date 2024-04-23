@@ -16,9 +16,10 @@ namespace Rhizine.Displays.Windows;
 
 public partial class ShellViewModel : BaseViewModel
 {
-    private readonly INavigationService _navigationService;
-    private readonly ILoggingService _loggingService;
+    #region Fields
 
+    private readonly ILoggingService _loggingService;
+    private readonly INavigationService _navigationService;
     [ObservableProperty]
     private IFlyoutService _flyoutService;
 
@@ -27,6 +28,30 @@ public partial class ShellViewModel : BaseViewModel
 
     [ObservableProperty]
     private HamburgerMenuItem _selectedOptionsMenuItem;
+
+    #endregion Fields
+
+    #region Constructors
+
+    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
+    {
+        _navigationService = navigationService;
+
+        FlyoutService = flyoutService;
+        _loggingService = loggingService;
+        if (_flyoutService != null)
+        {
+            _flyoutService.OnFlyoutOpened += FlyoutOpened;
+            _flyoutService.OnFlyoutClosed += FlyoutClosed;
+        }
+    }
+
+    #endregion Constructors
+
+    #region Properties
+
+    public Func<HamburgerMenuItem, bool> IsPageRestricted { get; } =
+        (menuItem) => Attribute.IsDefined(menuItem.TargetPageType, typeof(Restricted));
 
     // TODO: Change the icons and titles for all HamburgerMenuItems here
     public ObservableCollection<HamburgerMenuItem> MenuItems { get; } =
@@ -43,32 +68,25 @@ public partial class ShellViewModel : BaseViewModel
         new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     ];
 
-    public ShellViewModel(INavigationService navigationService, IFlyoutService flyoutService, ILoggingService loggingService)
+    #endregion Properties
+
+    #region Methods
+
+    private static HamburgerMenuItem FindMenuItem(IEnumerable<HamburgerMenuItem> items, string viewModelName)
     {
-        _navigationService = navigationService;
-
-        FlyoutService = flyoutService;
-        _loggingService = loggingService;
-        if (_flyoutService != null)
-        {
-            _flyoutService.OnFlyoutOpened += FlyoutOpened;
-            _flyoutService.OnFlyoutClosed += FlyoutClosed;
-        }
-    }
-
-    public Func<HamburgerMenuItem, bool> IsPageRestricted { get; } =
-    (menuItem) => Attribute.IsDefined(menuItem.TargetPageType, typeof(Restricted));
-
-    [RelayCommand]
-    private void OnLoaded()
-    {
-        _navigationService.Navigated += OnNavigated;
+        return items?.FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
     }
 
     [RelayCommand]
-    private void OnUnloaded()
+    private void FlyoutClosed(string flyout)
     {
-        _navigationService.Navigated -= OnNavigated;
+        _loggingService.LogInformation("FlyoutOpened");
+    }
+
+    [RelayCommand]
+    private void FlyoutOpened(string flyout)
+    {
+        _loggingService.LogInformation("FlyoutOpened");
     }
 
     [RelayCommand]
@@ -77,12 +95,6 @@ public partial class ShellViewModel : BaseViewModel
         _ = _navigationService.GoBackAsync();
     }
 
-    [RelayCommand]
-    private void OnMenuItemInvoked() => NavigateTo(SelectedMenuItem.TargetPageType);
-
-    [RelayCommand]
-    private void OnOptionsMenuItemInvoked() => NavigateTo(SelectedOptionsMenuItem.TargetPageType);
-
     private void NavigateTo(Type targetViewModel)
     {
         if (targetViewModel != null)
@@ -90,6 +102,15 @@ public partial class ShellViewModel : BaseViewModel
             _ = _navigationService.NavigateToAsync(targetViewModel.FullName);
         }
     }
+
+    [RelayCommand]
+    private void OnLoaded()
+    {
+        _navigationService.Navigated += OnNavigated;
+    }
+
+    [RelayCommand]
+    private void OnMenuItemInvoked() => NavigateTo(SelectedMenuItem.TargetPageType);
 
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
@@ -109,20 +130,14 @@ public partial class ShellViewModel : BaseViewModel
         }
     }
 
-    private static HamburgerMenuItem FindMenuItem(IEnumerable<HamburgerMenuItem> items, string viewModelName)
-    {
-        return items?.FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
-    }
+    [RelayCommand]
+    private void OnOptionsMenuItemInvoked() => NavigateTo(SelectedOptionsMenuItem.TargetPageType);
 
     [RelayCommand]
-    private void FlyoutOpened(string flyout)
+    private void OnUnloaded()
     {
-        _loggingService.LogInformation("FlyoutOpened");
+        _navigationService.Navigated -= OnNavigated;
     }
 
-    [RelayCommand]
-    private void FlyoutClosed(string flyout)
-    {
-        _loggingService.LogInformation("FlyoutOpened");
-    }
+    #endregion Methods
 }

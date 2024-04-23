@@ -7,7 +7,19 @@ namespace Rhizine.WPF.ViewModels.Flyouts;
 
 public partial class SimpleFrameFlyoutViewModel : FlyoutBaseViewModel
 {
+    #region Fields
+
     private readonly ILoggingService _loggingService;
+
+    [ObservableProperty]
+    private Page _currentPage;
+
+    [ObservableProperty]
+    private Uri _currentUri;
+
+    #endregion Fields
+
+    #region Constructors
 
     public SimpleFrameFlyoutViewModel()
     { }
@@ -37,9 +49,5 @@ public partial class SimpleFrameFlyoutViewModel : FlyoutBaseViewModel
         _loggingService.LogInformation($"SimpleFrameFlyoutViewModel constructor with {page}");
     }
 
-    [ObservableProperty]
-    private Page _currentPage;
-
-    [ObservableProperty]
-    private Uri _currentUri;
+    #endregion Constructors
 }

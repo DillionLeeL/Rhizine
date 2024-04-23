@@ -11,45 +11,38 @@ namespace Rhizine.WPF.ViewModels.Pages;
 
 public partial class WebViewViewModel(IWebViewService webViewService, ILoggingService loggingService) : BaseViewModel
 {
-    public IWebViewService WebViewService { get; } = webViewService;
-    private readonly ILoggingService _loggingService = loggingService;
+    #region Fields
 
+    private readonly ILoggingService _loggingService = loggingService;
     [ObservableProperty]
-    private Uri _source = new("https://docs.microsoft.com/windows/apps/");
+    [NotifyPropertyChangedFor(nameof(IsLoadingVisibility))]
+    private bool _isLoading;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FailedMesageVisibility))]
     private bool _isShowingFailedMessage;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsLoadingVisibility))]
-    private bool _isLoading;
+    private Uri _source = new("https://docs.microsoft.com/windows/apps/");
 
-    public Visibility IsLoadingVisibility => IsLoading ? Visibility.Visible : Visibility.Collapsed;
+    #endregion Fields
+
+    #region Properties
 
     public Visibility FailedMesageVisibility => IsLoading ? Visibility.Visible : Visibility.Collapsed;
-
-    private bool BrowserCanGoForward => WebViewService.CanGoForward;
+    public Visibility IsLoadingVisibility => IsLoading ? Visibility.Visible : Visibility.Collapsed;
+    public IWebViewService WebViewService { get; } = webViewService;
     private bool BrowserCanGoBack => WebViewService.CanGoBack;
+    private bool BrowserCanGoForward => WebViewService.CanGoForward;
 
-    [RelayCommand]
-    private void Reload()
-    {
-        IsShowingFailedMessage = false;
-        IsLoading = true;
-        WebViewService.Reload();
-    }
+    #endregion Properties
 
-    [RelayCommand(CanExecute = nameof(BrowserCanGoForward))]
-    private void BrowserForward()
-    {
-        WebViewService.GoForward();
-    }
+    #region Methods
 
-    [RelayCommand(CanExecute = nameof(BrowserCanGoBack))]
-    private void BrowserBack()
+    public override void OnNavigatedFrom()
     {
-        WebViewService.GoBack();
+        WebViewService.UnregisterEvents();
+        WebViewService.NavigationCompleted -= OnNavigationCompleted;
     }
 
     public override void OnNavigatedTo(object parameter)
@@ -58,10 +51,16 @@ public partial class WebViewViewModel(IWebViewService webViewService, ILoggingSe
         WebViewService.NavigationCompleted += OnNavigationCompleted;
     }
 
-    public override void OnNavigatedFrom()
+    [RelayCommand(CanExecute = nameof(BrowserCanGoBack))]
+    private void BrowserBack()
     {
-        WebViewService.UnregisterEvents();
-        WebViewService.NavigationCompleted -= OnNavigationCompleted;
+        WebViewService.GoBack();
+    }
+
+    [RelayCommand(CanExecute = nameof(BrowserCanGoForward))]
+    private void BrowserForward()
+    {
+        WebViewService.GoForward();
     }
 
     private void OnNavigationCompleted(object? sender, CoreWebView2WebErrorStatus webErrorStatus)
@@ -84,4 +83,14 @@ public partial class WebViewViewModel(IWebViewService webViewService, ILoggingSe
             await Windows.System.Launcher.LaunchUriAsync(WebViewService.Source);
         }
     }
+
+    [RelayCommand]
+    private void Reload()
+    {
+        IsShowingFailedMessage = false;
+        IsLoading = true;
+        WebViewService.Reload();
+    }
+
+    #endregion Methods
 }

@@ -10,11 +10,21 @@ namespace Rhizine.WPF.ViewModels.Pages;
 
 public partial class ContentGridViewModel(ISampleDataService sampleDataService, INavigationService navigationService, ILoggingService loggingService) : BaseViewModel
 {
+    #region Fields
+
+    private readonly ILoggingService _loggingService = loggingService;
     private readonly INavigationService _navigationService = navigationService;
     private readonly ISampleDataService _sampleDataService = sampleDataService;
-    private readonly ILoggingService _loggingService = loggingService;
+
+    #endregion Fields
+
+    #region Properties
 
     public ObservableCollection<SampleOrder> Source { get; } = [];
+
+    #endregion Properties
+
+    #region Methods
 
     public override async void OnNavigatedTo(object parameter)
     {
@@ -43,4 +53,6 @@ public partial class ContentGridViewModel(ISampleDataService sampleDataService, 
             _ = _navigationService.NavigateToAsync(typeof(ContentGridDetailViewModel).FullName, order.OrderID);
         }
     }
+
+    #endregion Methods
 }

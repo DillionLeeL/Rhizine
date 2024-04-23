@@ -7,11 +7,16 @@ namespace Rhizine.WPF.ViewModels.Pages;
 
 public partial class ContentGridDetailViewModel(ISampleDataService sampleDataService, ILoggingService loggingService) : BaseViewModel
 {
-    private readonly ISampleDataService _sampleDataService = sampleDataService;
-    private readonly ILoggingService _loggingService = loggingService;
+    #region Fields
 
+    private readonly ILoggingService _loggingService = loggingService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
     [ObservableProperty]
     private SampleOrder _item;
+
+    #endregion Fields
+
+    #region Methods
 
     public override async void OnNavigatedTo(object parameter)
     {
@@ -28,4 +33,6 @@ public partial class ContentGridDetailViewModel(ISampleDataService sampleDataSer
             await _loggingService.LogErrorAsync(ex, "Error while navigating to Content Grid Detail");
         }
     }
+
+    #endregion Methods
 }

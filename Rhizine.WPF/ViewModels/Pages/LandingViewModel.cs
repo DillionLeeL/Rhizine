@@ -10,12 +10,18 @@ namespace Rhizine.Displays.Pages;
 
 public partial class LandingViewModel : BaseViewModel
 {
+    #region Fields
+
     private readonly ILoggingService _loggingService;
     private readonly IPageService _pageService;
     private readonly IPopupService _popupService;
 
     [ObservableProperty]
     private IFlyoutService _flyoutService;
+
+    #endregion Fields
+
+    #region Constructors
 
     public LandingViewModel(ILoggingService loggingService, IFlyoutService flyoutService, IPageService pageService, IPopupService popupService)
     {
@@ -27,6 +33,10 @@ public partial class LandingViewModel : BaseViewModel
         _flyoutService.OnFlyoutOpened += FlyoutOpened;
         _flyoutService.OnFlyoutClosed += FlyoutClosed;
     }
+
+    #endregion Constructors
+
+    #region Methods
 
     [RelayCommand]
     public async Task ShowPopupAsync()
@@ -43,14 +53,16 @@ public partial class LandingViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void FlyoutOpened(string flyout)
+    private void FlyoutClosed(string flyout)
     {
         _loggingService.LogInformation(flyout);
     }
 
     [RelayCommand]
-    private void FlyoutClosed(string flyout)
+    private void FlyoutOpened(string flyout)
     {
         _loggingService.LogInformation(flyout);
     }
+
+    #endregion Methods
 }

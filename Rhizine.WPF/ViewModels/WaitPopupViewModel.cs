@@ -9,9 +9,21 @@ namespace Rhizine.Displays.Popups;
 
 public partial class WaitPopupViewModel : PopupBaseViewModel
 {
+    #region Fields
+
     private readonly ILoggingService _loggingService;
-    public ObservableCollection<string> WaitingStates { get; } = [];
-    public bool? DialogResult { get; private set; }
+    [ObservableProperty]
+    private string _currentStatus;
+
+    [ObservableProperty]
+    private bool _isVisible;
+
+    [ObservableProperty]
+    private bool _progressBarVisibility;
+
+    #endregion Fields
+
+    #region Constructors
 
     public WaitPopupViewModel(ILoggingService loggingService)
     {
@@ -20,17 +32,20 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
         ProgressBarVisibility = true;
     }
 
-    [ObservableProperty]
-    private bool _isVisible;
+    #endregion Constructors
 
-    [ObservableProperty]
-    private string _currentStatus;
+    #region Properties
 
-    [ObservableProperty]
-    private bool _progressBarVisibility;
+    public bool? DialogResult { get; private set; }
+    public ObservableCollection<string> WaitingStates { get; } = [];
 
-    public override void Show()
+    #endregion Properties
+
+    #region Methods
+
+    public void AddWaitingState(string state)
     {
+        WaitingStates.Add(state);
     }
 
     [RelayCommand]
@@ -51,16 +66,20 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
         }
     }
 
-    public void AddWaitingState(string state)
+    public override void Show()
     {
-        WaitingStates.Add(state);
     }
-
     public void ShowButtons()
     {
         // TODO: Show buttons
         //progressBar.Visibility = Visibility.Collapsed;
         //buttonPanel.Visibility = Visibility.Visible;
+    }
+
+    private void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        DialogResult = false;
+        //Close();
     }
 
     private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -69,9 +88,5 @@ public partial class WaitPopupViewModel : PopupBaseViewModel
         //Close();
     }
 
-    private void CancelButton_Click(object sender, RoutedEventArgs e)
-    {
-        DialogResult = false;
-        //Close();
-    }
+    #endregion Methods
 }

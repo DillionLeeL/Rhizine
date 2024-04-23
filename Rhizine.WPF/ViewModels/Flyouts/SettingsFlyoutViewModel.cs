@@ -6,7 +6,16 @@ namespace Rhizine.WPF.ViewModels.Flyouts;
 
 public partial class SettingsFlyoutViewModel : FlyoutBaseViewModel
 {
+    #region Fields
+
     private readonly ILoggingService _loggingService;
+
+    [ObservableProperty]
+    private string _settingsText;
+
+    #endregion Fields
+
+    #region Constructors
 
     public SettingsFlyoutViewModel()
     {
@@ -22,6 +31,5 @@ public partial class SettingsFlyoutViewModel : FlyoutBaseViewModel
         SettingsText = "test";
     }
 
-    [ObservableProperty]
-    private string _settingsText;
+    #endregion Constructors
 }

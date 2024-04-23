@@ -7,10 +7,20 @@ namespace Rhizine.WPF.ViewModels.Pages;
 
 public class DataGridViewModel(ISampleDataService sampleDataService, ILoggingService loggingService) : BaseViewModel
 {
-    private readonly ISampleDataService _sampleDataService = sampleDataService;
+    #region Fields
+
     private readonly ILoggingService _loggingService = loggingService;
+    private readonly ISampleDataService _sampleDataService = sampleDataService;
+
+    #endregion Fields
+
+    #region Properties
 
     public ObservableCollection<SampleOrder> Source { get; } = [];
+
+    #endregion Properties
+
+    #region Methods
 
     public override async void OnNavigatedTo(object parameter)
     {
@@ -31,4 +41,6 @@ public class DataGridViewModel(ISampleDataService sampleDataService, ILoggingSer
             await _loggingService.LogErrorAsync(ex, "Error while navigating to Data Grid");
         }
     }
+
+    #endregion Methods
 }

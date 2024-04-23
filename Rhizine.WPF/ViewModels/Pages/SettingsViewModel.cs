@@ -13,10 +13,17 @@ namespace Rhizine.WPF.ViewModels.Pages;
 public partial class SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService,
                          IApplicationInfoService applicationInfoService, ILoggingService loggingService) : BaseViewModel
 {
+    #region Fields
+
     private readonly AppConfig _appConfig = appConfig?.Value ?? new AppConfig();
-    private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
     private readonly IApplicationInfoService _applicationInfoService = applicationInfoService;
     private readonly ILoggingService _loggingService = loggingService;
+    private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
+    [ObservableProperty]
+    private FlyoutsControl _flyoutsControl;
+
+    [ObservableProperty]
+    private Flyout _testFlyout;
 
     [ObservableProperty]
     private AppTheme _theme;
@@ -24,11 +31,9 @@ public partial class SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSele
     [ObservableProperty]
     private string _versionDescription;
 
-    [ObservableProperty]
-    private FlyoutsControl _flyoutsControl;
+    #endregion Fields
 
-    [ObservableProperty]
-    private Flyout _testFlyout;
+    #region Methods
 
     public override void OnNavigatedTo(object parameter)
     {
@@ -43,6 +48,6 @@ public partial class SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSele
         _themeSelectorService.SetTheme(theme);
     }
 
-    //[RelayCommand]
-    //private void PrivacyStatement() => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
+    #endregion Methods
+
 }
