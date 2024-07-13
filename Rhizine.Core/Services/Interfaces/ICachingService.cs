@@ -5,7 +5,7 @@ namespace Rhizine.Core.Services.Interfaces
 {
     public interface ICachingService
     {
-        Task<T> GetAsync<T>(string key);
+        Task<T?> GetAsync<T>(string key);
 
         Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions options = null, DistributedCacheEntryOptions distributedOptions = null);
 

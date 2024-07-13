@@ -10,141 +10,112 @@ namespace Rhizine.Core.Services;
 /// This service offers methods for retrieving, setting, checking existence, and removing cached items.
 /// It can optionally use a distributed cache as a fallback when the in-memory cache is unavailable.
 /// </summary>
-public class CachingService(ILoggingService loggingService, IMemoryCache memoryCache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false) : ICachingService
+public class CachingService : ICachingService
 {
-    private readonly IMemoryCache _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
-    private readonly ILoggingService _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
-    private readonly IDistributedCache _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
-    private readonly bool _useDistributedCacheFallback = useDistributedCacheFallback;
+    private readonly IMemoryCache _memoryCache;
+    private readonly ILoggingService _loggingService;
+    private readonly IDistributedCache _distributedCache;
+    private readonly bool _useDistributedCacheFallback;
 
     /// <summary>
-    /// Asynchronously retrieves a cached item by its key. If the item is not found in the memory cache,
-    /// and if distributed cache fallback is enabled, it attempts to retrieve the item from the distributed cache.
+    /// Initializes a new instance of the CachingService class.
     /// </summary>
-    /// <typeparam name="T">The type of the item to retrieve from the cache.</typeparam>
-    /// <param name="key">The key of the item to retrieve.</param>
-    /// <returns>The cached item if found; otherwise, default value of type T.</returns>
-    /// <exception cref="ArgumentException">Thrown when the key is null or whitespace.</exception>
-    /// <exception cref="Exception">Propagates any exceptions encountered during the operation.</exception>
-    public async Task<T> GetAsync<T>(string key)
+    /// <param name="loggingService">Provides logging services.</param>
+    /// <param name="memoryCache">Represents the in-memory cache.</param>
+    /// <param name="distributedCache">Represents the distributed cache.</param>
+    /// <param name="useDistributedCacheFallback">Indicates whether to use the distributed cache as a fallback.</param>
+    public CachingService(ILoggingService loggingService, IMemoryCache memoryCache, IDistributedCache distributedCache, bool useDistributedCacheFallback = false)
     {
-        if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
-
-        try
-        {
-            if (_memoryCache.TryGetValue(key, out T value))
-            {
-                return value;
-            }
-
-            if (_useDistributedCacheFallback)
-            {
-                var serializedValue = await _distributedCache.GetStringAsync(key);
-                if (!string.IsNullOrEmpty(serializedValue))
-                {
-                    return Deserialize<T>(serializedValue);
-                }
-            }
-
-            return default;
-        }
-        catch (Exception ex)
-        {
-            await _loggingService.LogErrorAsync(ex, $"Error retrieving item from cache for key {key}.");
-            throw;
-        }
+        _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
+        _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
+        _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
+        _useDistributedCacheFallback = useDistributedCacheFallback;
     }
 
     /// <summary>
-    /// Asynchronously sets a value in the cache with the specified key.
-    /// If distributed cache fallback is enabled, the value is also set in the distributed cache.
+    /// Asynchronously retrieves a cached item with the specified key.
     /// </summary>
-    /// <typeparam name="T">The type of the item to store in the cache.</typeparam>
-    /// <param name="key">The key for the cache item.</param>
-    /// <param name="value">The value to store in the cache.</param>
-    /// <param name="memoryOptions">Optional. Memory cache entry options.</param>
-    /// <param name="distributedOptions">Optional. Distributed cache entry options.</param>
-    /// <exception cref="ArgumentException">Thrown when the key is null or whitespace.</exception>
-    /// <exception cref="Exception">Propagates any exceptions encountered during the operation.</exception>
+    /// <typeparam name="T">The type of the cached item.</typeparam>
+    /// <param name="key">The key for the cached item.</param>
+    /// <returns>The cached item if found; otherwise, null.</returns>
+    public async Task<T?> GetAsync<T>(string key)
+    {
+        if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
+
+        if (_memoryCache.TryGetValue(key, out T? value))
+        {
+            return value;
+        }
+
+        if (_useDistributedCacheFallback)
+        {
+            var serializedValue = await _distributedCache.GetStringAsync(key);
+            if (!string.IsNullOrEmpty(serializedValue))
+            {
+                return Deserialize<T>(serializedValue);
+            }
+        }
+        _loggingService.LogInformation($"Cache miss for key: {key}");
+        return default;
+    }
+
+    /// <summary>
+    /// Asynchronously sets the value with the specified key in the cache.
+    /// </summary>
+    /// <typeparam name="T">The type of the item to cache.</typeparam>
+    /// <param name="key">The key for the item to cache.</param>
+    /// <param name="value">The item to cache.</param>
+    /// <param name="memoryOptions">The options for caching in memory.</param>
+    /// <param name="distributedOptions">The options for caching in the distributed cache.</param>
     public async Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions? memoryOptions = null, DistributedCacheEntryOptions? distributedOptions = null)
     {
         if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
 
-        try
-        {
-            _memoryCache.Set(key, value, memoryOptions ?? new MemoryCacheEntryOptions());
+        _memoryCache.Set(key, value, memoryOptions ?? new MemoryCacheEntryOptions());
 
-            if (_useDistributedCacheFallback)
-            {
-                var serializedValue = Serialize(value);
-                await _distributedCache.SetStringAsync(key, serializedValue, distributedOptions ?? new DistributedCacheEntryOptions());
-            }
-        }
-        catch (Exception ex)
+        if (_useDistributedCacheFallback)
         {
-            await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
-            throw;
+            var serializedValue = Serialize(value);
+            await _distributedCache.SetStringAsync(key, serializedValue, distributedOptions ?? new DistributedCacheEntryOptions());
         }
     }
 
     /// <summary>
-    /// Asynchronously checks whether an item with the specified key exists in the cache.
-    /// If the item is not found in the memory cache, and if distributed cache fallback is enabled,
-    /// checks the distributed cache.
+    /// Asynchronously checks if an item with the specified key exists in the cache.
     /// </summary>
-    /// <param name="key">The key of the item to check for existence.</param>
-    /// <returns>True if the item exists in the cache; otherwise, false.</returns>
-    /// <exception cref="ArgumentException">Thrown when the key is null or whitespace.</exception>
-    /// <exception cref="Exception">Propagates any exceptions encountered during the operation.</exception>
+    /// <param name="key">The key of the item to check.</param>
+    /// <returns>true if the item exists in the cache; otherwise, false.</returns>
     public async Task<bool> ExistsAsync(string key)
     {
         if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
 
-        try
+        if (_memoryCache.TryGetValue(key, out _))
         {
-            if (_memoryCache.TryGetValue(key, out _))
-            {
-                return true;
-            }
-
-            if (_useDistributedCacheFallback)
-            {
-                var value = await _distributedCache.GetStringAsync(key);
-                return !string.IsNullOrEmpty(value);
-            }
-
-            return false;
+            return true;
         }
-        catch (Exception ex)
+
+        if (_useDistributedCacheFallback)
         {
-            await _loggingService.LogErrorAsync(ex, $"Error checking existence in cache for key {key}.");
-            throw;
+            var value = await _distributedCache.GetStringAsync(key);
+            return !string.IsNullOrEmpty(value);
         }
+
+        return false;
     }
 
     /// <summary>
-    /// Asynchronously removes a cached item with the specified key from both the memory and distributed caches.
+    /// Asynchronously removes the item with the specified key from the cache.
     /// </summary>
     /// <param name="key">The key of the item to remove.</param>
-    /// <exception cref="ArgumentException">Thrown when the key is null or whitespace.</exception>
-    /// <exception cref="Exception">Propagates any exceptions encountered during the operation.</exception>
     public async Task RemoveAsync(string key)
     {
         if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
 
-        try
-        {
-            _memoryCache.Remove(key);
+        _memoryCache.Remove(key);
 
-            if (_useDistributedCacheFallback)
-            {
-                await _distributedCache.RemoveAsync(key);
-            }
-        }
-        catch (Exception ex)
+        if (_useDistributedCacheFallback)
         {
-            await _loggingService.LogErrorAsync(ex, $"Error removing item from cache for key {key}.");
-            throw;
+            await _distributedCache.RemoveAsync(key);
         }
     }
 
@@ -159,12 +130,12 @@ public class CachingService(ILoggingService loggingService, IMemoryCache memoryC
         throw new NotImplementedException();
     }
 
-    private string Serialize<T>(T value)
+    private static string Serialize<T>(T value)
     {
         return JsonSerializer.Serialize(value);
     }
 
-    private T Deserialize<T>(string serializedValue)
+    private static T? Deserialize<T>(string serializedValue)
     {
         return JsonSerializer.Deserialize<T>(serializedValue);
     }
