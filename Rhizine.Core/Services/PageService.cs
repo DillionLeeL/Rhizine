@@ -4,13 +4,6 @@ using System.Collections.Concurrent;
 
 namespace Rhizine.Core.Services;
 
-// Example WPF usage: using IPageService = Rhizine.Core.Services.Interfaces.IPageService<System.Windows.Controls.Page>;
-
-/// <summary>
-/// Initializes a new instance of the PageService with a given service provider.
-/// </summary>
-/// <param name="serviceProvider">The service provider to resolve page instances.</param>
-/// <exception cref="ArgumentNullException">Thrown if serviceProvider is null.</exception>
 public class PageService<TPage>(IServiceProvider serviceProvider) : IPageService<TPage>
 {
     private readonly ConcurrentDictionary<string, Lazy<TPage>> _pagesCache = new();
@@ -48,7 +41,14 @@ public class PageService<TPage>(IServiceProvider serviceProvider) : IPageService
 
         return lazyPage.Value;
     }
-
+    public TPage GetPage<TViewModel>()
+    {
+        if (typeof(TViewModel).FullName is string key)
+        {
+            return GetPage(key);
+        }
+        throw new ArgumentNullException($"Page not found for ViewModel {typeof(TViewModel)}. Ensure it is configured properly in PageService.");
+    }
     /// <summary>
     /// Registers a ViewModel-Page mapping in the service.
     /// </summary>
